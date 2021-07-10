@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>ShowDevices</AssemblyName>
+    <RootNamespace>ShowDevices</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Model\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Src\SoundDevices50\SoundDevices50.csproj" />
+  </ItemGroup>
+
+</Project>
