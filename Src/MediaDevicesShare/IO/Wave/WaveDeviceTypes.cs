@@ -8,6 +8,8 @@ namespace MediaDevices.IO.Wave
     public enum WaveDeviceTypes
     {
         All = 0xffff,
-        WinMM = 0x0001
+        WinMM = 0x0001,
+        ASIO = 0x0002,
+        DirectSound = 0x0004
     }
 }

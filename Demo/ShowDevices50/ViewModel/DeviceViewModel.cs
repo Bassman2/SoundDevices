@@ -1,41 +1,47 @@
-﻿using MediaDevices.IO.MIDI;
+﻿using MediaDevices.IO;
+using MediaDevices.IO.MIDI;
 using MediaDevices.IO.Wave;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ShowDevices.ViewModel
 {
     public class DeviceViewModel
     {
-        public DeviceViewModel(MidiInDeviceInfo info)
+        public DeviceViewModel(SoundDevice device)
         {
-            this.Name = info.Name;
-            this.Version = info.Version;
+            this.InterfaceType = device.InterfaceType;
+            this.Name = device.Name;
+            this.Description = device.Description;
+            this.Version = device.Version;
         }
 
-        public DeviceViewModel(MidiOutDeviceInfo info)
+        public DeviceViewModel(MidiInDevice device) : this((SoundDevice) device)
         {
-            this.Name = info.Name;
-            this.Version = info.Version;
+            
         }
 
-        public DeviceViewModel(WaveInDeviceInfo info)
+        public DeviceViewModel(MidiOutDevice device) : this((SoundDevice)device)
         {
-            this.Name = info.Name;
-            this.Version = info.Version;
+            
         }
 
-        public DeviceViewModel(WaveOutDeviceInfo info)
+        public DeviceViewModel(WaveInDevice device) : this((SoundDevice)device)
         {
-            this.Name = info.Name;
-            this.Version = info.Version;
+            
+        }
+
+        public DeviceViewModel(WaveOutDevice device) : this((SoundDevice)device)
+        {
+            
         }
         
         public string Name { get; }
 
         public Version Version { get; }
+
+        public SoundInterfaceType InterfaceType { get; }
+
+        public string Description { get; }
+
     }
 }

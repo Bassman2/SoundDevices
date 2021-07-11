@@ -1,17 +1,30 @@
-﻿using MediaDevices.IO.Wave.Internal.WinMM;
+﻿using MediaDevices.IO.Internal.DirectSound;
+using MediaDevices.IO.Internal.WinMM;
+using MediaDevices.IO.Internal.ASIO;
 using System;
 using System.Collections.Generic;
 
 namespace MediaDevices.IO.Wave
 {
-    public class WaveOutDevice : IDisposable
+    public class WaveOutDevice : SoundDevice
     {
-        public static WaveOutDeviceInfo[] GetDevices(WaveDeviceTypes waveDeviceTypes)
+        public static WaveOutDevice[] GetDevices(WaveDeviceTypes waveDeviceTypes)
         {
-            List<WaveOutDeviceInfo> devices = new();
-            if (OperatingSystem.IsWindows() && waveDeviceTypes.HasFlag(WaveDeviceTypes.WinMM))
+            List<WaveOutDevice> devices = new();
+            if (OperatingSystem.IsWindows())
             {
-                devices.AddRange(WaveOutWinMMDevice.GetDevices());
+                if (waveDeviceTypes.HasFlag(WaveDeviceTypes.WinMM))
+                {
+                    WaveOutWinMMDevice.AddInternalDevices(devices);
+                }
+                if (waveDeviceTypes.HasFlag(WaveDeviceTypes.ASIO))
+                {
+                    WaveOutASIODevice.AddInternalDevices(devices);
+                }
+                if (waveDeviceTypes.HasFlag(WaveDeviceTypes.DirectSound))
+                {
+                    WaveOutDirectSoundDevice.AddInternalDevices(devices);
+                }
             }
             if (OperatingSystem.IsAndroid())
             {
@@ -31,43 +44,6 @@ namespace MediaDevices.IO.Wave
             }
             return devices.ToArray();
         }
-
-
-
-        #region IDisposable
-
-        private bool disposedValue;
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    // TODO: dispose managed state (managed objects)
-                }
-
-                // TODO: free unmanaged resources (unmanaged objects) and override finalizer
-                // TODO: set large fields to null
-                disposedValue = true;
-            }
-        }
-
-        // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
-        // ~MidiInDevice()
-        // {
-        //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-        //     Dispose(disposing: false);
-        // }
-
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
-
-        #endregion
-   
+  
     }
 }

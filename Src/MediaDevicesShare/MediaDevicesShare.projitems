@@ -9,24 +9,44 @@
     <Import_RootNamespace>MediaDevices</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)IO\Wave\Internal\ASIA\" />
-    <Folder Include="$(MSBuildThisFileDirectory)IO\Wave\Internal\DirectSound\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)IO\DeviceInfo.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\MIDI\Internal\WinMM\MidiInWinMMDevice.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\MIDI\Internal\WinMM\MidiOutWinMMDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\ASIO\ASIODevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\ASIO\COMInterface\AsioDriver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectSound\COMInterface\IDirectSound.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectSound\COMInterface\IDirectSound8.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectSound\DirectX.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\WASAPI\COMInterface\Blob.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\WASAPI\COMInterface\ClsCtx.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\WASAPI\COMInterface\DataFlow.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\WASAPI\COMInterface\DeviceState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\WASAPI\COMInterface\IMMDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\WASAPI\COMInterface\IMMDeviceCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\WASAPI\COMInterface\IMMDeviceEnumerator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\WASAPI\COMInterface\IMMNotificationClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\WASAPI\COMInterface\IPropertyStore.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\WASAPI\COMInterface\PropertyKey.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\WASAPI\COMInterface\PropVariant.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\WASAPI\COMInterface\PropVariantNative.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\WASAPI\COMInterface\Role.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\WASAPI\COMInterface\StorageAccessMode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\WASAPI\WavWASAPIDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\WinMM\WinMMImport.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\SoundMediaDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\ASIO\WaveInASIODevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\ASIO\WaveOutASIODevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\Device.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectSound\WaveInDirectSoundDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectSound\WaveOutDirectSoundDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\WinMM\MidiInWinMMDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\WinMM\MidiOutWinMMDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\WinMM\MMVersion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\MIDI\MidiDeviceTypes.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\MIDI\MidiInDevice.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\MIDI\MidiInDeviceInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\MIDI\MidiOutDevice.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\MIDI\MidiOutDeviceInfo.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\Wave\Internal\WinMM\WaveInWinMMDevice.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\Wave\Internal\WinMM\WaveOutWinMMDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\WinMM\WaveInWinMMDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\WinMM\WaveOutWinMMDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\SoundInterfaceType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\Wave\WaveDeviceTypes.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\Wave\WaveInDevice.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\Wave\WaveInDeviceInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\Wave\WaveOutDevice.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\Wave\WaveOutDeviceInfo.cs" />
   </ItemGroup>
 </Project>
