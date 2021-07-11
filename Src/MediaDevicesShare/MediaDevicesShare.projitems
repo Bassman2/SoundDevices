@@ -9,11 +9,15 @@
     <Import_RootNamespace>MediaDevices</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\JACK\Class1.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\ASIO\ASIODevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\ASIO\COMInterface\AsioDriver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectMusic\COMInterface\IDirectMusic.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectMusic\COMInterface\IDirectMusic8.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectSound\COMInterface\IDirectSound.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectSound\COMInterface\IDirectSound8.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectSound\DirectX.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\OpenSoundSystem\OSSDevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\WASAPI\COMInterface\Blob.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\WASAPI\COMInterface\ClsCtx.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\WASAPI\COMInterface\DataFlow.cs" />
@@ -48,5 +52,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)IO\Wave\WaveDeviceTypes.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\Wave\WaveInDevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\Wave\WaveOutDevice.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)IO\Internal\JACK\" />
   </ItemGroup>
 </Project>

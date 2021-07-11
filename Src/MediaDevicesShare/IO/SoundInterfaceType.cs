@@ -6,8 +6,16 @@ namespace MediaDevices.IO
 {
     public enum SoundInterfaceType
     {
+        // Windows
         WinMM,
         ASIO,
-        DirectSound
+        DirectSound,
+        
+        // Linux
+
+        /// <summary>
+        /// JACK Audio Connection Kit
+        /// </summary>
+        JACK
     }
 }
