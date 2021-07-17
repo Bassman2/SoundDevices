@@ -10,8 +10,8 @@ namespace MediaDevices.IO.Internal.ASIO
     internal class WaveInASIODevice : WaveInDevice
     {
         private Guid devieId;
-        private IntPtr pAsioComObject;
-        private IntPtr pinnedcallbacks;
+        //private IntPtr pAsioComObject;
+        //private IntPtr pinnedcallbacks;
         //private AsioDriverVTable asioDriverVTable;
 
         public static void AddInternalDevices(List<WaveInDevice> devices)
@@ -27,7 +27,7 @@ namespace MediaDevices.IO.Internal.ASIO
                     var guid = new Guid(regSubKey.GetValue("CLSID").ToString());
                     string description = regSubKey.GetValue("Description").ToString();
                     //return GetAsioDriverByGuid(new Guid(guid));
-
+                    new ASIODevice().CreateDevice(guid);
                     devices.Add(new WaveInASIODevice() { devieId = guid, Name = name, InterfaceType = SoundInterfaceType.ASIO, Description = description });
                 }
                 regKey.Close();

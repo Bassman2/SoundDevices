@@ -1,0 +1,23 @@
+﻿
+https://docs.microsoft.com/de-de/dotnet/standard/native-interop/customize-struct-marshaling
+
+
+DWORD			uint
+GUID
+WCHAR [NUM]
+
+Bool			bool		[MarshalAs(UnmanagedType.Bool)]
+BOOL			bool		[MarshalAs(UnmanagedType.U1)]
+char [NUM]      string      [MarshalAs(UnmanagedType.ByValTStr, SizeConst = num)]
+       
+       
+ASIo
+ASIOBool        int;
+
+
+
+C               C#
+char            ubyte
+short           short
+long            int
+long long       long 

@@ -8,6 +8,7 @@ namespace MediaDevices.IO.MIDI
     public enum MidiDeviceTypes
     {
         All = 0xffff,
-        WinMM = 0x0001
+        WinMM = 0x0001,
+        DirectMusic = 0x0002
     }
 }

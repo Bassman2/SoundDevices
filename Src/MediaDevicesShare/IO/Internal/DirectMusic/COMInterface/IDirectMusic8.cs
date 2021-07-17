@@ -1,45 +1,52 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace MediaDevices.IO.Internal.DirectMusic.COMInterface
 {
     [ComImport]
-    [Guid("636b9f10-0c7d-11d1-95b2-0020afdc7421")]
-    internal class DirectMusic8 : IDirectMusic8
-    {
-    }
-
-    [ComImport]
-    [Guid("A95664D2-9614-4F35-A746-DE8DB63617E6")]
+    [Guid("d2ac2878-b39b-11d1-8704-00600893b1bd")]
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     internal interface IDirectMusic8
     {
+        void EnumPort(
+            uint dwIndex,
+            LPDMUS_PORTCAPS pPortCaps);
 
-        /*  IDirectMusic 
-        STDMETHOD(EnumPort)             (THIS_ DWORD dwIndex,
-                                               LPDMUS_PORTCAPS pPortCaps) PURE;
-    STDMETHOD(CreateMusicBuffer)    (THIS_ LPDMUS_BUFFERDESC pBufferDesc,
-                                           LPDIRECTMUSICBUFFER *ppBuffer,
-                                           LPUNKNOWN pUnkOuter) PURE;
-    STDMETHOD(CreatePort)           (THIS_ REFCLSID rclsidPort,
-                                           LPDMUS_PORTPARAMS pPortParams,
-                                           LPDIRECTMUSICPORT* ppPort,
-                                           LPUNKNOWN pUnkOuter) PURE;
-    STDMETHOD(EnumMasterClock)      (THIS_ DWORD dwIndex,
-                                           LPDMUS_CLOCKINFO lpClockInfo) PURE;
-    STDMETHOD(GetMasterClock)       (THIS_ LPGUID pguidClock,
-                                           IReferenceClock **ppReferenceClock) PURE;
-    STDMETHOD(SetMasterClock)       (THIS_ REFGUID rguidClock) PURE;
-    STDMETHOD(Activate)             (THIS_ BOOL fEnable) PURE;
-    STDMETHOD(GetDefaultPort)       (THIS_ LPGUID pguidPort) PURE;
-    STDMETHOD(SetDirectSound)       (THIS_ LPDIRECTSOUND pDirectSound,
-                      /*  IDirectMusic8 
-        STDMETHOD(SetExternalMasterClock)
-                                    (THIS_ IReferenceClock * pClock) PURE;                     HWND hWnd) PURE;
-        */
+        void CreateMusicBuffer(
+            LPDMUS_BUFFERDESC pBufferDesc,
+            ppBuffe r,
+            LPUNKNOWN pUnkOuter);
 
+        void CreatePort(
+            REFCLSID rclsidPort,
+            LPDMUS_PORTPARAMS pPortParams,
+            ppPor t,
+            LPUNKNOWN pUnkOuter);
+
+        void EnumMasterClock(
+            uint dwIndex,
+            LPDMUS_CLOCKINFO lpClockInfo);
+
+        void GetMasterClock(
+            ref Guid pguidClock,
+            ppReferenceCloc k);
+
+        void SetMasterClock(
+            ref Guid rguidClock);
+
+        void Activate(
+            [MarshalAs(UnmanagedType.Bool)]
+            bool fEnable);
+
+        void GetDefaultPort(
+            ref Guid pguidPort);
+
+        void SetDirectSound(
+            LPDIRECTSOUND pDirectSound,
+            HWND hWnd);
+
+        void SetExternalMasterClock(
+            pCloc k);
 
     }
 }
