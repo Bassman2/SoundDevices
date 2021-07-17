@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace MediaDevices.IO.Internal.DirectMusic.COMInterface
 {
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-    internal struct _DMUS_PORTPARAMS8
+    internal struct DMUS_PORTPARAMS7
     {
         uint dwSize;
         uint dwValidParams;
@@ -15,6 +15,5 @@ namespace MediaDevices.IO.Internal.DirectMusic.COMInterface
         uint dwEffectFlags;
         [MarshalAs(UnmanagedType.Bool)]
         bool fShare;
-        uint dwFeatures;
     }
 }

@@ -10,22 +10,22 @@ namespace MediaDevices.IO.Internal.DirectMusic.COMInterface
     {
         void EnumPort(
             uint dwIndex,
-            LPDMUS_PORTCAPS pPortCaps);
+            ref DMUS_PORTCAPS pPortCaps);
 
         void CreateMusicBuffer(
-            LPDMUS_BUFFERDESC pBufferDesc,
+            ref DMUS_BUFFERDESC pBufferDesc,
             ppBuffe r,
-            LPUNKNOWN pUnkOuter);
+            IntPtr pUnkOuter);
 
         void CreatePort(
-            REFCLSID rclsidPort,
-            LPDMUS_PORTPARAMS pPortParams,
+            ref Guid rclsidPort,
+            ref DMUS_PORTPARAMS pPortParams,
             ppPor t,
-            LPUNKNOWN pUnkOuter);
+            IntPtr pUnkOuter);
 
         void EnumMasterClock(
             uint dwIndex,
-            LPDMUS_CLOCKINFO lpClockInfo);
+            ref DMUS_CLOCKINFO lpClockInfo);
 
         void GetMasterClock(
             ref Guid pguidClock,
@@ -42,8 +42,8 @@ namespace MediaDevices.IO.Internal.DirectMusic.COMInterface
             ref Guid pguidPort);
 
         void SetDirectSound(
-            LPDIRECTSOUND pDirectSound,
-            HWND hWnd);
+            ref DIRECTSOUND pDirectSound,
+            IntPtr hWnd);
 
     }
 }

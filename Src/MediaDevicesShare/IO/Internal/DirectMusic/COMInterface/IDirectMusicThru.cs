@@ -13,7 +13,7 @@ namespace MediaDevices.IO.Internal.DirectMusic.COMInterface
             uint dwSourceChannel,
             uint dwDestinationChannelGroup,
             uint dwDestinationChannel,
-            LPDIRECTMUSICPORT pDestinationPort);
+            ref DIRECTMUSICPORT pDestinationPort);
 
     }
 }

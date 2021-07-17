@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace MediaDevices.IO.Internal.DirectMusic.COMInterface
 {
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-    internal struct _DMUS_CLOCKINFO8
+    internal struct DMUS_CLOCKINFO8
     {
         uint dwSize;
         DMUS_CLOCKTYPE ctType;

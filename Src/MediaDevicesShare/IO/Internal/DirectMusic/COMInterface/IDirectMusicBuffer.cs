@@ -11,7 +11,7 @@ namespace MediaDevices.IO.Internal.DirectMusic.COMInterface
         void Flush();
 
         void TotalTime(
-            LPREFERENCE_TIME prtTime);
+            ref REFERENCE_TIME prtTime);
 
         void PackStructured(
             REFERENCE_TIME rt,
@@ -22,25 +22,25 @@ namespace MediaDevices.IO.Internal.DirectMusic.COMInterface
             REFERENCE_TIME rt,
             uint dwChannelGroup,
             uint cb,
-            LPBYTE lpb);
+            ref BYTE lpb);
 
         void ResetReadPtr();
 
         void GetNextEvent(
-            LPREFERENCE_TIME prt,
-            LPDWORD pdwChannelGroup,
-            LPDWORD pdwLength,
+            ref REFERENCE_TIME prt,
+            ref DWORD pdwChannelGroup,
+            ref DWORD pdwLength,
             ppDat a);
 
         void GetRawBufferPtr(
-            LPREFERENCE_TIME prt,
-            LPREFERENCE_TIME prt);
+            ref REFERENCE_TIME prt,
+            ref REFERENCE_TIME prt);
 
         void GetUsedBytes(
-            LPDWORD pcb);
+            ref DWORD pcb);
 
         void GetMaxBytes(
-            LPDWORD pcb);
+            ref DWORD pcb);
 
         void GetBufferFormat(
             ref Guid pGuidFormat);

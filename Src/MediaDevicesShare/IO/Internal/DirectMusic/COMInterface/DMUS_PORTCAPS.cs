@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace MediaDevices.IO.Internal.DirectMusic.COMInterface
 {
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-    internal struct _DMUS_PORTCAPS
+    internal struct DMUS_PORTCAPS
     {
         uint dwSize;
         uint dwFlags;

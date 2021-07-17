@@ -31,13 +31,13 @@ namespace MediaDevices.IO.Internal.DirectMusic.COMInterface
             THI S);
 
         void PlayBuffer(
-            LPDIRECTMUSICBUFFER pBuffer);
+            ref DIRECTMUSICBUFFER pBuffer);
 
         void SetReadNotificationHandle(
             IntPtr hEvent);
 
         void Read(
-            LPDIRECTMUSICBUFFER pBuffer);
+            ref DIRECTMUSICBUFFER pBuffer);
 
         void DownloadInstrument(
             ppDownloadedInstrumen t,
@@ -48,27 +48,27 @@ namespace MediaDevices.IO.Internal.DirectMusic.COMInterface
             ppCloc k);
 
         void GetRunningStats(
-            LPDMUS_SYNTHSTATS pStats);
+            ref DMUS_SYNTHSTATS pStats);
 
         void Compact();
 
         void GetCaps(
-            LPDMUS_PORTCAPS pPortCaps);
+            ref DMUS_PORTCAPS pPortCaps);
 
         void DeviceIoControl(
             uint dwIoControlCode,
-            LPVOID lpInBuffer,
+            ref VOID lpInBuffer,
             uint nInBufferSize,
-            LPVOID lpOutBuffer,
+            ref VOID lpOutBuffer,
             uint nOutBufferSize,
-            LPDWORD lpBytesReturned,
-            LPOVERLAPPED lpOverlapped);
+            ref DWORD lpBytesReturned,
+            ref OVERLAPPED lpOverlapped);
 
         void SetNumChannelGroups(
             uint dwChannelGroups);
 
         void GetNumChannelGroups(
-            LPDWORD pdwChannelGroups);
+            ref DWORD pdwChannelGroups);
 
         void Activate(
             [MarshalAs(UnmanagedType.Bool)]
@@ -77,14 +77,14 @@ namespace MediaDevices.IO.Internal.DirectMusic.COMInterface
         void SetChannelPriority(
             uint dwChannelGroup,
             uint dwChannelGroup,
-            LPDWORD pdwPriority,
+            ref DWORD pdwPriority,
             uint dwChannelGroup);
 
         void SetDirectSound(
-            LPDIRECTSOUND pDirectSound,
-            LPWAVEFORMATEX pWaveFormatEx,
-            LPDWORD pdwBufferSize,
-            LPWAVEFORMATEX pWaveFormatEx);
+            ref DIRECTSOUND pDirectSound,
+            ref WAVEFORMATEX pWaveFormatEx,
+            ref DWORD pdwBufferSize,
+            ref WAVEFORMATEX pWaveFormatEx);
 
     }
 }

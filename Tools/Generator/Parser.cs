@@ -188,9 +188,9 @@ namespace Generator
             match = Regex.Match(line, @"\s*typedef\s*struct\s*(?<name>[A-Z0-9_]+)\s*$", RegexOptions.IgnoreCase);
             if (match.Success)
             {
-                string name = match.Groups["name"].Value;
-                this.currentStruct = new() { Name = name };
-                this.Structs.Add(name, this.currentStruct);
+                //string name = match.Groups["name"].Value;
+                this.currentStruct = new(); //{ Name = name };
+                //this.Structs.Add(name, this.currentStruct);
                 this.parserState = ParserState.Struct;
             }
 
@@ -299,14 +299,19 @@ namespace Generator
 
         private void ParseStruct(string line)
         {
-            // reset on }
-            if (Regex.IsMatch(line, @"\s*}"))
+            // end of struct
+            var match = Regex.Match(line, @"\s*}\s*(?<name>[A-Z0-9_]+)\s*;");
+            if (match.Success)
             {
+                string name = match.Groups["name"].Value;
+                this.currentStruct.Name = name;
+                this.Structs.Add(name, this.currentStruct);
                 this.parserState = ParserState.NoState;
                 return;
             }
 
-            var match = Regex.Match(line, @"\s*(?<type>[A-Z0-9_]+)\s*(?<name>[A-Z0-9_]+)\s*;", RegexOptions.IgnoreCase);
+            // parameter
+            match = Regex.Match(line, @"\s*(?<type>[A-Z0-9_]+)\s*(?<name>[A-Z0-9_]+)\s*;", RegexOptions.IgnoreCase);
             if (match.Success)
             {
                 this.currentStruct.Params.Add(CreateParameter(match));
@@ -359,7 +364,9 @@ namespace Generator
             return type switch
             {
                 "void*" => new Parameter() { Name = name, Type = "IntPtr" },
+                "LPUNKNOWN" => new Parameter() { Name = name, Type = "IntPtr" },
                 "HANDLE" => new Parameter() { Name = name, Type = "IntPtr" },
+                "HWND" => new Parameter() { Name = name, Type = "IntPtr" },
                 "unsigned char" => new Parameter() { Name = name, Type = "Byte" },
                 "BYTE" => new Parameter() { Name = name, Type = "Byte" },
                 "short" => new Parameter() { Name = name, Type = "short" },
@@ -387,9 +394,10 @@ namespace Generator
                 "DOUBLE" => new Parameter() { Name = name, Type = "double" },
                 "GUID" => new Parameter() { Name = name, Type = "Guid" },
                 "REFGUID" => new Parameter() { Name = name, Type = "ref Guid" },
+                "REFCLSID" => new Parameter() { Name = name, Type = "ref Guid" },
                 "LPGUID" => new Parameter() { Name = name, Type = "ref Guid" },
                 "BOOL" => new Parameter() { Name = name, Type = "bool", Attr = "[MarshalAs(UnmanagedType.Bool)]" },
-                _ => new Parameter() { Name = name, Type = type },
+                _ => new Parameter() { Name = name, Type = type.StartsWith("LP") ? "ref " + type[2..] : type },
             };
         }
 
