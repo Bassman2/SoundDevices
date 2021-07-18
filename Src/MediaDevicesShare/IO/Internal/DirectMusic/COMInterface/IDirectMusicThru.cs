@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace MediaDevices.IO.Internal.DirectMusic.COMInterface
 {
     [ComImport]
-    [Guid("d2ac2878-b39b-11d1-8704-00600893b1bd")]
+    [Guid("ced153e7-3606-11d2-b9f9-0000f875ac12")]
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     internal interface IDirectMusicThru
     {
@@ -13,7 +13,7 @@ namespace MediaDevices.IO.Internal.DirectMusic.COMInterface
             uint dwSourceChannel,
             uint dwDestinationChannelGroup,
             uint dwDestinationChannel,
-            ref DIRECTMUSICPORT pDestinationPort);
+            ref IDirectMusicPort pDestinationPort);
 
     }
 }

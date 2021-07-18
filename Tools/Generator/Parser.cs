@@ -15,6 +15,7 @@ namespace Generator
         private ParserState parserState = ParserState.NoState;
 
         private const string guidreg = @"0x(?<a>[a-fA-F0-9)]+),\s*0x(?<b>[a-fA-F0-9)]+),\s*0x(?<c>[a-fA-F0-9)]+),\s*0x(?<d>[a-fA-F0-9)]+),\s*0x(?<e>[a-fA-F0-9)]+),\s*0x(?<f>[a-fA-F0-9)]+),\s*0x(?<g>[a-fA-F0-9)]+),\s*0x(?<h>[a-fA-F0-9)]+),\s*0x(?<i>[a-fA-F0-9)]+),\s*0x(?<j>[a-fA-F0-9)]+),\s*0x(?<k>[a-fA-F0-9)]+)";
+        private const string parareg = @"(?<type>[A-Z0-9_]+)\s*(?<ptr>[\*]*)\s*(?<name>[A-Z0-9_]+)";
 
         public class InterfaceData
         {
@@ -76,6 +77,7 @@ namespace Generator
         public Dictionary<string, InterfaceData> Interfaces { get; }
         public Dictionary<string, StructData> Structs { get; }
         public Dictionary<string, EnumData> Enums { get; }
+        public Dictionary<string, string> TypeDefs { get; }
 
         private InterfaceData currentInterface;
         private StructData currentStruct;
@@ -92,6 +94,7 @@ namespace Generator
             this.Interfaces = new();
             this.Structs = new();
             this.Enums = new();
+            this.TypeDefs = new();
         }
 
         public void Parse(string file)
@@ -106,7 +109,7 @@ namespace Generator
                     {
                         this.lineNum++;
                         string line = reader.ReadLine();
-                        if (lineNum == 389)
+                        if (lineNum == 360)
                         {
 
                         }
@@ -201,6 +204,23 @@ namespace Generator
                 this.currentEnum = new();
                 this.parserState = ParserState.Enum;
             }
+
+            // typedef
+            match = Regex.Match(line, @"\s*typedef\s*" + parareg + @"\s*;", RegexOptions.IgnoreCase);
+            if (match.Success)
+            {
+                string type = match.Groups["type"].Value;
+                string ptr = match.Groups["ptr"].Value;
+                string name = match.Groups["name"].Value;
+                //if (!this.TypeDefs.TryGetValue(name, out string str))
+                //{
+                    this.TypeDefs[name] = string.IsNullOrEmpty(ptr) ? type : "ref " + type;
+                //}
+                //else
+                //{
+
+                //}
+            }
         }
 
         private void ParseInterface(string line)
@@ -222,7 +242,7 @@ namespace Generator
             }
 
             // one param method
-            match = Regex.Match(line, @"\s*STDMETHOD\((?<func>[A-Z0-9_]+)\)\s*\(THIS_\s*(?<type>[A-Z0-9_]+)\s*(?<name>[A-Z0-9_]+)\s*\)\s*PURE\s*;", RegexOptions.IgnoreCase);
+            match = Regex.Match(line, @"\s*STDMETHOD\((?<func>[A-Z0-9_]+)\)\s*\(THIS_\s*" + parareg + @"\s*\)\s*PURE\s*;", RegexOptions.IgnoreCase);
             if (match.Success)
             {
                 string func = match.Groups["func"].Value;
@@ -234,7 +254,7 @@ namespace Generator
             }
 
             // multi param method
-            match = Regex.Match(line, @"\s*STDMETHOD\((?<func>[A-Z0-9_]+)\)\s*\(THIS_\s*(?<type>[A-Z0-9_]+)\s*(?<name>[A-Z0-9_]+)\s*,", RegexOptions.IgnoreCase);
+            match = Regex.Match(line, @"\s*STDMETHOD\((?<func>[A-Z0-9_]+)\)\s*\(THIS_\s*" + parareg + @"\s*,", RegexOptions.IgnoreCase);
             if (match.Success)
             {
                 string func = match.Groups["func"].Value;
@@ -266,14 +286,14 @@ namespace Generator
         private void ParseInterfaceParam(string line)
         {
             // mid param
-            var match = Regex.Match(line, @"\s*(?<type>[A-Z0-9_]+)\s*(?<name>[A-Z0-9_]+)\s*,", RegexOptions.IgnoreCase);
+            var match = Regex.Match(line, @"\s*" + parareg + @"\s*,", RegexOptions.IgnoreCase);
             if (match.Success)
             {
                 this.currentMethod.Params.Add(CreateParameter(match));
             }
 
             // end param
-            match = Regex.Match(line, @"\s*(?<type>[A-Z0-9_]+)\s*(?<name>[A-Z0-9_]+)\s*\)\s*PURE\s*;", RegexOptions.IgnoreCase);
+            match = Regex.Match(line, @"\s*" + parareg + @"\s*\)\s*PURE\s*;", RegexOptions.IgnoreCase);
             if (match.Success)
             {
                 this.currentMethod.Params.Add(CreateParameter(match));
@@ -282,7 +302,7 @@ namespace Generator
             }
 
             // new line single param
-            match = Regex.Match(line, @"\s*\(THIS_\s*(?<type>[A-Z0-9_]+)\s*(?<name>[A-Z0-9_]+)\s*\)\s*PURE\s*;", RegexOptions.IgnoreCase);
+            match = Regex.Match(line, @"\s*\(THIS_\s*" + parareg + @"\s*\)\s*PURE\s*;", RegexOptions.IgnoreCase);
             if (match.Success)
             {
                 this.currentMethod.Params.Add(CreateParameter(match));
@@ -290,7 +310,7 @@ namespace Generator
             }
 
             // new line first param
-            match = Regex.Match(line, @"\s*\(THIS_\s*(?<type>[A-Z0-9_]+)\s*(?<name>[A-Z0-9_]+)\s*,", RegexOptions.IgnoreCase);
+            match = Regex.Match(line, @"\s*\(THIS_\s*" + parareg + @"\s*,", RegexOptions.IgnoreCase);
             if (match.Success)
             {
                 this.currentMethod.Params.Add(CreateParameter(match));
@@ -311,7 +331,7 @@ namespace Generator
             }
 
             // parameter
-            match = Regex.Match(line, @"\s*(?<type>[A-Z0-9_]+)\s*(?<name>[A-Z0-9_]+)\s*;", RegexOptions.IgnoreCase);
+            match = Regex.Match(line, @"\s*" + parareg + @"\s*;", RegexOptions.IgnoreCase);
             if (match.Success)
             {
                 this.currentStruct.Params.Add(CreateParameter(match));
@@ -360,6 +380,7 @@ namespace Generator
         private Parameter CreateParameter(Match match)
         {
             string type = match.Groups["type"].Value;
+            string ptr = match.Groups["ptr"].Value;
             string name = match.Groups["name"].Value;
             return type switch
             {
@@ -397,8 +418,23 @@ namespace Generator
                 "REFCLSID" => new Parameter() { Name = name, Type = "ref Guid" },
                 "LPGUID" => new Parameter() { Name = name, Type = "ref Guid" },
                 "BOOL" => new Parameter() { Name = name, Type = "bool", Attr = "[MarshalAs(UnmanagedType.Bool)]" },
-                _ => new Parameter() { Name = name, Type = type.StartsWith("LP") ? "ref " + type[2..] : type },
+                _ => CreateParameter(type, ptr, name)  
             };
+        }
+
+        private Parameter CreateParameter(string type, string ptr, string name)
+        {
+            Parameter parameter = new Parameter() { Name = name, Type = type };
+            if (this.TypeDefs.TryGetValue(type, out string val))
+            {
+                parameter.Type = string.IsNullOrEmpty(ptr) ? val : "ref " + val;
+            }
+            else
+            {
+                parameter.Type = type.StartsWith("LP") ? "ref " + type[2..] : type;
+            }
+            return parameter;
+
         }
 
         private enum ParserState

@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace MediaDevices.IO.Internal.DirectMusic.COMInterface
 {
     [ComImport]
-    [Guid("d2ac2878-b39b-11d1-8704-00600893b1bd")]
+    [Guid("2d3629f7-813d-4939-8508-f05c6b75fd97")]
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     internal interface IDirectMusic8
     {
@@ -14,13 +14,13 @@ namespace MediaDevices.IO.Internal.DirectMusic.COMInterface
 
         void CreateMusicBuffer(
             ref DMUS_BUFFERDESC pBufferDesc,
-            ppBuffe r,
+            ref ref IDirectMusicBuffer ppBuffer,
             IntPtr pUnkOuter);
 
         void CreatePort(
             ref Guid rclsidPort,
             ref DMUS_PORTPARAMS pPortParams,
-            ppPor t,
+            ref ref IDirectMusicPort ppPort,
             IntPtr pUnkOuter);
 
         void EnumMasterClock(
@@ -29,7 +29,7 @@ namespace MediaDevices.IO.Internal.DirectMusic.COMInterface
 
         void GetMasterClock(
             ref Guid pguidClock,
-            ppReferenceCloc k);
+            IReferenceClock ppReferenceClock);
 
         void SetMasterClock(
             ref Guid rguidClock);
@@ -46,7 +46,8 @@ namespace MediaDevices.IO.Internal.DirectMusic.COMInterface
             IntPtr hWnd);
 
         void SetExternalMasterClock(
-            pCloc k);
+            IReferenceClock pClock,
+            IReferenceClock pClock);
 
     }
 }

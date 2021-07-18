@@ -30,10 +30,12 @@ namespace MediaDevices.IO.Internal.DirectMusic.COMInterface
             ref REFERENCE_TIME prt,
             ref DWORD pdwChannelGroup,
             ref DWORD pdwLength,
-            ppDat a);
+            ref BYTE ppData);
 
         void GetRawBufferPtr(
-            ref REFERENCE_TIME prt,
+            ref BYTE ppData);
+
+        void GetStartTime(
             ref REFERENCE_TIME prt);
 
         void GetUsedBytes(

@@ -4,22 +4,24 @@ using System.Runtime.InteropServices;
 namespace MediaDevices.IO.Internal.DirectMusic.COMInterface
 {
     [ComImport]
-    [Guid("d2ac2878-b39b-11d1-8704-00600893b1bd")]
+    [Guid("56a86897-0ad4-11ce-b03a-0020af0ba770")]
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     internal interface IReferenceClock
     {
         void GetTime(
-            REFERENCE_TIME baseTime,
+            REFERENCE_TIME pTime);
+
+        void AdviseTime(
             REFERENCE_TIME baseTime,
             REFERENCE_TIME streamTime,
             IntPtr hEvent,
-            pdwAdviseCooki e);
+            uint pdwAdviseCookie);
 
         void AdvisePeriodic(
             REFERENCE_TIME startTime,
             REFERENCE_TIME periodTime,
             IntPtr hSemaphore,
-            pdwAdviseCooki e);
+            uint pdwAdviseCookie);
 
         void Unadvise(
             uint dwAdviseCookie);

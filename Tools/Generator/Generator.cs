@@ -40,8 +40,20 @@ namespace Generator
                     sw.WriteLine();
                     sw.WriteLine($"namespace {nameSpace}");
                     sw.WriteLine("{");
-                    sw.WriteLine("    [ComImport]");
-                    sw.WriteLine("    [Guid(\"d2ac2878-b39b-11d1-8704-00600893b1bd\")]");
+                    if (parser.ClassIDs.TryGetValue(val.Name[1..], out Guid clsid))
+                    {
+                        sw.WriteLine("    [ComImport]");
+                        sw.WriteLine($"    [Guid(\"{clsid.ToString()}\")]");
+                        sw.WriteLine($"    internal class {val.Name[1..]}");
+                        sw.WriteLine("    {");
+                        sw.WriteLine("    }");
+                        sw.WriteLine();
+                    }
+                    if (parser.InterfaceIDs.TryGetValue(val.Name, out Guid iid))
+                    {
+                        sw.WriteLine("    [ComImport]");
+                        sw.WriteLine($"    [Guid(\"{iid.ToString()}\")]");
+                    }
                     sw.WriteLine("    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]");
                     sw.WriteLine($"    internal interface {val.Name}");
                     sw.WriteLine("    {");
