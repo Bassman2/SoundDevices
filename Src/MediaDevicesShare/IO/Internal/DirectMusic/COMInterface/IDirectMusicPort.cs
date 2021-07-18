@@ -39,18 +39,18 @@ namespace MediaDevices.IO.Internal.DirectMusic.COMInterface
 
         void DeviceIoControl(
             uint dwIoControlCode,
-            ref VOID lpInBuffer,
+            IntPtr lpInBuffer,
             uint nInBufferSize,
-            ref VOID lpOutBuffer,
+            IntPtr lpOutBuffer,
             uint nOutBufferSize,
-            ref DWORD lpBytesReturned,
+            ref uint lpBytesReturned,
             ref OVERLAPPED lpOverlapped);
 
         void SetNumChannelGroups(
             uint dwChannelGroups);
 
         void GetNumChannelGroups(
-            ref DWORD pdwChannelGroups);
+            ref uint pdwChannelGroups);
 
         void Activate(
             [MarshalAs(UnmanagedType.Bool)]
@@ -59,14 +59,17 @@ namespace MediaDevices.IO.Internal.DirectMusic.COMInterface
         void SetChannelPriority(
             uint dwChannelGroup,
             uint dwChannelGroup,
-            ref DWORD pdwPriority,
-            uint dwChannelGroup);
-
-        void SetDirectSound(
             ref DIRECTSOUND pDirectSound,
             ref WAVEFORMATEX pWaveFormatEx,
-            ref DWORD pdwBufferSize,
-            ref WAVEFORMATEX pWaveFormatEx);
+            IDirectMusicThr u,
+            THIS_ REFIID,
+            ULON G,
+            ULON G,
+            uint dwSourceChannelGroup,
+            uint dwSourceChannel,
+            uint dwDestinationChannelGroup,
+            uint dwDestinationChannel,
+            ref IDirectMusicPort pDestinationPort);
 
     }
 }

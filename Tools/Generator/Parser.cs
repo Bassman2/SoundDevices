@@ -15,6 +15,7 @@ namespace Generator
         private ParserState parserState = ParserState.NoState;
 
         private const string guidreg = @"0x(?<a>[a-fA-F0-9)]+),\s*0x(?<b>[a-fA-F0-9)]+),\s*0x(?<c>[a-fA-F0-9)]+),\s*0x(?<d>[a-fA-F0-9)]+),\s*0x(?<e>[a-fA-F0-9)]+),\s*0x(?<f>[a-fA-F0-9)]+),\s*0x(?<g>[a-fA-F0-9)]+),\s*0x(?<h>[a-fA-F0-9)]+),\s*0x(?<i>[a-fA-F0-9)]+),\s*0x(?<j>[a-fA-F0-9)]+),\s*0x(?<k>[a-fA-F0-9)]+)";
+        private const string namereg = @"(?<func>[A-Z0-9_]+)";
         private const string parareg = @"(?<type>[A-Z0-9_]+)\s*(?<ptr>[\*]*)\s*(?<name>[A-Z0-9_]+)";
 
         public class InterfaceData
@@ -109,7 +110,7 @@ namespace Generator
                     {
                         this.lineNum++;
                         string line = reader.ReadLine();
-                        if (lineNum == 360)
+                        if (lineNum == 669)
                         {
 
                         }
@@ -121,6 +122,7 @@ namespace Generator
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
+                Debugger.Break();
             }
         }
 
@@ -157,6 +159,7 @@ namespace Generator
                 string name = match.Groups["name"].Value;
                 Guid value = GetGuid(match);
                 this.ClassIDs.Add(name, value);
+                return;
             }
 
             // Interface IDs
@@ -166,6 +169,7 @@ namespace Generator
                 string name = match.Groups["name"].Value;
                 Guid value = GetGuid(match);
                 this.InterfaceIDs.Add(name, value);
+                return;
             }
 
             // GUID
@@ -175,6 +179,7 @@ namespace Generator
                 string name = match.Groups["name"].Value;
                 Guid value = GetGuid(match);
                 this.GUIDs.Add(name, value);
+                return;
             }
 
             // IUnknown interface
@@ -185,16 +190,16 @@ namespace Generator
                 this.currentInterface = new() { Name = name };
                 this.Interfaces.Add(name, this.currentInterface);
                 this.parserState = ParserState.Interface;
+                return;
             }
 
             // struct
             match = Regex.Match(line, @"\s*typedef\s*struct\s*(?<name>[A-Z0-9_]+)\s*$", RegexOptions.IgnoreCase);
             if (match.Success)
             {
-                //string name = match.Groups["name"].Value;
-                this.currentStruct = new(); //{ Name = name };
-                //this.Structs.Add(name, this.currentStruct);
+                this.currentStruct = new(); 
                 this.parserState = ParserState.Struct;
+                return;
             }
 
             // enum
@@ -203,6 +208,7 @@ namespace Generator
             {
                 this.currentEnum = new();
                 this.parserState = ParserState.Enum;
+                return;
             }
 
             // typedef
@@ -212,14 +218,8 @@ namespace Generator
                 string type = match.Groups["type"].Value;
                 string ptr = match.Groups["ptr"].Value;
                 string name = match.Groups["name"].Value;
-                //if (!this.TypeDefs.TryGetValue(name, out string str))
-                //{
-                    this.TypeDefs[name] = string.IsNullOrEmpty(ptr) ? type : "ref " + type;
-                //}
-                //else
-                //{
-
-                //}
+                this.TypeDefs[name] = string.IsNullOrEmpty(ptr) ? type : "ref " + type;
+                return;
             }
         }
 
@@ -254,6 +254,21 @@ namespace Generator
             }
 
             // multi param method
+            if (line.Contains("SetChannelPriority"))
+            {
+                match = Regex.Match(line, @"\s*STDMETHOD\(" + namereg + @"\)\s*\(THIS_\s*(" + parareg + @"\s*,?\s*)*\)\s*PURE\s*;", RegexOptions.IgnoreCase);
+                if (match.Success)
+                {
+                    string func = match.Groups["func"].Value;
+
+                    MethodData method = new() { Name = func };
+                    method.Params.Add(CreateParameter(match));
+                    this.currentInterface.Methods.Add(method);
+                    return;
+                }
+            }
+
+            // multi line param method
             match = Regex.Match(line, @"\s*STDMETHOD\((?<func>[A-Z0-9_]+)\)\s*\(THIS_\s*" + parareg + @"\s*,", RegexOptions.IgnoreCase);
             if (match.Success)
             {
@@ -290,6 +305,7 @@ namespace Generator
             if (match.Success)
             {
                 this.currentMethod.Params.Add(CreateParameter(match));
+                return;
             }
 
             // end param
@@ -299,6 +315,7 @@ namespace Generator
                 this.currentMethod.Params.Add(CreateParameter(match));
 
                 this.parserState = ParserState.Interface;
+                return;
             }
 
             // new line single param
@@ -307,6 +324,7 @@ namespace Generator
             {
                 this.currentMethod.Params.Add(CreateParameter(match));
                 this.parserState = ParserState.Interface;
+                return;
             }
 
             // new line first param
@@ -314,6 +332,7 @@ namespace Generator
             if (match.Success)
             {
                 this.currentMethod.Params.Add(CreateParameter(match));
+                return;
             }
         }
 
@@ -335,6 +354,7 @@ namespace Generator
             if (match.Success)
             {
                 this.currentStruct.Params.Add(CreateParameter(match));
+                return;
             }
         }
 
@@ -358,6 +378,7 @@ namespace Generator
                 string name = match.Groups["name"].Value;
                 string value = match.Groups["value"].Value;
                 this.currentEnum.Vars.Add(new EnumVar() { Name = name, Val = value });
+                return;
             }
         }
 
@@ -385,6 +406,7 @@ namespace Generator
             return type switch
             {
                 "void*" => new Parameter() { Name = name, Type = "IntPtr" },
+                "LPVOID" => new Parameter() { Name = name, Type = "IntPtr" },
                 "LPUNKNOWN" => new Parameter() { Name = name, Type = "IntPtr" },
                 "HANDLE" => new Parameter() { Name = name, Type = "IntPtr" },
                 "HWND" => new Parameter() { Name = name, Type = "IntPtr" },
@@ -403,6 +425,7 @@ namespace Generator
                 "unsigned long" => new Parameter() { Name = name, Type = "uint" },
                 "ULONG" => new Parameter() { Name = name, Type = "uint" },
                 "DWORD" => new Parameter() { Name = name, Type = "uint" },
+                "LPDWORD" => new Parameter() { Name = name, Type = "ref uint" },
                 "LPSTR" => new Parameter() { Name = name, Type = "string" },
                 "LPCSTR" => new Parameter() { Name = name, Type = "string" },
                 "LPWSTR" => new Parameter() { Name = name, Type = "string" },
@@ -427,11 +450,25 @@ namespace Generator
             Parameter parameter = new Parameter() { Name = name, Type = type };
             if (this.TypeDefs.TryGetValue(type, out string val))
             {
-                parameter.Type = string.IsNullOrEmpty(ptr) ? val : "ref " + val;
+                if (val.StartsWith("ref") || string.IsNullOrEmpty(ptr))
+                {
+                    parameter.Type = val;
+                }
+                else
+                {
+                    parameter.Type = "ref " + val;
+                }
             }
             else
             {
-                parameter.Type = type.StartsWith("LP") ? "ref " + type[2..] : type;
+                if (type.StartsWith("LP"))
+                {
+                    parameter.Type = "ref " + type[2..];
+                }
+                else
+                {
+                    parameter.Type = type;
+                }
             }
             return parameter;
 

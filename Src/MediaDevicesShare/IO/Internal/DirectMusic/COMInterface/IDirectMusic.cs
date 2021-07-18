@@ -20,13 +20,13 @@ namespace MediaDevices.IO.Internal.DirectMusic.COMInterface
 
         void CreateMusicBuffer(
             ref DMUS_BUFFERDESC pBufferDesc,
-            ref ref IDirectMusicBuffer ppBuffer,
+            ref IDirectMusicBuffer ppBuffer,
             IntPtr pUnkOuter);
 
         void CreatePort(
             ref Guid rclsidPort,
             ref DMUS_PORTPARAMS pPortParams,
-            ref ref IDirectMusicPort ppPort,
+            ref IDirectMusicPort ppPort,
             IntPtr pUnkOuter);
 
         void EnumMasterClock(

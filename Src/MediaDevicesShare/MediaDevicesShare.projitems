@@ -9,6 +9,7 @@
     <Import_RootNamespace>MediaDevices</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\ALSA\ALSADevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\ASIO\COMInterface\ASIODriverInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\COMDebug\COMDebugger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectMusic\COMInterface\DirectMusic.cs" />
@@ -29,6 +30,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectMusic\COMInterface\IDirectMusicDownload.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectMusic\COMInterface\IDirectMusicDownloadedInstrument.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectMusic\COMInterface\IDirectMusicInstrument.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectMusic\COMInterface\IDirectMusicPort.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectMusic\COMInterface\IDirectMusicPortDownload.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectMusic\COMInterface\IDirectMusicThru.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectMusic\COMInterface\IReferenceClock.cs" />
@@ -79,7 +81,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)IO\Internal\JACK\" />
-    <Folder Include="$(MSBuildThisFileDirectory)IO\Internal\ALSA\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)IO\Internal\Marshal.txt" />

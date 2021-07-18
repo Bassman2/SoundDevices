@@ -28,8 +28,8 @@ namespace MediaDevices.IO.Internal.DirectMusic.COMInterface
 
         void GetNextEvent(
             ref REFERENCE_TIME prt,
-            ref DWORD pdwChannelGroup,
-            ref DWORD pdwLength,
+            ref uint pdwChannelGroup,
+            ref uint pdwLength,
             ref BYTE ppData);
 
         void GetRawBufferPtr(
@@ -39,10 +39,10 @@ namespace MediaDevices.IO.Internal.DirectMusic.COMInterface
             ref REFERENCE_TIME prt);
 
         void GetUsedBytes(
-            ref DWORD pcb);
+            ref uint pcb);
 
         void GetMaxBytes(
-            ref DWORD pcb);
+            ref uint pcb);
 
         void GetBufferFormat(
             ref Guid pGuidFormat);

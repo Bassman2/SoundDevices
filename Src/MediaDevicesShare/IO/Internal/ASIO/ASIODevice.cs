@@ -13,13 +13,14 @@ namespace MediaDevices.IO.Internal.ASIO
     // https://devblogs.microsoft.com/dotnet/improvements-in-native-code-interop-in-net-5-0/
 
     //https://bytes.com/topic/c-sharp/answers/632358-interop-asio-driver-com-object
-    
+
+    [SupportedOSPlatform("Windows")]
     internal class ASIODevice
     {
         private Type comType;
         private dynamic driver;
 
-        [SupportedOSPlatform("Windows")]
+        
         public void CreateDevice(Guid guid)
         {
             try
