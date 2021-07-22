@@ -12,28 +12,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\ALSA\ALSADevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\ASIO\COMInterface\ASIODriverInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\COMDebug\COMDebugger.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectMusic\COMInterface\DirectMusic.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectMusic\COMInterface\DMUS_BUFFERDESC.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectMusic\COMInterface\DMUS_CLOCKINFO7.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectMusic\COMInterface\DMUS_CLOCKINFO8.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectMusic\COMInterface\DMUS_CLOCKTYPE.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectMusic\COMInterface\DMUS_PORTCAPS.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectMusic\COMInterface\DMUS_PORTPARAMS7.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectMusic\COMInterface\DMUS_PORTPARAMS8.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectMusic\COMInterface\DMUS_SYNTHSTATS.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectMusic\COMInterface\DMUS_SYNTHSTATS8.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectMusic\COMInterface\DMUS_WAVES_REVERB_PARAMS.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectMusic\COMInterface\IDirectMusic.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectMusic\COMInterface\IDirectMusic8.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectMusic\COMInterface\IDirectMusicBuffer.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectMusic\COMInterface\IDirectMusicCollection.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectMusic\COMInterface\IDirectMusicDownload.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectMusic\COMInterface\IDirectMusicDownloadedInstrument.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectMusic\COMInterface\IDirectMusicInstrument.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectMusic\COMInterface\IDirectMusicPort.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectMusic\COMInterface\IDirectMusicPortDownload.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectMusic\COMInterface\IDirectMusicThru.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectMusic\COMInterface\IReferenceClock.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectMusic\DirectMusicDevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectMusic\MidiInDirectMusicDevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectMusic\MidiOutDirectMusicDevice.cs" />
@@ -80,6 +58,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)IO\Wave\WaveOutDevice.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)IO\Internal\DirectMusic\COMInterface\" />
     <Folder Include="$(MSBuildThisFileDirectory)IO\Internal\JACK\" />
   </ItemGroup>
   <ItemGroup>
