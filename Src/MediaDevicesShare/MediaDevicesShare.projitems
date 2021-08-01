@@ -12,6 +12,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\ALSA\ALSADevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\ASIO\COMInterface\ASIODriverInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\COMDebug\COMDebugger.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\CoreMidi\CoreMidiDevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectMusic\DirectMusicDevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectMusic\MidiInDirectMusicDevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\Internal\DirectMusic\MidiOutDirectMusicDevice.cs" />

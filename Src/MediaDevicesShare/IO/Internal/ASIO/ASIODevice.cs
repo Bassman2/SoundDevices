@@ -9,6 +9,7 @@ using System.Text;
 
 namespace MediaDevices.IO.Internal.ASIO
 {
+    // TODO: sudo apt-get install libasound2-dev
 
     // https://devblogs.microsoft.com/dotnet/improvements-in-native-code-interop-in-net-5-0/
 
