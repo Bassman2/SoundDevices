@@ -5,13 +5,17 @@ using System.Text;
 
 namespace MediaDevices.IO.Internal.CoreMidi
 {
-    // https://developer.apple.com/documentation/coremidi
+	// https://developer.apple.com/documentation/coremidi
 
-    // https://developer.apple.com/documentation/coremidi/1495164-midigetnumberofdevices
+	// https://developer.apple.com/documentation/coremidi/1495164-midigetnumberofdevices
 
-    // https://apisof.net/catalog/e61ee9a2-d72e-f028-238a-5f135f9bc063
+	// https://apisof.net/catalog/e61ee9a2-d72e-f028-238a-5f135f9bc063
 
-    public class CoreMidiDevice
+	// https://github.com/kjpou1/maccore
+
+	// https://apisof.net/catalog/e61ee9a2-d72e-f028-238a-5f135f9bc063
+
+	public class CoreMidiDevice
     {
         public const string CoreMidiLibrary = "/System/Library/Frameworks/CoreMIDI.framework/CoreMIDI";
 
