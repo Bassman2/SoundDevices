@@ -15,7 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{A31F2E9A-8
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoundDevices50", "Src\SoundDevices50\SoundDevices50.csproj", "{9E7EB2AD-3AE8-479F-9F7F-46E26C946ACD}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MediaDevicesShare", "Src\MediaDevicesShare\MediaDevicesShare.shproj", "{E4986640-5C60-4BA0-A26C-21ECCF109F22}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SoundDevicesShare", "Src\SoundDevicesShare\SoundDevicesShare.shproj", "{E4986640-5C60-4BA0-A26C-21ECCF109F22}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "COMWASAPI", "Test\COMWASAPI\COMWASAPI.csproj", "{57565C8B-7894-4E42-B811-AE5602E97B71}"
 EndProject
@@ -33,9 +33,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinuxPucture50", "Demo\Linu
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Src\MediaDevicesShare\MediaDevicesShare.projitems*{5fd0f74b-de3b-4d15-9e05-cc8cc8eb5947}*SharedItemsImports = 5
-		Src\MediaDevicesShare\MediaDevicesShare.projitems*{9e7eb2ad-3ae8-479f-9f7f-46e26c946acd}*SharedItemsImports = 5
-		Src\MediaDevicesShare\MediaDevicesShare.projitems*{e4986640-5c60-4ba0-a26c-21eccf109f22}*SharedItemsImports = 13
+		Src\SoundDevicesShare\SoundDevicesShare.projitems*{5fd0f74b-de3b-4d15-9e05-cc8cc8eb5947}*SharedItemsImports = 5
+		Src\SoundDevicesShare\SoundDevicesShare.projitems*{9e7eb2ad-3ae8-479f-9f7f-46e26c946acd}*SharedItemsImports = 5
+		Src\SoundDevicesShare\SoundDevicesShare.projitems*{e4986640-5c60-4ba0-a26c-21eccf109f22}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

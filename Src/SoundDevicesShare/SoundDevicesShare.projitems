@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>e4986640-5c60-4ba0-a26c-21eccf109f22</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>SoundDevices</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)ALSA\Internal\ALSADevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ALSA\MidiInALSADevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ALSA\MidiOutALSADevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ALSA\WaveInALSADevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ALSA\WaveOutALSADevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ASIO\Internal\ASIODriverInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CoreMIDI\MidiInCoreMIDIDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CoreMIDI\MidiOutCoreMIDIDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CoreMIDI\WaveInCoreMIDIDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CoreMIDI\WaveOutCoreMIDIDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DirectX\Internal\COMDebugger.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CoreMIDI\Internal\CoreMidiDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DirectX\Internal\DirectMusicDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DirectX\MidiInDirectXDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DirectX\MidiOutDirectXDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ASIO\Internal\ASIODevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ASIO\Internal\AsioDriver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DirectX\Internal\IDirectSound.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DirectX\Internal\IDirectSound8.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DirectX\Internal\DirectXDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WinMM\Internal\WinMMImport.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SoundDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ASIO\WaveInASIODevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ASIO\WaveOutASIODevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DirectX\WaveInDirectXDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DirectX\WaveOutDirectXDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WinMM\MidiInWinMMDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WinMM\MidiOutWinMMDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WinMM\Internal\MMVersion.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SoundDeviceType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MidiInDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MidiOutDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WinMM\WaveInWinMMDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WinMM\WaveOutWinMMDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WaveInDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WaveOutDevice.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)ALSA\Internal\" />
+    <Folder Include="$(MSBuildThisFileDirectory)ASIO\Internal\" />
+    <Folder Include="$(MSBuildThisFileDirectory)CoreMIDI\Internal\" />
+    <Folder Include="$(MSBuildThisFileDirectory)DirectX\Internal\" />
+    <Folder Include="$(MSBuildThisFileDirectory)WinMM\Internal\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)Marshal.txt" />
+  </ItemGroup>
+</Project>

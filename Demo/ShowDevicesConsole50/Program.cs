@@ -1,5 +1,4 @@
-﻿using MediaDevices.IO.MIDI;
-using MediaDevices.IO.Wave;
+﻿using SoundDevices;
 using System;
 
 namespace ShowDevicesConsole50
@@ -11,31 +10,31 @@ namespace ShowDevicesConsole50
             Console.WriteLine("SoundDevices device list");
 
             Console.WriteLine("  Midi In devices");
-            foreach (var midiInDevice in MidiInDevice.GetDevices(MidiDeviceTypes.All))
+            foreach (var midiInDevice in MidiInDevice.GetDevices())
             {
-                Console.WriteLine($"    {midiInDevice.Name}, {midiInDevice.Version}, {midiInDevice.InterfaceType}, {midiInDevice.Description}");
+                Console.WriteLine($"    {midiInDevice.Name}, {midiInDevice.Version}, {midiInDevice.DeviceType}, {midiInDevice.Description}");
             }
             Console.WriteLine();
 
             Console.WriteLine("  Midi Out devices");
-            foreach (var midiOutDevice in MidiOutDevice.GetDevices(MidiDeviceTypes.All))
+            foreach (var midiOutDevice in MidiOutDevice.GetDevices())
             {
-                Console.WriteLine($"    {midiOutDevice.Name}, {midiOutDevice.Version}, {midiOutDevice.InterfaceType}, {midiOutDevice.Description}");
+                Console.WriteLine($"    {midiOutDevice.Name}, {midiOutDevice.Version}, {midiOutDevice.DeviceType}, {midiOutDevice.Description}");
             }
             Console.WriteLine();
 
             Console.WriteLine("  Wave In devices");
-            foreach (var waveInDevice in WaveInDevice.GetDevices(WaveDeviceTypes.All))
+            foreach (var waveInDevice in WaveInDevice.GetDevices())
             {
-                Console.WriteLine($"    {waveInDevice.Name}, {waveInDevice.Version}, {waveInDevice.InterfaceType}, {waveInDevice.Description}");
+                Console.WriteLine($"    {waveInDevice.Name}, {waveInDevice.Version}, {waveInDevice.DeviceType}, {waveInDevice.Description}");
 
             }
             Console.WriteLine();
 
             Console.WriteLine("  Wave Out devices");
-            foreach (var waveOutDevice in WaveOutDevice.GetDevices(WaveDeviceTypes.All))
+            foreach (var waveOutDevice in WaveOutDevice.GetDevices())
             {
-                Console.WriteLine($"    {waveOutDevice.Name}, {waveOutDevice.Version}, {waveOutDevice.InterfaceType}, {waveOutDevice.Description}");
+                Console.WriteLine($"    {waveOutDevice.Name}, {waveOutDevice.Version}, {waveOutDevice.DeviceType}, {waveOutDevice.Description}");
 
             }
         }

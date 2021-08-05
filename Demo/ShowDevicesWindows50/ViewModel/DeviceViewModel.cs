@@ -1,6 +1,4 @@
-﻿using MediaDevices.IO;
-using MediaDevices.IO.MIDI;
-using MediaDevices.IO.Wave;
+﻿using SoundDevices;
 using System;
 
 namespace ShowDevices.ViewModel
@@ -9,7 +7,7 @@ namespace ShowDevices.ViewModel
     {
         public DeviceViewModel(SoundDevice device)
         {
-            this.InterfaceType = device.InterfaceType;
+            this.InterfaceType = device.DeviceType;
             this.Name = device.Name;
             this.Description = device.Description;
             this.Version = device.Version;
@@ -39,7 +37,7 @@ namespace ShowDevices.ViewModel
 
         public Version Version { get; }
 
-        public SoundInterfaceType InterfaceType { get; }
+        public SoundDeviceType InterfaceType { get; }
 
         public string Description { get; }
 

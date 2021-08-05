@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -6,10 +6,10 @@
     <RootNamespace>SoundDevices</RootNamespace>
   </PropertyGroup>
 
-  <Import Project="..\MediaDevicesShare\MediaDevicesShare.projitems" Label="Shared" />
-
   <ItemGroup>
     <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
   </ItemGroup>
+
+  <Import Project="..\SoundDevicesShare\SoundDevicesShare.projitems" Label="Shared" />
 
 </Project>
