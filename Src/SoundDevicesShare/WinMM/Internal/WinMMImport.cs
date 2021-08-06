@@ -5,34 +5,108 @@ namespace SoundDevices.WinMM.Internal
 {
     internal static class WinMMImport
     {
-        [DllImport("winmm.dll", EntryPoint = "midiInGetNumDevs")]
+        private const string WinMMLibrary = "winmm.dll";
+
+        internal static readonly int MidiInCapsSize = Marshal.SizeOf(typeof(WinMMImport.MidiInCaps));
+        internal static readonly int MidiOutCapsSize = Marshal.SizeOf(typeof(WinMMImport.MidiOutCaps));
+        internal static readonly int MidiHeaderSize = Marshal.SizeOf(typeof(MidiHeader));
+        /*
+        CALLBACK_FUNCTION	The dwCallback parameter is a callback procedure address.
+        CALLBACK_NULL	There is no callback mechanism. This value is the default setting.
+        CALLBACK_THREAD	The dwCallback parameter is a thread identifier.
+        CALLBACK_WINDOW	The dwCallback parameter is a window handle.
+        MIDI_IO_STATUS
+        */
+        public const int CALLBACK_FUNCTION = 0x30000;
+
+        public delegate void MidiInProc(IntPtr handle, int msg, IntPtr instance, IntPtr param1, IntPtr param2);
+        public delegate void MidiOutProc(IntPtr hnd, int msg, IntPtr instance, IntPtr param1, IntPtr param2);
+
+        #region MIDI IN
+
+        [DllImport(WinMMLibrary, EntryPoint = "midiInGetNumDevs")]
         public static extern int MidiInGetNumDevs();
 
-        [DllImport("winmm.dll", EntryPoint = "midiInGetDevCaps", CharSet = CharSet.Auto)]
+        [DllImport(WinMMLibrary, EntryPoint = "midiInGetDevCaps", CharSet = CharSet.Auto)]
         public static extern int MidiInGetDevCaps(IntPtr deviceID, out MidiInCaps midiInCaps, int sizeMidiInCaps);
 
+        [DllImport(WinMMLibrary, EntryPoint = "midiInOpen")]
+        public static extern int MidiInOpen(out IntPtr handle, int deviceID, MidiInProc proc, IntPtr instance, int flags);
 
-        [DllImport("winmm.dll", EntryPoint = "midiOutGetNumDevs")]
+        [DllImport(WinMMLibrary, EntryPoint = "midiInStart")]
+        public static extern int MidiInStart(IntPtr handle);
+
+        [DllImport(WinMMLibrary, EntryPoint = "midiInStop")]
+        public static extern int MidiInStop(IntPtr handle);
+
+        [DllImport(WinMMLibrary, EntryPoint = "midiInClose")]
+        public static extern int MidiInClose(IntPtr handle);
+
+        [DllImport(WinMMLibrary, EntryPoint = "midiInReset")]
+        public static extern int MidiInReset(IntPtr handle);
+
+        [DllImport(WinMMLibrary, EntryPoint = "midiInPrepareHeader")]
+        public static extern int MidiInPrepareHeader(IntPtr handle, IntPtr headerPtr, int sizeOfMidiHeader);
+
+        [DllImport(WinMMLibrary, EntryPoint = "midiInUnprepareHeader")]
+        public static extern int MidiInUnprepareHeader(IntPtr handle, IntPtr headerPtr, int sizeOfMidiHeader);
+
+        [DllImport(WinMMLibrary, EntryPoint = "midiInAddBuffer")]
+        public static extern int MidiInAddBuffer(IntPtr handle, IntPtr headerPtr, int sizeOfMidiHeader);
+
+        #endregion
+        
+        #region MIDI Out
+
+        [DllImport(WinMMLibrary, EntryPoint = "midiOutGetNumDevs")]
         public static extern int MidiOutGetNumDevs();
 
-        [DllImport("winmm.dll", EntryPoint = "midiOutGetDevCaps", CharSet = CharSet.Auto)]
+        [DllImport(WinMMLibrary, EntryPoint = "midiOutGetDevCaps", CharSet = CharSet.Auto)]
         public static extern int MidiOutGetDevCaps(IntPtr deviceID, out MidiOutCaps midiOutCaps, int sizeMidiOutCaps);
 
+        [DllImport(WinMMLibrary, EntryPoint = "midiOutOpen")]
+        public static extern int MidiOutOpen(out IntPtr handle, int deviceID, MidiOutProc proc, IntPtr instance, int flags);
 
-        [DllImport("winmm.dll", EntryPoint = "waveInGetNumDevs")]
+        [DllImport(WinMMLibrary, EntryPoint = "midiOutClose")]
+        public static extern int MidiOutClose(IntPtr handle);
+               
+        [DllImport(WinMMLibrary, EntryPoint = "midiOutReset")]
+        public static extern int MidiOutReset(IntPtr handle);
+
+        [DllImport(WinMMLibrary, EntryPoint = "midiOutShortMsg")]
+        public static extern int MidiOutShortMsg(IntPtr handle, int message);
+
+        [DllImport(WinMMLibrary, EntryPoint = "midiOutPrepareHeader")]
+        public static extern int MidiOutPrepareHeader(IntPtr handle, IntPtr headerPtr, int sizeOfMidiHeader);
+
+        [DllImport(WinMMLibrary, EntryPoint = "midiOutUnprepareHeader")]
+        public static extern int MidiOutUnprepareHeader(IntPtr handle, IntPtr headerPtr, int sizeOfMidiHeader);
+
+        [DllImport(WinMMLibrary, EntryPoint = "midiOutLongMsg")]
+        public static extern int MidiOutLongMsg(IntPtr handle, IntPtr headerPtr, int sizeOfMidiHeader);
+
+        #endregion
+
+        #region WAVE In
+
+        [DllImport(WinMMLibrary, EntryPoint = "waveInGetNumDevs")]
         public static extern int WaveInGetNumDevs();
 
-        [DllImport("winmm.dll", EntryPoint = "waveInGetDevCaps", CharSet = CharSet.Auto)]
+        [DllImport(WinMMLibrary, EntryPoint = "waveInGetDevCaps", CharSet = CharSet.Auto)]
         public static extern int WaveInGetDevCaps(IntPtr deviceID, out WaveInCaps waveinCaps, int sizeWaveInCaps);
 
+        #endregion
 
-        [DllImport("winmm.dll", EntryPoint = "waveOutGetNumDevs")]
+        #region WAVE Out
+
+        [DllImport(WinMMLibrary, EntryPoint = "waveOutGetNumDevs")]
         public static extern int WaveOutGetNumDevs();
 
-        [DllImport("winmm.dll", EntryPoint = "waveOutGetDevCaps", CharSet = CharSet.Auto)]
+        [DllImport(WinMMLibrary, EntryPoint = "waveOutGetDevCaps", CharSet = CharSet.Auto)]
         public static extern int WaveOutGetDevCaps(IntPtr deviceID, out WaveOutCaps waveOutCaps, int sizeWaveOutCaps);
 
-        
+        #endregion
+
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
         public struct MidiInCaps
         {
@@ -116,6 +190,65 @@ namespace SoundDevices.WinMM.Internal
             /// Optional functionality supported by the device. 
             /// </summary>
             public int support;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct MidiHeader
+        {
+            #region MidiHeader Members
+
+            /// <summary>
+            /// Pointer to MIDI data.
+            /// </summary>
+            public IntPtr data;
+
+            /// <summary>
+            /// Size of the buffer.
+            /// </summary>
+            public int bufferLength;
+
+            /// <summary>
+            /// Actual amount of data in the buffer. This value should be less than 
+            /// or equal to the value given in the dwBufferLength member.
+            /// </summary>
+            public int bytesRecorded;
+
+            /// <summary>
+            /// Custom user data.
+            /// </summary>
+            public int user;
+
+            /// <summary>
+            /// Flags giving information about the buffer.
+            /// </summary>
+            public int flags;
+
+            /// <summary>
+            /// Reserved; do not use.
+            /// </summary>
+            public IntPtr next;
+
+            /// <summary>
+            /// Reserved; do not use.
+            /// </summary>
+            public int reserved;
+
+            /// <summary>
+            /// Offset into the buffer when a callback is performed. (This 
+            /// callback is generated because the MEVT_F_CALLBACK flag is 
+            /// set in the dwEvent member of the MidiEventArgs structure.) 
+            /// This offset enables an application to determine which 
+            /// event caused the callback. 
+            /// </summary>
+            public int offset;
+
+            /// <summary>
+            /// Reserved; do not use.
+            /// </summary>
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
+            public int[] reservedArray;
+
+            #endregion
         }
 
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
