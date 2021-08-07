@@ -6,7 +6,7 @@ namespace MidiViewerConsole50
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            new MidiViewer().Run(args);
         }
     }
 }

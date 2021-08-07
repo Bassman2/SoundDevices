@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace SoundDevices
 {
-    public class MidiInDevice : SoundDevice
+    public abstract class MidiInDevice : SoundDevice
     {
         public static IEnumerable<MidiInDevice> GetDevices(SoundDeviceType soundDeviceTypes = SoundDeviceType.All)
         {
@@ -39,5 +39,18 @@ namespace SoundDevices
             }
             return devices;
         }
+
+        public event EventHandler<MidiMsgEventArgs> MidiMsgReceived;
+
+        protected void RaiseMidiMsgReceived(int midiMsg)
+        {
+            this.MidiMsgReceived?.Invoke(this, new MidiMsgEventArgs(midiMsg));
+        }
+
+        public abstract void Open();
+        public abstract void Close();
+        public abstract void Reset();
+        public abstract void Start();
+        public abstract void Stop();
     }
 }

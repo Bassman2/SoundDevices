@@ -65,7 +65,7 @@ namespace SoundDevices.WinMM
 
         #endregion
 
-        public void Open()
+        public override void Open()
         {
             
             int result = WinMMImport.MidiInOpen(out this.deviceHandle, this.deviceID, this.midiInProc, IntPtr.Zero, WinMMImport.CALLBACK_FUNCTION);
@@ -81,6 +81,8 @@ namespace SoundDevices.WinMM
             case WinMMInMsg.MIM_CLOSE:
                 break;
             case WinMMInMsg.MIM_DATA:
+                //this.MidiMsgReceived?.Invoke(this, new MidiMsgEventArgs((int)param1));
+                RaiseMidiMsgReceived((int)param1);
                 break;
             case WinMMInMsg.MIM_MOREDATA:
                 break;
@@ -93,27 +95,26 @@ namespace SoundDevices.WinMM
             }
         }
         
-        public void Close()
+        public override void Close()
         {
             WinMMImport.MidiInReset(this.deviceHandle);
             WinMMImport.MidiInClose(this.deviceHandle);
         }
 
-        public void Reset()
+        public override void Reset()
         {
             WinMMImport.MidiInReset(this.deviceHandle);
         }
 
         // start Clock
-        public void Start()
+        public override void Start()
         {
             WinMMImport.MidiInStart(this.deviceHandle);
         }
 
-        public void Stop()
+        public override void Stop()
         {
             WinMMImport.MidiInStop(this.deviceHandle);
-
         }
     }
 }

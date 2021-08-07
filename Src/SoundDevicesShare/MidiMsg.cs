@@ -41,6 +41,11 @@ namespace SoundDevices
             get { return (int)this.Message | this.Channel | ((int)this.Key) << 8 | this.Velocity << 16; }        
         }
 
+        public override string ToString()
+        {
+            return $"{this.Message}, {this.Channel}, {this.Key}, {this.Velocity}";
+        }
+
         public static implicit operator int(MidiMsg m) => m.Value;
         public static implicit operator MidiMsg(int i) => new(i);
     }

@@ -11,5 +11,20 @@ namespace SoundDevices.DirectX
         {
             DirectMusicDevice.GetDevices();
         }
+
+        public override void Open()
+        { }
+
+        public override void Close()
+        { }
+
+        public override void Reset()
+        { }
+
+        public override void Start()
+        { }
+
+        public override void Stop()
+        { }
     }
 }

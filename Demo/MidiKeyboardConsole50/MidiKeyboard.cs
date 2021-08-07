@@ -64,7 +64,7 @@ namespace MidiKeyboardConsole
             using MidiOutDevice device = devices.ElementAtOrDefault(deviceIndex);
             if (device == null)
             {
-                Console.WriteLine("No MIDI device available");
+                Console.WriteLine("MIDI device not available");
                 return;
             }
             Console.WriteLine($"Output: {device.Name}");
