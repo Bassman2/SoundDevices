@@ -31,11 +31,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShowDevicesWindows50", "Dem
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinuxPucture50", "Demo\LinuxPucture50\LinuxPucture50.csproj", "{8D34EB16-4384-43D3-AA68-765C44711462}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MidiPlayerConsole50", "MidiPlayerConsole50\MidiPlayerConsole50.csproj", "{80255841-482D-4A25-9D02-BC7B4FA45858}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MidiPlayerConsole50", "Demo\MidiPlayerConsole50\MidiPlayerConsole50.csproj", "{80255841-482D-4A25-9D02-BC7B4FA45858}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MidiRecorderConsole50", "MidiRecorderConsole50\MidiRecorderConsole50.csproj", "{A0F5548E-CB7F-4947-8725-BED1E89BFBA3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MidiRecorderConsole50", "Demo\MidiRecorderConsole50\MidiRecorderConsole50.csproj", "{A0F5548E-CB7F-4947-8725-BED1E89BFBA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MidiKeyboardConsole50", "MidiKeyboardConsole50\MidiKeyboardConsole50.csproj", "{561B20A6-A915-4A02-BA47-28AB2D7F9397}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MidiKeyboardConsole50", "Demo\MidiKeyboardConsole50\MidiKeyboardConsole50.csproj", "{561B20A6-A915-4A02-BA47-28AB2D7F9397}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MidiViewerConsole50", "Demo\MidiViewerConsole50\MidiViewerConsole50.csproj", "{DC322011-E1C2-4C5C-BE71-1ECD9B00537D}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -92,6 +94,10 @@ Global
 		{561B20A6-A915-4A02-BA47-28AB2D7F9397}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{561B20A6-A915-4A02-BA47-28AB2D7F9397}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{561B20A6-A915-4A02-BA47-28AB2D7F9397}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC322011-E1C2-4C5C-BE71-1ECD9B00537D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC322011-E1C2-4C5C-BE71-1ECD9B00537D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC322011-E1C2-4C5C-BE71-1ECD9B00537D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC322011-E1C2-4C5C-BE71-1ECD9B00537D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -109,6 +115,7 @@ Global
 		{80255841-482D-4A25-9D02-BC7B4FA45858} = {C4C94AD8-E857-4CA3-A148-5FE89FA92D05}
 		{A0F5548E-CB7F-4947-8725-BED1E89BFBA3} = {C4C94AD8-E857-4CA3-A148-5FE89FA92D05}
 		{561B20A6-A915-4A02-BA47-28AB2D7F9397} = {C4C94AD8-E857-4CA3-A148-5FE89FA92D05}
+		{DC322011-E1C2-4C5C-BE71-1ECD9B00537D} = {C4C94AD8-E857-4CA3-A148-5FE89FA92D05}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {36CB24C8-C88B-4802-88B2-44328ECCDDD9}
