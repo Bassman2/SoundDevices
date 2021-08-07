@@ -47,7 +47,7 @@ namespace MidiViewerConsole50
                 } while (!int.TryParse(Console.ReadLine(), out deviceIndex) || deviceIndex < 1 || deviceIndex > devices.Count());
             }
 
-            using MidiInDevice device = devices.ElementAtOrDefault(deviceIndex);
+            using MidiInDevice device = devices.ElementAtOrDefault(deviceIndex - 1);
             if (device == null)
             {
                 Console.WriteLine("MIDI device not available");
