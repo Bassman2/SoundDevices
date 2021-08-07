@@ -14,14 +14,20 @@ namespace SoundDevices
         public static int ReadBigEndianInt16(this BinaryReader reader)
         {
             byte[] array = reader.ReadBytes(2);
-            Array.Reverse<byte>(array);
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse<byte>(array);
+            }
             return BitConverter.ToInt16(array, 0);
         }
 
         public static int ReadBigEndianInt32(this BinaryReader reader)
         {
             byte[] array = reader.ReadBytes(4);
-            Array.Reverse<byte>(array);
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse<byte>(array);
+            }
             return BitConverter.ToInt32(array, 0);
         }
 
@@ -48,6 +54,11 @@ namespace SoundDevices
             }
             time += b;
             return time;
+        }
+
+        public static short ReadMidiInt16(this BinaryReader reader)
+        {
+            return (short)(((short)reader.ReadByte()) << 7 + reader.ReadByte());
         }
     }
 }

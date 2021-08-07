@@ -13,7 +13,7 @@ namespace SoundDevices
         private int midiFileFormat;
         private int numOfTracks;
         private int ticksPerQuarterNote;
-        private List<MidiTrack> tracksStream;
+        private List<MidiTrack> tracks;
 
         public MidiPlayer()
         { }
@@ -30,12 +30,12 @@ namespace SoundDevices
 
             ReadHeaderChunk(reader);
 
-            this.tracksStream = new(); 
+            this.tracks = new(); 
             for (int i = 0; i < this.numOfTracks; i++)
             {
                 Stream trkStream = ReadTrackChunk(reader);
-                MidiTrack midiTrack = new MidiTrack(trkStream);
-                this.tracksStream.Add(midiTrack);
+                MidiTrack midiTrack = new MidiTrack(trkStream, this.ticksPerQuarterNote);
+                this.tracks.Add(midiTrack);
             }
 
             PlayTracks();
@@ -93,9 +93,125 @@ namespace SoundDevices
             while (running)
             {
                 playTime = Environment.TickCount64 - startTime;
-
+                foreach (var track in this.tracks)
+                {
+                    PlayEvent(track);
+                    track.Next();
+                }
             }
         }
+
+        private void PlayEvent(MidiTrack track)
+        {
+            byte b = track.Reader.ReadByte();
+            MidiMessage msg = (MidiMessage)b;
+            MidiMessage cmd = (MidiMessage)(b & ((byte)0xf0));
+            byte chn = (byte)(b & ((byte)0x0f));
+            byte key, vel, ctr, val, prg, prs, sng;
+            short pit, pos;
+            MidiMetaEvent metaEvent;
+
+
+            switch (cmd)
+            {
+            case MidiMessage.NoteOff: 
+                key = track.Reader.ReadByte(); // key
+                vel = track.Reader.ReadByte(); // velocity
+                break;
+            case MidiMessage.NoteOn: 
+                key = track.Reader.ReadByte(); // key
+                vel = track.Reader.ReadByte(); // velocity
+                break;
+            case MidiMessage.Aftertouch: 
+                key = track.Reader.ReadByte(); // key
+                vel = track.Reader.ReadByte(); // velocity
+                break;
+            case MidiMessage.ControlChange: 
+                ctr = track.Reader.ReadByte(); // controller
+                val = track.Reader.ReadByte(); // value
+                break;
+            case MidiMessage.ProgramChange: 
+                prg = track.Reader.ReadByte(); // program no#
+                break;
+            case MidiMessage.ChannelPressure: 
+                prs = track.Reader.ReadByte(); // pressure
+                break;
+            case MidiMessage.PitchWheelChange: 
+                pit = track.Reader.ReadMidiInt16(); // pitch wheel value
+                break;
+            case MidiMessage.SystemExclusive:
+                switch (msg)
+                {
+                case MidiMessage.SystemExclusive:
+                    break;
+                case MidiMessage.SongPositionPointer:
+                    pos = track.Reader.ReadMidiInt16(); // song position
+                    break;
+                case MidiMessage.SongSelect:
+                    sng = track.Reader.ReadByte(); 
+                    break;
+                case MidiMessage.TuneRequest:
+                    break;
+                case MidiMessage.EndOfExclusive:
+                    break;
+                case MidiMessage.TimingClock:
+                    break;
+                case MidiMessage.Start:
+                    break;
+                case MidiMessage.Continue:
+                    break;
+                case MidiMessage.Stop:
+                    break;
+                case MidiMessage.ActiveSensing:
+                    break;
+                case MidiMessage.MetaEvent:
+                    metaEvent = (MidiMetaEvent)track.Reader.ReadByte();
+                    switch (metaEvent)
+                    {
+                    case MidiMetaEvent.SequenceNumber:
+                        byte seqNum = track.Reader.ReadByte();
+                        break;
+                    case MidiMetaEvent.TextEvent:
+                        break;
+                    case MidiMetaEvent.CopyrightNotice:
+                        break;
+                    case MidiMetaEvent.SequenceTrackName:
+                        break;
+                    case MidiMetaEvent.InstrumentName: 
+                        break;
+                    case MidiMetaEvent.Lyric:
+                        break;
+                    case MidiMetaEvent.Marker:
+                        break;
+                    case MidiMetaEvent.CuePoint:
+                        break;
+                    case MidiMetaEvent.ChannelPrefix:
+                        break;
+                    case MidiMetaEvent.EndOfTrack:
+                        break;
+                    case MidiMetaEvent.Tempo:
+                        break;
+                    case MidiMetaEvent.SMPTEOffset:
+                        break;
+                    case MidiMetaEvent.TimeSignature:
+                        break;
+                    case MidiMetaEvent.KeySignature:
+                        break;
+                    case MidiMetaEvent.SequencerSpecific:
+                        break;
+                    default:
+                        throw new Exception($"Unknown MIDI meta event {metaEvent}");
+                    }
+                    break;
+                default:
+                    throw new Exception($"Unknown MIDI message {msg}");
+                }
+                break;
+            default:
+                break;
+            }
+        }
+    
 
         private class MidiTrack
         {
