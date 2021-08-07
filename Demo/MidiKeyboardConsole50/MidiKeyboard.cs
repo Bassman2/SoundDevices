@@ -45,7 +45,7 @@ namespace MidiKeyboardConsole
                 int index = 1;
                 foreach (var dev in devices)
                 {
-                    Console.WriteLine("{index++}: {dev.Name}");
+                    Console.WriteLine($"{index++}: {dev.Name} {dev.DeviceType}");
                 }
 
                 do
@@ -61,7 +61,7 @@ namespace MidiKeyboardConsole
             } while (!int.TryParse(Console.ReadLine(), out deviceChannel) || deviceChannel < 1 || deviceChannel > 16);
 
 
-            using MidiOutDevice device = devices.ElementAtOrDefault(deviceIndex);
+            using MidiOutDevice device = devices.ElementAtOrDefault(deviceIndex - 1);
             if (device == null)
             {
                 Console.WriteLine("MIDI device not available");
@@ -83,22 +83,22 @@ namespace MidiKeyboardConsole
                 MidiKeys key = keyInfo.Key switch
                 {
                     ConsoleKey.Z => MidiKeys.C5,
-                    ConsoleKey.S => MidiKeys.Db5,
+                        ConsoleKey.S => MidiKeys.Db5,
                     ConsoleKey.X => MidiKeys.D5,
-                    ConsoleKey.D => MidiKeys.Eb5,
+                        ConsoleKey.D => MidiKeys.Eb5,
                     ConsoleKey.C => MidiKeys.E5,
                     ConsoleKey.V => MidiKeys.F5,
-                    ConsoleKey.G => MidiKeys.Gb5,
+                        ConsoleKey.G => MidiKeys.Gb5,
                     ConsoleKey.B => MidiKeys.G5,
-                    ConsoleKey.H => MidiKeys.Ab5,
+                        ConsoleKey.H => MidiKeys.Ab5,
                     ConsoleKey.N => MidiKeys.A5,
-                    ConsoleKey.J => MidiKeys.Bb5,
+                        ConsoleKey.J => MidiKeys.Bb5,
                     ConsoleKey.M => MidiKeys.B5,
-                    ConsoleKey.Separator => MidiKeys.C6,
-                    ConsoleKey.L => MidiKeys.Db6,
-                    ConsoleKey.Decimal => MidiKeys.D6,
-                    ConsoleKey.Q => MidiKeys.Eb6,
-                    ConsoleKey.Divide => MidiKeys.E6,
+                    ConsoleKey.OemComma => MidiKeys.C6,
+                        ConsoleKey.L => MidiKeys.Db6,
+                    ConsoleKey.OemPeriod => MidiKeys.D6,
+                        ConsoleKey.Oem1 => MidiKeys.Eb6,
+                    ConsoleKey.Oem2 => MidiKeys.E6,
                     _ => MidiKeys.C0
                 };
 

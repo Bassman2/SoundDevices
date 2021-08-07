@@ -38,7 +38,7 @@ namespace MidiViewerConsole50
                 int index = 1;
                 foreach (var dev in devices)
                 {
-                    Console.WriteLine("{index++}: {dev.Name}");
+                    Console.WriteLine($"{index++}: {dev.Name} {dev.DeviceType}");
                 }
 
                 do
