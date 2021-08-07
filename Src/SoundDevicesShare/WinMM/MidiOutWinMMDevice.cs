@@ -2,6 +2,7 @@
 using SoundDevices.WinMM.Internal;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 namespace SoundDevices.WinMM
@@ -14,16 +15,16 @@ namespace SoundDevices.WinMM
 
         internal static void AddDevices(List<MidiOutDevice> devices)
         {
-            for (int i = 0; i < WinMMImport.MidiOutGetNumDevs(); i++)
+            // -1 for windows Midi mixer
+            for (int i = -1; i < WinMMImport.MidiOutGetNumDevs(); i++)
             {
-                if (WinMMImport.MidiOutGetDevCaps((IntPtr)i, out WinMMImport.MidiOutCaps midiOutCaps, WinMMImport.MidiOutCapsSize) == 0)
+                try
                 {
-                    devices.Add(new MidiOutDevice
-                    {
-                        DeviceType = SoundDeviceType.WinMM,
-                        Name = midiOutCaps.name,
-                        Version = new Version(midiOutCaps.driverVersion.Major, midiOutCaps.driverVersion.Minor)
-                    });
+                    devices.Add(new MidiOutWinMMDevice(i));
+                }
+                catch (SoundDeviceException ex)
+                {
+                    Debug.WriteLine(ex);
                 }
             }
         }
@@ -68,7 +69,7 @@ namespace SoundDevices.WinMM
 
         #endregion
 
-        public void Open()
+        public override void Open()
         {
 
             int result = WinMMImport.MidiOutOpen(out this.deviceHandle, this.deviceID, this.midiOutProc, IntPtr.Zero, WinMMImport.CALLBACK_FUNCTION);
@@ -93,23 +94,23 @@ namespace SoundDevices.WinMM
             }
         }
 
-        public void Close()
+        public override void Close()
         {
             WinMMImport.MidiOutReset(this.deviceHandle);
             WinMMImport.MidiOutClose(this.deviceHandle);
         }
 
-        public void Reset()
+        public override void Reset()
         {
             WinMMImport.MidiOutReset(this.deviceHandle);
         }
 
-        public void Send(int msg)
+        public override void Send(int msg)
         {
             WinMMImport.MidiOutShortMsg(this.deviceHandle, msg);
         }
 
-        public void Send(byte[] data)
+        public override void Send(byte[] data)
         {
             WinMMImport.MidiHeader header = new WinMMImport.MidiHeader();
             header.bufferLength = header.bytesRecorded = data.Length;

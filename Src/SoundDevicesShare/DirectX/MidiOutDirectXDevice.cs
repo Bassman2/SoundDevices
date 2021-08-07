@@ -10,5 +10,20 @@ namespace SoundDevices.DirectX
         {
             
         }
+
+        public override void Open()
+        { }
+
+        public override void Close()
+        { }
+
+        public override void Reset()
+        { }
+
+        public override void Send(int msg)
+        { }
+
+        public override void Send(byte[] data)
+        { }
     }
 }

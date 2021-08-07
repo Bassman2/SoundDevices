@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace SoundDevices
 {
-    public class MidiOutDevice : SoundDevice
+    public abstract class MidiOutDevice : SoundDevice
     {
         public static IEnumerable<MidiOutDevice> GetDevices(SoundDeviceType soundDeviceTypes = SoundDeviceType.All)
         {
@@ -39,5 +39,11 @@ namespace SoundDevices
             }
             return devices.ToArray();
         }
+
+        public abstract void Open();
+        public abstract void Close();
+        public abstract void Reset();
+        public abstract void Send(int msg);
+        public abstract void Send(byte[] data);
     }
 }
