@@ -31,6 +31,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)DirectX\Internal\IDirectSound8.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DirectX\Internal\DirectXDevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MidiFile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MidiFileException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MidiFileTrack.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MidiKeys.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MidiMetaEvent.cs" />

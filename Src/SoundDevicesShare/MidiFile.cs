@@ -11,12 +11,17 @@ namespace SoundDevices
         public MidiFile()
         {
             this.Tracks = new();
+            this.Description = string.Empty;
+            this.Copyright = string.Empty;
         }
 
         public int NumOfTracks { get; private set; }
         public int MidiFileFormat { get; private set; }
         public int TicksPerQuarterNote { get; private set; }
         public List<MidiFileTrack> Tracks { get; }
+
+        public string Description { get; set; }
+        public string Copyright { get; set; }
 
         public void Load(string fileName)
         {
@@ -26,57 +31,32 @@ namespace SoundDevices
 
         public void Load(Stream midiStream)
         {
-            using BinaryReader reader = new BinaryReader(midiStream);
+            using BinaryReader reader = new(midiStream);
 
-            ReadHeaderChunk(reader);
-                        
-            for (int i = 0; i < this.NumOfTracks; i++)
-            {
-                Stream trkStream = ReadTrackChunk(reader);
-                MidiFileTrack midiTrack = new MidiFileTrack(trkStream, this.TicksPerQuarterNote);
-                this.Tracks.Add(midiTrack);
-            }
-        }
-
-        private void ReadHeaderChunk(BinaryReader reader)
-        {
+            // read MIDI chunk header
             string chunkID = reader.ReadChunkID();
             if (chunkID != "MThd")
             {
-                throw new Exception("Not a midi file");
+                throw new MidiFileException("Incorrect chunk ID");
             }
             int chunkLength = reader.ReadBigEndianInt32();
             if (chunkLength != 6)
             {
-                throw new Exception("Incorrect chunk length");
+                throw new MidiFileException("Incorrect chunk length");
             }
             this.MidiFileFormat = reader.ReadBigEndianInt16();
             if (this.MidiFileFormat < 0 || this.MidiFileFormat > 2)
             {
-                throw new Exception("MIDI file format not defined");
+                throw new MidiFileException("MIDI file format not defined");
             }
             this.NumOfTracks = reader.ReadBigEndianInt16();
             this.TicksPerQuarterNote = reader.ReadBigEndianInt16();
-        }
 
-        private Stream ReadTrackChunk(BinaryReader reader)
-        {
-            string chunkID = reader.ReadChunkID();
-            if (chunkID != "MTrk")
+            // read MIDI tracks
+            for (int i = 0; i < this.NumOfTracks; i++)
             {
-                throw new Exception("Not a midi track");
+               this.Tracks.Add(new MidiFileTrack(this, reader));
             }
-            int chunkLength = reader.ReadBigEndianInt32();
-            if (chunkLength < 0)
-            {
-                throw new Exception("Incorrect chunk length");
-            }
-
-            MemoryStream trackStream = new MemoryStream(chunkLength);
-            reader.CopyToStream(trackStream, chunkLength);
-            trackStream.Seek(0, SeekOrigin.Begin);
-            return trackStream;
         }
-
     }
 }

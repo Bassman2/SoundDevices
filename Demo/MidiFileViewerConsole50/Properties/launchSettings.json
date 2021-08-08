@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MidiFileViewerConsole50": {
+      "commandName": "Project",
+      "commandLineArgs": "\"C:\\Projects\\Midi\\Bohemian-Rhapsody-1.mid\""
+    }
+  }
+}

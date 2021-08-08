@@ -29,7 +29,7 @@ namespace MidiFileViewerConsole50
                 fileName = arg;
             }
 
-            if (string.IsNullOrEmpty(fileName) ||  !File.Exists(fileName))
+            if (string.IsNullOrEmpty(fileName) || !File.Exists(fileName))
             {
                 Console.WriteLine("File not found");
                 return;
@@ -42,6 +42,19 @@ namespace MidiFileViewerConsole50
 
             Console.WriteLine($"NumOfTracks: {midiFile.NumOfTracks}");
             Console.WriteLine($"TicksPerQuarterNote: {midiFile.TicksPerQuarterNote}");
+
+            Console.WriteLine($"Description: {midiFile.Description}");
+            Console.WriteLine($"Copyright: {midiFile.Copyright}");
+
+            int index = 1;
+            foreach(var track in midiFile.Tracks)
+            {
+                Console.WriteLine($"Track {index}");
+                Console.WriteLine($"  Number {track.SequenceNumber}");
+                Console.WriteLine($"  Name: {track.Name}");
+                Console.WriteLine($"  Instrument: {track.Instrument}");
+                index++;
+            }
         }
     }
 }
