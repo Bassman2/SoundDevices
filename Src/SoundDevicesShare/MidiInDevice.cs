@@ -48,9 +48,10 @@ namespace SoundDevices
         }
 
         public abstract void Open();
-        public abstract void Close();
-        public abstract void Reset();
         public abstract void Start();
-        public abstract void Stop();
+        public abstract void Stop(); 
+        public abstract void Reset();
+        public abstract void Close();
+
     }
 }

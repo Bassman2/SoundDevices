@@ -31,5 +31,14 @@ namespace SoundDevices.ALSA
         }
 
         #endregion
+
+        public override void Open()
+        { }
+
+        public override void Reset()
+        { }
+
+        public override void Close()
+        { }
     }
 }

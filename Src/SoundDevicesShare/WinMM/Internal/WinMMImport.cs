@@ -10,6 +10,10 @@ namespace SoundDevices.WinMM.Internal
         internal static readonly int MidiInCapsSize = Marshal.SizeOf(typeof(WinMMImport.MidiInCaps));
         internal static readonly int MidiOutCapsSize = Marshal.SizeOf(typeof(WinMMImport.MidiOutCaps));
         internal static readonly int MidiHeaderSize = Marshal.SizeOf(typeof(MidiHeader));
+
+        internal static readonly int WaveInCapsSize = Marshal.SizeOf(typeof(WinMMImport.WaveInCaps));
+        internal static readonly int WaveOutCapsSize = Marshal.SizeOf(typeof(WinMMImport.WaveOutCaps));
+
         /*
         CALLBACK_FUNCTION	The dwCallback parameter is a callback procedure address.
         CALLBACK_NULL	There is no callback mechanism. This value is the default setting.
@@ -19,9 +23,8 @@ namespace SoundDevices.WinMM.Internal
         */
         public const int CALLBACK_FUNCTION = 0x30000;
 
-        public delegate void MidiInProc(IntPtr handle, int msg, IntPtr instance, IntPtr param1, IntPtr param2);
-        public delegate void MidiOutProc(IntPtr hnd, int msg, IntPtr instance, IntPtr param1, IntPtr param2);
-
+        public delegate void Callback(IntPtr handle, int msg, IntPtr instance, IntPtr param1, IntPtr param2);
+        
         #region MIDI IN
 
         [DllImport(WinMMLibrary, EntryPoint = "midiInGetNumDevs")]
@@ -31,7 +34,7 @@ namespace SoundDevices.WinMM.Internal
         public static extern int MidiInGetDevCaps(IntPtr deviceID, out MidiInCaps midiInCaps, int sizeMidiInCaps);
 
         [DllImport(WinMMLibrary, EntryPoint = "midiInOpen")]
-        public static extern int MidiInOpen(out IntPtr handle, int deviceID, MidiInProc proc, IntPtr instance, int flags);
+        public static extern int MidiInOpen(out IntPtr handle, int deviceID, Callback callback, IntPtr instance, int flags);
 
         [DllImport(WinMMLibrary, EntryPoint = "midiInStart")]
         public static extern int MidiInStart(IntPtr handle);
@@ -65,7 +68,7 @@ namespace SoundDevices.WinMM.Internal
         public static extern int MidiOutGetDevCaps(IntPtr deviceID, out MidiOutCaps midiOutCaps, int sizeMidiOutCaps);
 
         [DllImport(WinMMLibrary, EntryPoint = "midiOutOpen")]
-        public static extern int MidiOutOpen(out IntPtr handle, int deviceID, MidiOutProc proc, IntPtr instance, int flags);
+        public static extern int MidiOutOpen(out IntPtr handle, int deviceID, Callback callback, IntPtr instance, int flags);
 
         [DllImport(WinMMLibrary, EntryPoint = "midiOutClose")]
         public static extern int MidiOutClose(IntPtr handle);
@@ -95,6 +98,21 @@ namespace SoundDevices.WinMM.Internal
         [DllImport(WinMMLibrary, EntryPoint = "waveInGetDevCaps", CharSet = CharSet.Auto)]
         public static extern int WaveInGetDevCaps(IntPtr deviceID, out WaveInCaps waveinCaps, int sizeWaveInCaps);
 
+        [DllImport(WinMMLibrary, EntryPoint = "waveInOpen")]
+        public static extern int WaveInOpen(out IntPtr handle, int deviceID, [In, MarshalAs(UnmanagedType.LPStruct)] WaveFormatEx b, Callback callback, IntPtr instance, WaveOpenFlags dwFlags);
+
+        [DllImport(WinMMLibrary, EntryPoint = "waveInStart")]
+        public static extern int WaveInStart(IntPtr handle);
+
+        [DllImport(WinMMLibrary, EntryPoint = "waveInStop")]
+        public static extern int WaveInStop(IntPtr handle);
+
+        [DllImport(WinMMLibrary, EntryPoint = "waveInClose")]
+        public static extern int WaveInClose(IntPtr handle);
+
+        [DllImport(WinMMLibrary, EntryPoint = "waveInReset")]
+        public static extern int WaveInReset(IntPtr handle);
+
         #endregion
 
         #region WAVE Out
@@ -104,6 +122,45 @@ namespace SoundDevices.WinMM.Internal
 
         [DllImport(WinMMLibrary, EntryPoint = "waveOutGetDevCaps", CharSet = CharSet.Auto)]
         public static extern int WaveOutGetDevCaps(IntPtr deviceID, out WaveOutCaps waveOutCaps, int sizeWaveOutCaps);
+
+        [DllImport(WinMMLibrary, EntryPoint = "waveOutOpen")]
+        public static extern int WaveOutOpen(out IntPtr handle, int deviceID, [In, MarshalAs(UnmanagedType.LPStruct)] WaveFormatEx b, Callback callback, IntPtr instance, WaveOpenFlags dwFlags);
+                
+        [DllImport(WinMMLibrary, EntryPoint = "waveOutReset")]
+        public static extern int WaveOutReset(IntPtr handle);
+
+        [DllImport(WinMMLibrary, EntryPoint = "waveOutClose")]
+        public static extern int WaveOutClose(IntPtr handle);
+
+        [DllImport(WinMMLibrary, EntryPoint = "waveOutPause")]
+        public static extern int WaveOutPause(IntPtr handle);
+
+        [DllImport(WinMMLibrary, EntryPoint = "waveOutRestart")]
+        public static extern int WaveOutRestart(IntPtr handle);
+
+        [DllImport(WinMMLibrary, EntryPoint = "waveOutSetVolume")]
+        public static extern int WaveOutSetVolume(IntPtr handle, int volume);
+
+        [DllImport(WinMMLibrary, EntryPoint = "waveOutGetVolume")]
+        public static extern int WaveOutGetVolume(IntPtr handle, out int volume);
+
+        [DllImport(WinMMLibrary, EntryPoint = "waveOutGetPitch")]
+        public static extern int WaveOutGetPitch(IntPtr handle, out int pitch);
+
+        [DllImport(WinMMLibrary, EntryPoint = "waveOutSetPitch")]
+        public static extern int WaveOutSetPitch(IntPtr handle, int pitch);
+
+        [DllImport(WinMMLibrary, EntryPoint = "waveOutGetPlaybackRate")]
+        public static extern int WaveOutGetPlaybackRate(IntPtr handle, out int rate);
+
+        [DllImport(WinMMLibrary, EntryPoint = "waveOutSetPlaybackRate")]
+        public static extern int WaveOutSetPlaybackRate(IntPtr handle, int rate);
+
+        [DllImport(WinMMLibrary, EntryPoint = "waveOutGetPosition")]
+        public static extern int WaveOutGetPosition(IntPtr handle, [In, Out, MarshalAs(UnmanagedType.LPStruct)] MMTIME lpInfo, int size);
+
+        [DllImport(WinMMLibrary, EntryPoint = "waveOutBreakLoop")]
+        public static extern int WaveOutBreakLoop(IntPtr handle);
 
         #endregion
 
@@ -333,6 +390,63 @@ namespace SoundDevices.WinMM.Internal
             public Guid manufacturerGuid;
             public Guid productGuid;
             public Guid nameGuid;
+        }
+
+        /// <summary>
+        /// From WAVEFORMAT
+        /// </summary>
+        [StructLayout(LayoutKind.Sequential, Pack = 2)]
+        public class WaveFormat
+        {
+            public short wFormatTag;        /* format type */
+            public short nChannels;         /* number of channels (i.e. mono, stereo, etc.) */
+            public int nSamplesPerSec;    /* sample rate */
+            public int nAvgBytesPerSec;   /* for buffer estimation */
+            public short nBlockAlign;       /* block size of data */
+        }
+
+        /// <summary>
+        /// From WAVEFORMATEX
+        /// </summary>
+        [StructLayout(LayoutKind.Sequential)]
+        public class WaveFormatEx : WaveFormat
+        {
+            public short wBitsPerSample;
+            public short cbSize;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public class MMTIME
+        {
+            public MMTimeFlags wType;
+            public int u;
+            public int x;
+        }
+
+        [Flags]
+        public enum MMTimeFlags
+        {
+            MS = 0x0001,        /* time in milliseconds */
+            Samples = 0x0002,   /* number of wave samples */
+            Bytes = 0x0004,     /* current byte offset */
+            SMPTE = 0x0008,     /* SMPTE time */
+            Midi = 0x0010,      /* MIDI time */
+            Ticks = 0x0020      /* Ticks within MIDI stream */
+        }
+
+        [Flags]
+        public enum WaveOpenFlags
+        {
+            None = 0,
+            FormatQuery = 0x0001,
+            AllowSync = 0x0002,
+            Mapped = 0x0004,
+            FormatDirect = 0x0008,
+            Null = 0x00000000,      /* no callback */
+            Window = 0x00010000,    /* dwCallback is a HWND */
+            Thread = 0x00020000,    /* dwCallback is a THREAD */
+            Function = 0x00030000,  /* dwCallback is a FARPROC */
+            Event = 0x00050000      /* dwCallback is an EVENT Handle */
         }
 
     }

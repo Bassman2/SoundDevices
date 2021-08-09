@@ -10,7 +10,7 @@ namespace SoundDevices.WinMM
     {
         private readonly int deviceID;
         private IntPtr deviceHandle;
-        private readonly WinMMImport.MidiInProc midiInProc;
+        private readonly WinMMImport.Callback callback;
 
         internal static void AddDevices(List<MidiInDevice> devices)
         {
@@ -30,7 +30,7 @@ namespace SoundDevices.WinMM
         private MidiInWinMMDevice(int deviceID)
         {
             this.deviceID = deviceID;
-            this.midiInProc = HandleMessage;
+            this.callback = HandleMessage;
 
             if (WinMMImport.MidiInGetDevCaps((IntPtr)deviceID, out WinMMImport.MidiInCaps midiInCaps, WinMMImport.MidiInCapsSize) != 0)
             {
@@ -40,7 +40,6 @@ namespace SoundDevices.WinMM
             this.DeviceType = SoundDeviceType.WinMM;
             this.Name = midiInCaps.name;
             this.Version = new Version(midiInCaps.driverVersion.Major, midiInCaps.driverVersion.Minor);
-
         }
 
         #region IDisposable
@@ -68,9 +67,33 @@ namespace SoundDevices.WinMM
         public override void Open()
         {
             
-            int result = WinMMImport.MidiInOpen(out this.deviceHandle, this.deviceID, this.midiInProc, IntPtr.Zero, WinMMImport.CALLBACK_FUNCTION);
+            int result = WinMMImport.MidiInOpen(out this.deviceHandle, this.deviceID, this.callback, IntPtr.Zero, WinMMImport.CALLBACK_FUNCTION);
 
         }
+
+        public override void Start()
+        {
+            WinMMImport.MidiInStart(this.deviceHandle);
+        }
+
+        public override void Stop()
+        {
+            WinMMImport.MidiInStop(this.deviceHandle);
+        }
+        
+        public override void Reset()
+        {
+            WinMMImport.MidiInReset(this.deviceHandle);
+        }
+
+        public override void Close()
+        {
+            WinMMImport.MidiInReset(this.deviceHandle);
+            WinMMImport.MidiInClose(this.deviceHandle);
+        }
+
+        // start Clock
+
 
         private void HandleMessage(IntPtr hnd, int msg, IntPtr instance, IntPtr param1, IntPtr param2)
         {
@@ -93,28 +116,6 @@ namespace SoundDevices.WinMM
             case WinMMInMsg.MIM_LONGERROR:
                 break;
             }
-        }
-        
-        public override void Close()
-        {
-            WinMMImport.MidiInReset(this.deviceHandle);
-            WinMMImport.MidiInClose(this.deviceHandle);
-        }
-
-        public override void Reset()
-        {
-            WinMMImport.MidiInReset(this.deviceHandle);
-        }
-
-        // start Clock
-        public override void Start()
-        {
-            WinMMImport.MidiInStart(this.deviceHandle);
-        }
-
-        public override void Stop()
-        {
-            WinMMImport.MidiInStop(this.deviceHandle);
         }
     }
 }

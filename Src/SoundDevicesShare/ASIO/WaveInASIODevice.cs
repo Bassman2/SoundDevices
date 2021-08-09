@@ -193,5 +193,20 @@ namespace SoundDevices.ASIO
         }
 
         #endregion
+
+        public override void Open()
+        { }
+
+        public override void Start()
+        { }
+
+        public override void Stop()
+        { }
+
+        public override void Reset()
+        { }
+
+        public override void Close()
+        { }
     }
 }

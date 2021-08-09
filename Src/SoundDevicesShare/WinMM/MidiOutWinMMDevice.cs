@@ -11,7 +11,7 @@ namespace SoundDevices.WinMM
     {
         private readonly int deviceID;
         private IntPtr deviceHandle;
-        private readonly WinMMImport.MidiOutProc midiOutProc;
+        private readonly WinMMImport.Callback callback;
 
         internal static void AddDevices(List<MidiOutDevice> devices)
         {
@@ -32,7 +32,7 @@ namespace SoundDevices.WinMM
         private MidiOutWinMMDevice(int deviceID)
         {
             this.deviceID = deviceID;
-            this.midiOutProc = HandleMessage;
+            this.callback = HandleMessage;
 
 
             if (WinMMImport.MidiOutGetDevCaps((IntPtr)deviceID, out WinMMImport.MidiOutCaps midiOutCaps, WinMMImport.MidiOutCapsSize) != 0)
@@ -72,7 +72,7 @@ namespace SoundDevices.WinMM
         public override void Open()
         {
 
-            int result = WinMMImport.MidiOutOpen(out this.deviceHandle, this.deviceID, this.midiOutProc, IntPtr.Zero, WinMMImport.CALLBACK_FUNCTION);
+            int result = WinMMImport.MidiOutOpen(out this.deviceHandle, this.deviceID, this.callback, IntPtr.Zero, WinMMImport.CALLBACK_FUNCTION);
 
         }
 

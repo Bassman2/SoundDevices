@@ -41,9 +41,10 @@ namespace SoundDevices
         }
 
         public abstract void Open();
-        public abstract void Close();
-        public abstract void Reset();
         public abstract void Send(int msg);
         public abstract void Send(byte[] data);
+        public abstract void Reset();
+        public abstract void Close();
+
     }
 }

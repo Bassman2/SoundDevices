@@ -1,6 +1,7 @@
 ﻿using SoundDevices.WinMM.Internal;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -8,27 +9,36 @@ namespace SoundDevices.WinMM
 {
     internal class WaveOutWinMMDevice : WaveOutDevice
     {
-        private static readonly int sizeWaveOutCaps = Marshal.SizeOf(typeof(WinMMImport.WaveOutCaps));
+        private readonly int deviceID;
+        private IntPtr deviceHandle;
 
         public static void AddDevices(List<WaveOutDevice> devices)
         {
             for (int i = 0; i < WinMMImport.WaveOutGetNumDevs(); i++)
             {
-                if (WinMMImport.WaveOutGetDevCaps((IntPtr)i, out WinMMImport.WaveOutCaps waveOutCaps, sizeWaveOutCaps) == 0)
+                try
                 {
-                    devices.Add(new WaveOutDevice
-                    {
-                        DeviceType = SoundDeviceType.WinMM,
-                        Name = waveOutCaps.name,
-                        Version = new Version(waveOutCaps.driverVersion.Major, waveOutCaps.driverVersion.Minor)
-                    });
+                    devices.Add(new WaveOutWinMMDevice(i));
+                }
+                catch (SoundDeviceException ex)
+                {
+                    Debug.WriteLine(ex);
                 }
             }
         }
 
-        
+        private WaveOutWinMMDevice(int deviceID)
+        {
+            this.deviceID = deviceID;
 
-        
+            if (WinMMImport.WaveOutGetDevCaps((IntPtr)deviceID, out WinMMImport.WaveOutCaps waveOutCaps, WinMMImport.WaveOutCapsSize) != 0)
+            {
+                throw new SoundDeviceException("WaveOutGetDevCaps failed");
+            }
+            this.DeviceType = SoundDeviceType.WinMM;
+            this.Name = waveOutCaps.name;
+            this.Version = new Version(waveOutCaps.driverVersion.Major, waveOutCaps.driverVersion.Minor);
+        }
 
         #region IDisposable
 
@@ -50,5 +60,14 @@ namespace SoundDevices.WinMM
         }
 
         #endregion
+
+        public override void Open()
+        { }
+
+        public override void Reset()
+        { }
+
+        public override void Close()
+        { }
     }
 }

@@ -2,6 +2,7 @@
 using SoundDevices.WinMM.Internal;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -9,28 +10,38 @@ namespace SoundDevices.WinMM
 {
     internal class WaveInWinMMDevice : WaveInDevice
     {
-        private static readonly int sizeWaveInCaps = Marshal.SizeOf(typeof(WinMMImport.WaveInCaps));
-
+        private readonly int deviceID;
+        private IntPtr deviceHandle;
+                
         internal static void AddDevices(List<WaveInDevice> devices)
         {
             int num = WinMMImport.WaveInGetNumDevs();
             for (int i = 0; i < num; i++)
             {
-                if (WinMMImport.WaveInGetDevCaps((IntPtr)i, out WinMMImport.WaveInCaps waveInCaps, sizeWaveInCaps) == 0)
+                try
                 {
-                    devices.Add(new WaveInDevice
-                    {
-                        DeviceType = SoundDeviceType.WinMM,
-                        Name = waveInCaps.name,
-                        Version = new Version(waveInCaps.driverVersion.Major, waveInCaps.driverVersion.Minor)
-                    });
+                    devices.Add(new WaveInWinMMDevice(i));
+                }
+                catch (SoundDeviceException ex)
+                {
+                    Debug.WriteLine(ex);
                 }
             }
         }
 
-       
+        private WaveInWinMMDevice(int deviceID)
+        {
+            this.deviceID = deviceID;
 
-        
+            if (WinMMImport.WaveInGetDevCaps((IntPtr)deviceID, out WinMMImport.WaveInCaps waveInCaps, WinMMImport.WaveInCapsSize) != 0)
+            {
+                throw new SoundDeviceException("WaveInGetDevCaps failed");
+            }
+
+            this.DeviceType = SoundDeviceType.WinMM;
+            this.Name = waveInCaps.name;
+            this.Version = new Version(waveInCaps.driverVersion.Major, waveInCaps.driverVersion.Minor);
+        }
 
         #region IDisposable
 
@@ -42,7 +53,8 @@ namespace SoundDevices.WinMM
             {
                 if (disposing)
                 {
-                    // TODO: dispose managed state (managed objects)
+                    WinMMImport.WaveInReset(this.deviceHandle);
+                    WinMMImport.WaveInClose(this.deviceHandle);
                 }
 
                 // TODO: free unmanaged resources (unmanaged objects) and override finalizer
@@ -52,5 +64,20 @@ namespace SoundDevices.WinMM
         }
 
         #endregion
+
+        public override void Open()
+        { }
+
+        public override void Start()
+        { }
+
+        public override void Stop()
+        { }
+
+        public override void Reset()
+        { }
+
+        public override void Close()
+        { }
     }
 }

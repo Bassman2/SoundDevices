@@ -40,6 +40,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)MidiPlayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MidiRecorder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SoundDeviceException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WaveFile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WavePlayer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WaveRecorder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WinMM\Internal\WinMMImport.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SoundDevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ASIO\WaveInASIODevice.cs" />

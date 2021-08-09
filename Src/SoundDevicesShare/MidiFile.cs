@@ -25,13 +25,13 @@ namespace SoundDevices
 
         public void Load(string fileName)
         {
-            using FileStream midiStream = File.Open(fileName, FileMode.Open);
-            Load(midiStream);
+            using FileStream stream = File.Open(fileName, FileMode.Open);
+            Load(stream);
         }
 
-        public void Load(Stream midiStream)
+        public void Load(Stream stream)
         {
-            using BinaryReader reader = new(midiStream);
+            using BinaryReader reader = new(stream);
 
             // read MIDI chunk header
             string chunkID = reader.ReadChunkID();
@@ -57,6 +57,17 @@ namespace SoundDevices
             {
                this.Tracks.Add(new MidiFileTrack(this, reader));
             }
+        }
+
+        public void Save(string fileName)
+        {
+            using FileStream stream = File.Create(fileName);
+            Save(stream);
+        }
+
+        public void Save(Stream stream)
+        {
+            using BinaryWriter writer = new(stream);
         }
     }
 }

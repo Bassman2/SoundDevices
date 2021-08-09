@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace SoundDevices
 {
-    public class WaveInDevice : SoundDevice
+    public abstract class WaveInDevice : SoundDevice
     {
         public static IEnumerable<WaveInDevice> GetDevices(SoundDeviceType soundDeviceTypes = SoundDeviceType.All)
         {
@@ -44,5 +44,11 @@ namespace SoundDevices
             }
             return devices;
         }
+
+        public abstract void Open();
+        public abstract void Start();
+        public abstract void Stop();
+        public abstract void Reset();
+        public abstract void Close();
     }
 }
