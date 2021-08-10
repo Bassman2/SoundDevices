@@ -10,7 +10,7 @@ namespace SoundDevices.WinMM
     {
         private readonly int deviceID;
         private IntPtr deviceHandle;
-        private readonly WinMMImport.Callback callback;
+        private readonly WinMMImport.Callback deviceCallback;
 
         internal static void AddDevices(List<MidiInDevice> devices)
         {
@@ -30,7 +30,7 @@ namespace SoundDevices.WinMM
         private MidiInWinMMDevice(int deviceID)
         {
             this.deviceID = deviceID;
-            this.callback = HandleMessage;
+            this.deviceCallback = HandleMessage;
 
             if (WinMMImport.MidiInGetDevCaps((IntPtr)deviceID, out WinMMImport.MidiInCaps midiInCaps, WinMMImport.MidiInCapsSize) != 0)
             {
@@ -67,7 +67,7 @@ namespace SoundDevices.WinMM
         public override void Open()
         {
             
-            int result = WinMMImport.MidiInOpen(out this.deviceHandle, this.deviceID, this.callback, IntPtr.Zero, WinMMImport.CALLBACK_FUNCTION);
+            int result = WinMMImport.MidiInOpen(out this.deviceHandle, this.deviceID, this.deviceCallback, IntPtr.Zero, WinMMImport.CALLBACK_FUNCTION);
 
         }
 
@@ -95,25 +95,25 @@ namespace SoundDevices.WinMM
         // start Clock
 
 
-        private void HandleMessage(IntPtr hnd, int msg, IntPtr instance, IntPtr param1, IntPtr param2)
+        private void HandleMessage(IntPtr hnd, WinMMMsg msg, IntPtr instance, IntPtr param1, IntPtr param2)
         {
-            switch ((WinMMInMsg)msg)
+            switch (msg)
             {
-            case WinMMInMsg.MIM_OPEN:
+            case WinMMMsg.MIM_OPEN:
                 break;
-            case WinMMInMsg.MIM_CLOSE:
+            case WinMMMsg.MIM_CLOSE:
                 break;
-            case WinMMInMsg.MIM_DATA:
+            case WinMMMsg.MIM_DATA:
                 //this.MidiMsgReceived?.Invoke(this, new MidiMsgEventArgs((int)param1));
                 RaiseMidiMsgReceived((int)param1);
                 break;
-            case WinMMInMsg.MIM_MOREDATA:
+            case WinMMMsg.MIM_MOREDATA:
                 break;
-            case WinMMInMsg.MIM_LONGDATA:
+            case WinMMMsg.MIM_LONGDATA:
                 break;
-            case WinMMInMsg.MIM_ERROR:
+            case WinMMMsg.MIM_ERROR:
                 break;
-            case WinMMInMsg.MIM_LONGERROR:
+            case WinMMMsg.MIM_LONGERROR:
                 break;
             }
         }

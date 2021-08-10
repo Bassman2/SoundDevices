@@ -12,7 +12,8 @@ namespace SoundDevices.WinMM
     {
         private readonly int deviceID;
         private IntPtr deviceHandle;
-                
+        private readonly WinMMImport.Callback deviceCallback;
+
         internal static void AddDevices(List<WaveInDevice> devices)
         {
             int num = WinMMImport.WaveInGetNumDevs();
@@ -65,19 +66,41 @@ namespace SoundDevices.WinMM
 
         #endregion
 
-        public override void Open()
-        { }
+        public override void Open(WaveFormat waveFormat = null)
+        {
+            waveFormat = waveFormat ?? new WaveFormat();
+
+            WinMMImport.WaveFormatEx format = new();
+            format.wFormatTag = 1; // WAVE_FORMAT_PCM
+            format.nChannels = (short)waveFormat.Channels;
+            format.nSamplesPerSec = (short)waveFormat.SampleRate;
+            format.wBitsPerSample = (short)waveFormat.BitRate;
+            format.nBlockAlign = (short)(format.nChannels * format.wBitsPerSample / 8);
+            format.nAvgBytesPerSec = format.nSamplesPerSec * format.nBlockAlign;
+            format.cbSize = (short)WinMMImport.WaveFormatExSize;
+            
+            WinMMImport.WaveInOpen(out this.deviceHandle, this.deviceID, format, this.deviceCallback, IntPtr.Zero, WinMMImport.CALLBACK_FUNCTION);
+        }
 
         public override void Start()
-        { }
+        {
+            WinMMImport.WaveInStart(this.deviceHandle);
+        }
 
         public override void Stop()
-        { }
+        {
+            WinMMImport.WaveInStop(this.deviceHandle);
+
+        }
 
         public override void Reset()
-        { }
+        {
+            WinMMImport.WaveInReset(this.deviceHandle);
+        }
 
         public override void Close()
-        { }
+        {
+            WinMMImport.WaveInClose(this.deviceHandle);
+        }
     }
 }

@@ -41,6 +41,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)MidiRecorder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SoundDeviceException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WaveFile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WaveFormat.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WavePlayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WaveRecorder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WinMM\Internal\WinMMImport.cs" />
@@ -49,9 +50,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)ASIO\WaveOutASIODevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DirectX\WaveInDirectXDevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DirectX\WaveOutDirectXDevice.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)WinMM\Internal\WinMMInMsg.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)WinMM\Internal\WinMMOutMsg.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MidiMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WinMM\Internal\WinMMMsg.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WinMM\MidiInWinMMDevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WinMM\MidiOutWinMMDevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WinMM\Internal\MMVersion.cs" />

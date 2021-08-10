@@ -4,8 +4,20 @@ using System.Text;
 
 namespace SoundDevices.WinMM.Internal
 {
-    internal enum WinMMInMsg : int
+    public enum WinMMMsg : int
     {
+        // waveform output 
+        WOM_OPEN = 0x3BB,
+        WOM_CLOSE = 0x3BC,
+        WOM_DONE = 0x3BD,
+
+        // waveform input 
+        WIM_OPEN = 0x3BE,
+        WIM_CLOSE = 0x3BF,
+        WIM_DATA = 0x3C0,
+
+        // MIDI input 
+
         /// <summary>
         /// The MIM_OPEN message is sent to a MIDI input callback function when a MIDI input device is opened.
         /// </summary>
@@ -40,6 +52,25 @@ namespace SoundDevices.WinMM.Internal
         /// The MIM_MOREDATA message is sent to a MIDI input callback function when a MIDI message is received by a MIDI input device but the application is not processing MIM_DATA messages fast enough to keep up with the input device driver. 
         /// The callback function receives this message only when the application specifies MIDI_IO_STATUS in the call to the midiInOpen function.
         /// </summary>
-        MIM_MOREDATA = 0x3CC
+        MIM_MOREDATA = 0x3CC,
+
+        // MIDI output 
+
+        /// <summary>
+        /// The MOM_OPEN message is sent to a MIDI output callback function when a MIDI output device is opened.
+        /// </summary>
+        MOM_OPEN = 0x3C7,
+
+        /// <summary>
+        /// The WIM_CLOSE message is sent to the given waveform-audio input callback function when a waveform-audio input device is closed. The device handle is no longer valid after this message has been sent.
+        /// </summary>
+        MOM_CLOSE = 0x3C8,
+
+        /// <summary>
+        /// The MOM_DONE message is sent to a MIDI output callback function when the specified system-exclusive or stream buffer has been played and is being returned to the application.
+        /// </summary>
+        MOM_DONE = 0x3C9,
+
+        MOM_POSITIONCB = 0x3CA,
     }
 }

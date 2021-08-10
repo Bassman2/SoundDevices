@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace SoundDevices.ASIO
@@ -31,8 +32,18 @@ namespace SoundDevices.ASIO
 
         #endregion
 
-        public override void Open()
+        public override void Open(WaveFormat waveFormat = null)
         { }
+
+        public override void Play(Stream stream)
+        {
+
+        }
+
+        public override void Play(byte[] buffer, int offset, int count)
+        {
+
+        }
 
         public override void Reset()
         { }

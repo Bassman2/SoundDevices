@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace SoundDevices.WinMM.Internal
 {
@@ -14,6 +15,8 @@ namespace SoundDevices.WinMM.Internal
         internal static readonly int WaveInCapsSize = Marshal.SizeOf(typeof(WinMMImport.WaveInCaps));
         internal static readonly int WaveOutCapsSize = Marshal.SizeOf(typeof(WinMMImport.WaveOutCaps));
 
+        internal static readonly int WaveFormatExSize = Marshal.SizeOf(typeof(WinMMImport.WaveFormatEx));
+        internal static readonly int WaveHeaderSize = Marshal.SizeOf(typeof(WinMMImport.WAVEHDR));
         /*
         CALLBACK_FUNCTION	The dwCallback parameter is a callback procedure address.
         CALLBACK_NULL	There is no callback mechanism. This value is the default setting.
@@ -23,7 +26,7 @@ namespace SoundDevices.WinMM.Internal
         */
         public const int CALLBACK_FUNCTION = 0x30000;
 
-        public delegate void Callback(IntPtr handle, int msg, IntPtr instance, IntPtr param1, IntPtr param2);
+        public delegate void Callback(IntPtr handle, WinMMMsg msg, IntPtr instance, IntPtr param1, IntPtr param2);
         
         #region MIDI IN
 
@@ -99,7 +102,7 @@ namespace SoundDevices.WinMM.Internal
         public static extern int WaveInGetDevCaps(IntPtr deviceID, out WaveInCaps waveinCaps, int sizeWaveInCaps);
 
         [DllImport(WinMMLibrary, EntryPoint = "waveInOpen")]
-        public static extern int WaveInOpen(out IntPtr handle, int deviceID, [In, MarshalAs(UnmanagedType.LPStruct)] WaveFormatEx b, Callback callback, IntPtr instance, WaveOpenFlags dwFlags);
+        public static extern int WaveInOpen(out IntPtr handle, int deviceID, [In, MarshalAs(UnmanagedType.LPStruct)] WaveFormatEx b, Callback callback, IntPtr instance, int dwFlags);
 
         [DllImport(WinMMLibrary, EntryPoint = "waveInStart")]
         public static extern int WaveInStart(IntPtr handle);
@@ -113,6 +116,21 @@ namespace SoundDevices.WinMM.Internal
         [DllImport(WinMMLibrary, EntryPoint = "waveInReset")]
         public static extern int WaveInReset(IntPtr handle);
 
+        [DllImport(WinMMLibrary, EntryPoint = "waveInGetPosition")]
+        public static extern int WaveInGetPosition(IntPtr handle, [In, Out, MarshalAs(UnmanagedType.LPStruct)] MMTIME pmmt, int cbmmt);
+
+        [DllImport(WinMMLibrary, EntryPoint = "waveInMessage")]
+        public static extern int WaveInMessage(IntPtr handle, int uMsg, IntPtr dw1, IntPtr dw2);
+
+        [DllImport(WinMMLibrary, EntryPoint = "waveInPrepareHeader")]
+        public static extern int WaveInPrepareHeader(IntPtr handle, [In, Out, MarshalAs(UnmanagedType.LPStruct)] WAVEHDR waveInHdr, int uSize);
+
+        [DllImport(WinMMLibrary, EntryPoint = "waveInUnprepareHeader")]
+        public static extern int WaveInUnprepareHeader(IntPtr handle, [In, Out, MarshalAs(UnmanagedType.LPStruct)] WAVEHDR waveInHdr, int size);
+
+        [DllImport(WinMMLibrary, EntryPoint = "waveInAddBuffer")]
+        public static extern int WaveInAddBuffer(IntPtr handle, IntPtr waveInHdr, int size);
+
         #endregion
 
         #region WAVE Out
@@ -124,7 +142,7 @@ namespace SoundDevices.WinMM.Internal
         public static extern int WaveOutGetDevCaps(IntPtr deviceID, out WaveOutCaps waveOutCaps, int sizeWaveOutCaps);
 
         [DllImport(WinMMLibrary, EntryPoint = "waveOutOpen")]
-        public static extern int WaveOutOpen(out IntPtr handle, int deviceID, [In, MarshalAs(UnmanagedType.LPStruct)] WaveFormatEx b, Callback callback, IntPtr instance, WaveOpenFlags dwFlags);
+        public static extern int WaveOutOpen(out IntPtr handle, int deviceID, [In, MarshalAs(UnmanagedType.LPStruct)] WaveFormatEx b, Callback callback, IntPtr instance, int dwFlags);
                 
         [DllImport(WinMMLibrary, EntryPoint = "waveOutReset")]
         public static extern int WaveOutReset(IntPtr handle);
@@ -161,6 +179,22 @@ namespace SoundDevices.WinMM.Internal
 
         [DllImport(WinMMLibrary, EntryPoint = "waveOutBreakLoop")]
         public static extern int WaveOutBreakLoop(IntPtr handle);
+
+        [DllImport(WinMMLibrary, EntryPoint = "waveOutMessage")]
+        public static extern int WaveOutMessage(IntPtr handle, int uMsg, IntPtr dw1, IntPtr dw2);
+
+
+        [DllImport(WinMMLibrary, EntryPoint = "waveOutPrepareHeader")]
+        public static extern int WaveOutPrepareHeader(IntPtr handle, [In, Out, MarshalAs(UnmanagedType.LPStruct)] WAVEHDR waveHeader, int uSize);
+
+        [DllImport(WinMMLibrary, EntryPoint = "waveOutUnprepareHeader")]
+        public static extern int WaveOutUnprepareHeader(IntPtr handle, IntPtr ptrWaveHeader, int uSize);
+
+        [DllImport(WinMMLibrary, EntryPoint = "waveOutWrite")]
+        public static extern int WaveOutWrite(IntPtr handle, [In, Out, MarshalAs(UnmanagedType.LPStruct)] WAVEHDR waveHeader, int uSize);
+
+        [DllImport(WinMMLibrary, ExactSpelling = true, CharSet = CharSet.Unicode, EntryPoint = "waveOutGetErrorTextW")]
+        public static extern int WaveOutGetErrorText(int errvalue, [Out] StringBuilder lpText, int uSize);
 
         #endregion
 
@@ -447,6 +481,60 @@ namespace SoundDevices.WinMM.Internal
             Thread = 0x00020000,    /* dwCallback is a THREAD */
             Function = 0x00030000,  /* dwCallback is a FARPROC */
             Event = 0x00050000      /* dwCallback is an EVENT Handle */
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct WAVEHDR //: IDisposable
+        {
+            public IntPtr lpData;
+            public int dwBufferLength;
+            public int dwBytesRecorded;
+            public IntPtr dwUser;
+            public WHDR dwFlags;
+            public int dwLoops;
+            public IntPtr lpNext;
+            public IntPtr Reserved;
+
+            /*
+            public WAVEHDR()
+            {
+            }
+
+            public WAVEHDR(int iMaxSize)
+            {
+                lpData = Marshal.AllocCoTaskMem(iMaxSize);
+                dwBufferLength = iMaxSize;
+                dwUser = IntPtr.Zero;
+                dwFlags = WHDR.None;
+                dwLoops = 0;
+                lpNext = IntPtr.Zero;
+                Reserved = IntPtr.Zero;
+            }
+
+            #region IDisposable Members
+
+            public void Dispose()
+            {
+                if (lpData != IntPtr.Zero)
+                {
+                    Marshal.FreeCoTaskMem(lpData);
+                    lpData = IntPtr.Zero;
+                }
+            }
+
+            #endregion
+            */
+        }
+
+        [Flags]
+        public enum WHDR
+        {
+            None = 0x0,
+            Done = 0x00000001,      /* done bit */
+            Prepared = 0x00000002,  /* set if this header has been prepared */
+            BeginLoop = 0x00000004, /* loop start block */
+            EndLoop = 0x00000008,   /* loop end block */
+            InQueue = 0x00000010    /* reserved for driver */
         }
 
     }

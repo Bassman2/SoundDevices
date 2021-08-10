@@ -11,7 +11,7 @@ namespace SoundDevices.WinMM
     {
         private readonly int deviceID;
         private IntPtr deviceHandle;
-        private readonly WinMMImport.Callback callback;
+        private readonly WinMMImport.Callback deviceCallback;
 
         internal static void AddDevices(List<MidiOutDevice> devices)
         {
@@ -32,7 +32,7 @@ namespace SoundDevices.WinMM
         private MidiOutWinMMDevice(int deviceID)
         {
             this.deviceID = deviceID;
-            this.callback = HandleMessage;
+            this.deviceCallback = HandleMessage;
 
 
             if (WinMMImport.MidiOutGetDevCaps((IntPtr)deviceID, out WinMMImport.MidiOutCaps midiOutCaps, WinMMImport.MidiOutCapsSize) != 0)
@@ -72,19 +72,19 @@ namespace SoundDevices.WinMM
         public override void Open()
         {
 
-            int result = WinMMImport.MidiOutOpen(out this.deviceHandle, this.deviceID, this.callback, IntPtr.Zero, WinMMImport.CALLBACK_FUNCTION);
+            int result = WinMMImport.MidiOutOpen(out this.deviceHandle, this.deviceID, this.deviceCallback, IntPtr.Zero, WinMMImport.CALLBACK_FUNCTION);
 
         }
 
-        private void HandleMessage(IntPtr hnd, int msg, IntPtr instance, IntPtr param1, IntPtr param2)
+        private void HandleMessage(IntPtr hnd, WinMMMsg msg, IntPtr instance, IntPtr param1, IntPtr param2)
         {
-            switch ((WinMMOutMsg)msg)
+            switch (msg)
             {
-            case WinMMOutMsg.MOM_OPEN:
+            case WinMMMsg.MOM_OPEN:
                 break;
-            case WinMMOutMsg.MOM_CLOSE:
+            case WinMMMsg.MOM_CLOSE:
                 break;
-            case WinMMOutMsg.MOM_DONE:
+            case WinMMMsg.MOM_DONE:
                 IntPtr headerPtr = param1;
                 WinMMImport.MidiHeader header = new WinMMImport.MidiHeader();
                 Marshal.PtrToStructure(headerPtr, header);

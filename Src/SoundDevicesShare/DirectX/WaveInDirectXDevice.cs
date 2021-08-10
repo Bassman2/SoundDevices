@@ -32,7 +32,7 @@ namespace SoundDevices.DirectX
 
         #endregion
 
-        public override void Open()
+        public override void Open(WaveFormat waveFormat = null)
         { }
 
         public override void Start()

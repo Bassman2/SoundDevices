@@ -45,7 +45,7 @@ namespace SoundDevices
             return devices;
         }
 
-        public abstract void Open();
+        public abstract void Open(WaveFormat waveFormat = null);
         public abstract void Start();
         public abstract void Stop();
         public abstract void Reset();

@@ -5,6 +5,7 @@ using SoundDevices.CoreMIDI;
 using SoundDevices.ALSA;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace SoundDevices
 {
@@ -45,7 +46,11 @@ namespace SoundDevices
             return devices;
         }
 
-        public abstract void Open();
+        public abstract void Open(WaveFormat waveFormat = null);
+        public abstract void Play(Stream stream);
+        public abstract void Play(byte[] buffer, int offset, int count);
+        //public abstract void Pause();
+        //public abstract void Restart();
         public abstract void Reset();
         public abstract void Close();
 
