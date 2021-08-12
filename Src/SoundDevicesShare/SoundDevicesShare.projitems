@@ -14,7 +14,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)ALSA\MidiOutALSADevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ALSA\WaveInALSADevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ALSA\WaveOutALSADevice.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ASIO\Internal\ASIODriverInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ASIO\Internal\AsioCallbacks.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ASIO\Internal\AsioChannelInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ASIO\Internal\AsioError.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ASIO\Internal\AsioMessageSelector.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ASIO\Internal\AsioSampleType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ASIO\Internal\_old\ASIODriverInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ASIO\Internal\AsioDriverVTable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ASIO\Internal\ASIOImport.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BinaryReaderExt.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CoreMIDI\MidiInCoreMIDIDevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CoreMIDI\MidiOutCoreMIDIDevice.cs" />
@@ -25,8 +32,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)DirectX\Internal\DirectMusicDevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DirectX\MidiInDirectXDevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DirectX\MidiOutDirectXDevice.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ASIO\Internal\ASIODevice.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ASIO\Internal\AsioDriver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ASIO\Internal\_old\ASIODevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ASIO\Internal\_old\AsioDriver.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DirectX\Internal\IDirectSound.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DirectX\Internal\IDirectSound8.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DirectX\Internal\DirectXDevice.cs" />
@@ -65,9 +72,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)ALSA\Internal\" />
-    <Folder Include="$(MSBuildThisFileDirectory)ASIO\Internal\" />
+    <Folder Include="$(MSBuildThisFileDirectory)ASIO\Internal\_old\" />
     <Folder Include="$(MSBuildThisFileDirectory)CoreMIDI\Internal\" />
     <Folder Include="$(MSBuildThisFileDirectory)DirectX\Internal\" />
+    <Folder Include="$(MSBuildThisFileDirectory)MediaFoundation\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)Marshal.txt" />

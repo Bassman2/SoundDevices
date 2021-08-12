@@ -39,13 +39,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MidiKeyboardConsole50", "De
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MidiViewerConsole50", "Demo\MidiViewerConsole50\MidiViewerConsole50.csproj", "{DC322011-E1C2-4C5C-BE71-1ECD9B00537D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MidiFileViewerConsole50", "Demo\MidiFileViewerConsole50\MidiFileViewerConsole50.csproj", "{6D0BCDBD-C57B-4224-A7FF-4984551029E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MidiFileViewerConsole50", "Demo\MidiFileViewerConsole50\MidiFileViewerConsole50.csproj", "{6D0BCDBD-C57B-4224-A7FF-4984551029E1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WaveFileViewerConsole50", "Demo\WaveFileViewerConsole50\WaveFileViewerConsole50.csproj", "{84562DF0-C05D-4345-86E1-B5959563FC90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WavePlayerConsole50", "Demo\WavePlayerConsole50\WavePlayerConsole50.csproj", "{3518789C-C648-42AF-B7C5-2B44D79861E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WavePlayerConsole50", "Demo\WavePlayerConsole50\WavePlayerConsole50.csproj", "{3518789C-C648-42AF-B7C5-2B44D79861E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WaveRecorderConsole50", "Demo\WaveRecorderConsole50\WaveRecorderConsole50.csproj", "{2F0BF38D-5A80-4B7F-9CA7-24BA5F137B4A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WaveRecorderConsole50", "Demo\WaveRecorderConsole50\WaveRecorderConsole50.csproj", "{2F0BF38D-5A80-4B7F-9CA7-24BA5F137B4A}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution

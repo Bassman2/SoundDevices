@@ -26,6 +26,8 @@ namespace SoundDevices
 
         public void Play(MidiOutDevice midiOutDevice, Stream midiStream)
         {
+            this.midiOutDevice = midiOutDevice;
+
             using BinaryReader reader = new BinaryReader(midiStream);
 
             ReadHeaderChunk(reader);
@@ -216,7 +218,7 @@ namespace SoundDevices
         private class MidiTrack
         {
             private readonly long ticksPerQuarterNote;
-            private long midiTicks;
+            //private long midiTicks;
             
 
             public MidiTrack(Stream stream, int ticksPerQuarterNote)

@@ -2,39 +2,64 @@
 using SoundDevices.ASIO.Internal;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
 using System.Text;
 
 namespace SoundDevices.ASIO
 {
+    [SupportedOSPlatform("Windows")]
     public class WaveInASIODevice : WaveInDevice
     {
-        private Guid devieId;
+        private Guid classID;
+        private ASIOImport asioImport;
+
         //private IntPtr pAsioComObject;
         //private IntPtr pinnedcallbacks;
         //private AsioDriverVTable asioDriverVTable;
 
+        //[SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>")]
         internal static void AddDevices(List<WaveInDevice> devices)
         {
-#pragma warning disable CA1416 // Validate platform compatibility
             var regKey = Registry.LocalMachine.OpenSubKey("SOFTWARE\\ASIO");
             if (regKey != null)
             {
                 foreach (var name in regKey.GetSubKeyNames())
                 {
-                    var regSubKey = regKey.OpenSubKey(name);
-
-                    var guid = new Guid(regSubKey.GetValue("CLSID").ToString());
-                    string description = regSubKey.GetValue("Description").ToString();
-                    //return GetAsioDriverByGuid(new Guid(guid));
-                    new ASIODevice().CreateDevice(guid);
-                    devices.Add(new WaveInASIODevice() { devieId = guid, Name = name, DeviceType = SoundDeviceType.ASIO, Description = description });
+                    try
+                    {
+                        var regSubKey = regKey.OpenSubKey(name);
+                        var classID = new Guid((string)regSubKey.GetValue("CLSID"));
+                        string description = regSubKey.GetValue("Description") as string;
+                        devices.Add(new WaveInASIODevice(classID, name, description));
+                    }
+                    catch (SoundDeviceException ex)
+                    {
+                        Debug.WriteLine(ex);
+                    }
                 }
                 regKey.Close();
 
             }
-#pragma warning restore CA1416 // Validate platform compatibility
         }
+
+        private WaveInASIODevice(Guid classID, string name, string description)
+        {
+            this.classID = classID;
+            this.DeviceType = SoundDeviceType.ASIO;
+            this.Name = name;
+            this.Description = description;
+
+            this.asioImport = new ASIOImport();
+            this.asioImport.InitFromGuid(classID);
+
+            string driverName = this.asioImport.GetDriverName();
+            int driverVersion = this.asioImport.GetDriverVersion();
+
+        }
+
 
         private void Create(Guid asioGuid)
         {

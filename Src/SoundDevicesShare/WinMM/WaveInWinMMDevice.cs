@@ -42,6 +42,12 @@ namespace SoundDevices.WinMM
             this.DeviceType = SoundDeviceType.WinMM;
             this.Name = waveInCaps.name;
             this.Version = new Version(waveInCaps.driverVersion.Major, waveInCaps.driverVersion.Minor);
+            this.deviceCallback = OnCallback;
+        }
+
+        private void OnCallback(IntPtr handle, WinMMMsg msg, IntPtr instance, IntPtr param1, IntPtr param2)
+        {
+            //throw new NotImplementedException();
         }
 
         #region IDisposable
