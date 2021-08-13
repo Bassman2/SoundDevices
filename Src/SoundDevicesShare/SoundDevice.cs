@@ -6,8 +6,6 @@ namespace SoundDevices
 {
     public abstract class SoundDevice : IDisposable
     {
-
-
         public string Name { get; internal set; }
         public string Description { get; internal set; }
         public Version Version { get; internal set; }

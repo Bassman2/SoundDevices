@@ -5,6 +5,7 @@ namespace ShowDevicesConsole50
 {
     class Program
     {
+        [STAThread]
         static void Main(string[] args)
         {
             Console.WriteLine("SoundDevices device list");
