@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SoundDevices.IO
+namespace SoundDevices.Engine
 {
     public class MidiFileException : Exception
     {

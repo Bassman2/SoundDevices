@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace SoundDevices.IO
+namespace SoundDevices.Engine
 {
     public class WaveFile
     {

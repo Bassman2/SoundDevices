@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SoundDevices.IO
+namespace SoundDevices.Engine
 {
     class MidiRecorder
     {

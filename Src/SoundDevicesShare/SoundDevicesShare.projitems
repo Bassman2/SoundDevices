@@ -28,16 +28,16 @@
     <Compile Include="$(MSBuildThisFileDirectory)IO\ASIO\Internal\ASIOImport.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\ASIO\WaveASIODevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\BinaryReaderExt.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\CoreMIDI\Internal\MidiObject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\CoreMIDI\Internal\MidiProperty.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\CoreMIDI\Internal\CoreMidiImport.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\CoreMIDI\Internal\SystemLibrary.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\CoreMIDI\MidiInCoreMIDIDevice.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\CoreMIDI\MidiOutCoreMIDIDevice.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\CoreMIDI\WaveInCoreMIDIDevice.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\CoreMIDI\WaveOutCoreMIDIDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\CoreAudio\Internal\MidiObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\CoreAudio\Internal\MidiProperty.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\CoreAudio\Internal\CoreMidiImport.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\CoreAudio\Internal\SystemLibrary.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\CoreAudio\MidiInCoreAudioDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\CoreAudio\MidiOutCoreAudioDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\CoreAudio\WaveInCoreAudioDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\CoreAudio\WaveOutCoreAudioDevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\DirectX\Internal\COMDebugger.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\CoreMIDI\Internal\CoreMidiDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\CoreAudio\Internal\CoreMidiDevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\DirectX\Internal\DirectMusicDevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\DirectX\MidiInDirectXDevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\DirectX\MidiOutDirectXDevice.cs" />
@@ -49,6 +49,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Engine\MidiFile.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Engine\MidiFileException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Engine\MidiFileTrack.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\MidiDevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\MidiKeys.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\MidiMetaEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\MidiMsg.cs" />
@@ -87,7 +88,6 @@
     <Folder Include="$(MSBuildThisFileDirectory)IO\ASIO\" />
     <Folder Include="$(MSBuildThisFileDirectory)IO\DirectX\" />
     <Folder Include="$(MSBuildThisFileDirectory)IO\MediaFoundation\" />
-    <Folder Include="$(MSBuildThisFileDirectory)IO\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)IO\Marshal.txt" />

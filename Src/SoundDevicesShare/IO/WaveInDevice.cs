@@ -37,9 +37,9 @@ namespace SoundDevices.IO
             }
             if (OperatingSystem.IsMacOS())
             {
-                if (soundDeviceTypes.HasFlag(SoundDeviceType.CoreMIDI))
+                if (soundDeviceTypes.HasFlag(SoundDeviceType.CoreAudio))
                 {
-                    WaveInCoreMIDIDevice.AddDevices(devices);
+                    WaveInCoreAudioDevice.AddDevices(devices);
                 }
             }
             return devices;

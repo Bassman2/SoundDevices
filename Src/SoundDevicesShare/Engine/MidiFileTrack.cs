@@ -1,10 +1,11 @@
-﻿using System;
+﻿using SoundDevices.IO;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace SoundDevices.IO
+namespace SoundDevices.Engine
 {
     public class MidiFileTrack
     {

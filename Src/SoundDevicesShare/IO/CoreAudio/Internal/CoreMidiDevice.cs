@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace SoundDevices.IO.CoreMidi.Internal
+namespace SoundDevices.IO.CoreAudio.Internal
 {
 	// https://developer.apple.com/documentation/coremidi
 

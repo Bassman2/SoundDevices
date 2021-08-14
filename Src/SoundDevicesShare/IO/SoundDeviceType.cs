@@ -15,6 +15,6 @@ namespace SoundDevices.IO
         // Linux
         ALSA = 0x0010,
         // Mac
-        CoreMIDI = 0x0100
+        CoreAudio = 0x0100
     }
 }

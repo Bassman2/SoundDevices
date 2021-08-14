@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SoundDevices.IO.CoreMIDI
 {
-    public class MidiOutCoreMIDIDevice : MidiOutDevice
+    public class MidiOutCoreAudioDevice : MidiOutDevice
     {
         internal static void AddDevices(List<MidiOutDevice> devices)
         {

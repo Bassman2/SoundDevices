@@ -1,13 +1,10 @@
-﻿using SoundDevices.IO.ALSA;
-using SoundDevices.IO.CoreMIDI;
-using SoundDevices.IO.DirectX;
-using SoundDevices.IO.WinMM;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace SoundDevices.IO
 {
-    public abstract class MidiInDevice : SoundDevice
+    public abstract class MidiDevice : SoundDevice
     {
         public static IEnumerable<MidiInDevice> GetDevices(SoundDeviceType soundDeviceTypes = SoundDeviceType.All)
         {
@@ -16,42 +13,28 @@ namespace SoundDevices.IO
             {
                 if (soundDeviceTypes.HasFlag(SoundDeviceType.WinMM))
                 {
-                    MidiInWinMMDevice.AddDevices(devices);
+                    //MidiInWinMMDevice.AddDevices(devices);
                 }
                 if (soundDeviceTypes.HasFlag(SoundDeviceType.DirectX))
                 {
-                    MidiInDirectXDevice.AddDevices(devices);
+                    //MidiInDirectXDevice.AddDevices(devices);
                 }
             }
             if (OperatingSystem.IsLinux())
             {
                 if (soundDeviceTypes.HasFlag(SoundDeviceType.ALSA))
                 {
-                    MidiInALSADevice.AddDevices(devices);
+                    //MidiInALSADevice.AddDevices(devices);
                 }
             }
             if (OperatingSystem.IsMacOS())
             {
                 if (soundDeviceTypes.HasFlag(SoundDeviceType.CoreAudio))
                 {
-                    MidiInCoreAudioDevice.AddDevices(devices);
+                    //MidiInCoreAudioDevice.AddDevices(devices);
                 }
             }
             return devices;
         }
-
-        public event EventHandler<MidiMsgEventArgs> MidiMsgReceived;
-
-        protected void RaiseMidiMsgReceived(int midiMsg)
-        {
-            this.MidiMsgReceived?.Invoke(this, new MidiMsgEventArgs(midiMsg));
-        }
-
-        public abstract void Open();
-        public abstract void Start();
-        public abstract void Stop(); 
-        public abstract void Reset();
-        public abstract void Close();
-
     }
 }

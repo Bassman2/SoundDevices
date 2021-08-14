@@ -32,9 +32,9 @@ namespace SoundDevices.IO
             }
             if (OperatingSystem.IsMacOS())
             {
-                if (soundDeviceTypes.HasFlag(SoundDeviceType.CoreMIDI))
+                if (soundDeviceTypes.HasFlag(SoundDeviceType.CoreAudio))
                 {
-                    MidiOutCoreMIDIDevice.AddDevices(devices);
+                    MidiOutCoreAudioDevice.AddDevices(devices);
                 }
             }
             return devices.ToArray();

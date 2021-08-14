@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SoundDevices.IO.CoreMIDI
 {
-    internal class WaveInCoreMIDIDevice : WaveInDevice
+    internal class WaveInCoreAudioDevice : WaveInDevice
     {
         internal static void AddDevices(List<WaveInDevice> devices)
         {
