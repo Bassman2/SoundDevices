@@ -18,7 +18,7 @@ ALSA
 
 ### Mac
 
-CoreMIDI
+CoreAudio
 
 
 
