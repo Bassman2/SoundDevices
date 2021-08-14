@@ -1,4 +1,4 @@
-﻿using SoundDevices;
+﻿using SoundDevices.IO;
 using System;
 
 namespace ShowDevicesConsole50

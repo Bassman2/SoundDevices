@@ -1,4 +1,4 @@
-﻿using SoundDevices;
+﻿using SoundDevices.IO;
 using System;
 
 namespace ShowDevices.ViewModel
@@ -11,6 +11,7 @@ namespace ShowDevices.ViewModel
             this.Name = device.Name;
             this.Description = device.Description;
             this.Version = device.Version;
+            this.Manufacturer = device.Manufacturer;
         }
 
         public DeviceViewModel(MidiInDevice device) : this((SoundDevice) device)
@@ -40,6 +41,8 @@ namespace ShowDevices.ViewModel
         public SoundDeviceType InterfaceType { get; }
 
         public string Description { get; }
+
+        public string Manufacturer { get; }
 
     }
 }
