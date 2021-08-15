@@ -15,25 +15,25 @@ namespace ShowDevices.ViewModel
             this.Manufacturer = device.Manufacturer;
         }
 
-        public DeviceViewModel(MidiInDevice device) : this((SoundDevice) device)
-        {
+        //public DeviceViewModel(MidiInDevice device) : this((SoundDevice) device)
+        //{
             
-        }
+        //}
 
-        public DeviceViewModel(MidiOutDevice device) : this((SoundDevice)device)
-        {
+        //public DeviceViewModel(MidiOutDevice device) : this((SoundDevice)device)
+        //{
             
-        }
+        //}
 
-        public DeviceViewModel(WaveInDevice device) : this((SoundDevice)device)
-        {
+        //public DeviceViewModel(WaveInDevice device) : this((SoundDevice)device)
+        //{
             
-        }
+        //}
 
-        public DeviceViewModel(WaveOutDevice device) : this((SoundDevice)device)
-        {
+        //public DeviceViewModel(WaveOutDevice device) : this((SoundDevice)device)
+        //{
             
-        }
+        //}
 
         public SoundDeviceType Type { get; }
 

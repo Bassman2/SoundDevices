@@ -15,25 +15,27 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <GroupBox Header="MIDI" Grid.Column="0" Grid.Row="0" Margin="2" >
+        <ComboBox Grid.Column="0" Grid.ColumnSpan="3" SelectedItem="{Binding DeviceType}" ItemsSource="{Binding DeviceTypes}" Width="160" HorizontalAlignment="Left" Grid.Row="0" Margin="2"/>
+        <GroupBox Header="MIDI" Grid.Column="0" Grid.Row="1" Margin="2" >
             <DataGrid ItemsSource="{Binding MidiDevices}" />
         </GroupBox>
-        <GroupBox Header="MIDI IN" Grid.Column="1" Grid.Row="0" Margin="2" >
+        <GroupBox Header="MIDI IN" Grid.Column="1" Grid.Row="1" Margin="2" >
             <DataGrid ItemsSource="{Binding MidiInDevices}" />
         </GroupBox>
-        <GroupBox Header="MIDI OUT" Grid.Column="2" Grid.Row="0" Margin="2" >
+        <GroupBox Header="MIDI OUT" Grid.Column="2" Grid.Row="1" Margin="2" >
             <DataGrid ItemsSource="{Binding MidiOutDevices}" />
         </GroupBox>
-        <GroupBox Header="WAVE" Grid.Column="0" Grid.Row="1" Margin="2" >
+        <GroupBox Header="WAVE" Grid.Column="0" Grid.Row="2" Margin="2" >
             <DataGrid ItemsSource="{Binding WaveDevices}" />
         </GroupBox>
-        <GroupBox Header="WAVE IN" Grid.Column="1" Grid.Row="1" Margin="2" >
+        <GroupBox Header="WAVE IN" Grid.Column="1" Grid.Row="2" Margin="2" >
             <DataGrid ItemsSource="{Binding WaveInDevices}" />
         </GroupBox>
-        <GroupBox Header="WAVE OUT" Grid.Column="2" Grid.Row="1" Margin="2" >
+        <GroupBox Header="WAVE OUT" Grid.Column="2" Grid.Row="2" Margin="2" >
             <DataGrid ItemsSource="{Binding WaveOutDevices}" />
         </GroupBox>
     </Grid>
