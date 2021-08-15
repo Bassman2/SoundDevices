@@ -15,7 +15,7 @@ namespace SoundDevices.IO
             {
                 if (soundDeviceTypes.HasFlag(SoundDeviceType.ASIO))
                 {
-                    WaveASIODevice.AddDevices(devices);
+                    WaveASIODevice.AddDevices(soundDeviceTypes, devices);
                 }
             }
             

@@ -10,18 +10,18 @@ namespace SoundDevices.IO
 {
     public abstract class WaveInDevice : SoundDevice
     {
-        public static IEnumerable<WaveInDevice> GetDevices(SoundDeviceType soundDeviceTypes = SoundDeviceType.All)
+        public static IEnumerable<WaveInDevice> GetDevices(SoundDeviceType soundDeviceType = SoundDeviceType.All)
         {
             List<WaveInDevice> devices = new();
             if (OperatingSystem.IsWindows())
             {
-                if (soundDeviceTypes.HasFlag(SoundDeviceType.WinMM))
+                if (soundDeviceType.HasFlag(SoundDeviceType.WinMM))
                 {
-                    WaveInWinMMDevice.AddDevices(devices);
+                    WaveInWinMMDevice.AddDevices(soundDeviceType, devices);
                 }
-                if (soundDeviceTypes.HasFlag(SoundDeviceType.DirectX))
+                if ((soundDeviceType & SoundDeviceType.DirectX) != 0)
                 {
-                    WaveInDirectXDevice.AddDevices(devices);
+                    WaveInDirectXDevice.AddDevices(soundDeviceType, devices);
                 }
                 //if (soundDeviceTypes.HasFlag(SoundDeviceType.ASIO))
                 //{
@@ -30,16 +30,16 @@ namespace SoundDevices.IO
             }
             if (OperatingSystem.IsLinux())
             {
-                if (soundDeviceTypes.HasFlag(SoundDeviceType.ALSA))
+                if (soundDeviceType.HasFlag(SoundDeviceType.ALSA))
                 {
-                    WaveInALSADevice.AddDevices(devices);
+                    WaveInALSADevice.AddDevices(soundDeviceType, devices);
                 }
             }
             if (OperatingSystem.IsMacOS())
             {
-                if (soundDeviceTypes.HasFlag(SoundDeviceType.CoreAudio))
+                if (soundDeviceType.HasFlag(SoundDeviceType.CoreAudio))
                 {
-                    WaveInCoreAudioDevice.AddDevices(devices);
+                    WaveInCoreAudioDevice.AddDevices(soundDeviceType, devices);
                 }
             }
             return devices;

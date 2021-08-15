@@ -7,11 +7,9 @@ namespace SoundDevices.IO.DirectX
 {
     public class MidiInDirectXDevice : MidiInDevice
     {
-        internal static void AddDevices(List<MidiInDevice> devices)
+        internal static void AddDevices(SoundDeviceType soundDeviceType, List<MidiInDevice> devices)
         {
-            DirectMusicImport dmi = new DirectMusicImport();
-            dmi.Initialize();
-            dmi.AddDevices(devices);
+            DirectMusicImport.AddInDevices(soundDeviceType, devices);
         }
 
         internal MidiInDirectXDevice(Guid deviceId, string name, string description)

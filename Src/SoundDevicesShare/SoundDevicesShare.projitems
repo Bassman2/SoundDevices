@@ -40,7 +40,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)IO\CoreAudio\WaveOutCoreAudioDevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\DirectX\Internal\COMDebugger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\CoreAudio\Internal\CoreMidiDevice.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\DirectX\Internal\DirectMusicDevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\DirectX\Internal\DirectMusicImport.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\DirectX\Internal\DMUS_BUFFERDESC.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\DirectX\Internal\DMUS_CLOCKINFO.cs" />
@@ -60,7 +59,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)IO\ASIO\Internal\_old\AsioDriver.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\DirectX\Internal\IDirectSound.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\DirectX\Internal\IDirectSound8.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\DirectX\Internal\DirectXDevice.cs" />
+    <Compile Include="..\SoundDevicesShare\IO\DirectX\Internal\DirectSoundImport.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Engine\MidiFile.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Engine\MidiFileException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Engine\MidiFileTrack.cs" />

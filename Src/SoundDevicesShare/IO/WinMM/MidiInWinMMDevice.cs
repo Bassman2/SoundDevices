@@ -12,7 +12,7 @@ namespace SoundDevices.IO.WinMM
         private IntPtr deviceHandle;
         private readonly WinMMImport.Callback deviceCallback;
 
-        internal static void AddDevices(List<MidiInDevice> devices)
+        internal static void AddDevices(SoundDeviceType soundDeviceType, List<MidiInDevice> devices)
         {
             for (int i = 0; i < WinMMImport.MidiInGetNumDevs(); i++)
             {

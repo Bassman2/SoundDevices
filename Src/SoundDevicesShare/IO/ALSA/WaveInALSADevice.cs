@@ -6,7 +6,7 @@ namespace SoundDevices.IO.ALSA
 {
     internal class WaveInALSADevice : WaveInDevice
     {
-        internal static void AddDevices(List<WaveInDevice> devices)
+        internal static void AddDevices(SoundDeviceType soundDeviceType, List<WaveInDevice> devices)
         {
             
         }

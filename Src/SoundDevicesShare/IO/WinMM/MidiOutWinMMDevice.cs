@@ -13,7 +13,7 @@ namespace SoundDevices.IO.WinMM
         private IntPtr deviceHandle;
         private readonly WinMMImport.Callback deviceCallback;
 
-        internal static void AddDevices(List<MidiOutDevice> devices)
+        internal static void AddDevices(SoundDeviceType soundDeviceType, List<MidiOutDevice> devices)
         {
             // -1 for windows Midi mixer
             for (int i = -1; i < WinMMImport.MidiOutGetNumDevs(); i++)

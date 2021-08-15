@@ -7,7 +7,7 @@ namespace SoundDevices.IO.CoreMIDI
 {
     internal class WaveOutCoreAudioDevice : WaveOutDevice
     {
-        internal static void AddDevices(List<WaveOutDevice> devices) 
+        internal static void AddDevices(SoundDeviceType soundDeviceType, List<WaveOutDevice> devices) 
         {
             
         }

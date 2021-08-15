@@ -11,36 +11,36 @@ namespace SoundDevices.IO
 {
     public abstract class WaveOutDevice : SoundDevice
     {
-        public static IEnumerable<WaveOutDevice> GetDevices(SoundDeviceType soundDeviceTypes = SoundDeviceType.All)
+        public static IEnumerable<WaveOutDevice> GetDevices(SoundDeviceType soundDeviceType = SoundDeviceType.All)
         {
             List<WaveOutDevice> devices = new();
             if (OperatingSystem.IsWindows())
             {
-                if (soundDeviceTypes.HasFlag(SoundDeviceType.WinMM))
+                if (soundDeviceType.HasFlag(SoundDeviceType.WinMM))
                 {
-                    WaveOutWinMMDevice.AddDevices(devices);
+                    WaveOutWinMMDevice.AddDevices(soundDeviceType, devices);
                 }
-                if (soundDeviceTypes.HasFlag(SoundDeviceType.DirectX))
+                if ((soundDeviceType & SoundDeviceType.DirectX) != 0)
                 {
-                    WaveOutDirectXDevice.AddDevices(devices);
+                    WaveOutDirectXDevice.AddDevices(soundDeviceType, devices);
                 }
                 //if (soundDeviceTypes.HasFlag(SoundDeviceType.ASIO))
                 //{
-                //    WaveOutASIODevice.AddDevices(devices);
+                //    WaveOutASIODevice.AddDevices(soundDeviceTypes, devices);
                 //}
             }
             if (OperatingSystem.IsLinux())
             {
-                if (soundDeviceTypes.HasFlag(SoundDeviceType.ALSA))
+                if (soundDeviceType.HasFlag(SoundDeviceType.ALSA))
                 {
-                    WaveOutALSADevice.AddDevices(devices);
+                    WaveOutALSADevice.AddDevices(soundDeviceType, devices);
                 }
             }
             if (OperatingSystem.IsMacOS())
             {
-                if (soundDeviceTypes.HasFlag(SoundDeviceType.CoreAudio))
+                if (soundDeviceType.HasFlag(SoundDeviceType.CoreAudio))
                 {
-                    WaveOutCoreAudioDevice.AddDevices(devices);
+                    WaveOutCoreAudioDevice.AddDevices(soundDeviceType, devices);
                 }
             }
             return devices;

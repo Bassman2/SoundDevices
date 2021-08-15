@@ -7,9 +7,9 @@ namespace SoundDevices.IO.DirectX
 {
     internal class WaveInDirectXDevice : WaveInDevice
     {
-        internal static void AddDevices(List<WaveInDevice> devices)
+        internal static void AddDevices(SoundDeviceType soundDeviceType, List<WaveInDevice> devices)
         {
-            DirectXDevice.GetWaveInDevices(devices);
+            DirectSoundImport.GetWaveInDevices(devices);
         }
 
         internal WaveInDirectXDevice(Guid deviceId, string name, string description)

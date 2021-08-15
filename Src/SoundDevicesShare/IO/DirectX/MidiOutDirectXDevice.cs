@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SoundDevices.IO.DirectX.Internal;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,9 +7,17 @@ namespace SoundDevices.IO.DirectX
 {
     public class MidiOutDirectXDevice : MidiOutDevice
     {
-        internal static void AddDevices(List<MidiOutDevice> devices)
+        internal static void AddDevices(SoundDeviceType soundDeviceType, List<MidiOutDevice> devices)
         {
-            
+            DirectMusicImport.AddOutDevices(soundDeviceType, devices);
+        }
+
+        internal MidiOutDirectXDevice(Guid deviceId, string name, string description)
+        {
+            this.DeviceType = SoundDeviceType.DirectX;
+            this.DeviceId = deviceId;
+            this.Name = name;
+            this.Description = description;
         }
 
         public override void Open()

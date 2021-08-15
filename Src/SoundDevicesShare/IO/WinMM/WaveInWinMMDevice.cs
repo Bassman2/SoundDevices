@@ -14,7 +14,7 @@ namespace SoundDevices.IO.WinMM
         private IntPtr deviceHandle;
         private readonly WinMMImport.Callback deviceCallback;
 
-        internal static void AddDevices(List<WaveInDevice> devices)
+        internal static void AddDevices(SoundDeviceType soundDeviceType, List<WaveInDevice> devices)
         {
             int num = WinMMImport.WaveInGetNumDevs();
             for (int i = 0; i < num; i++)

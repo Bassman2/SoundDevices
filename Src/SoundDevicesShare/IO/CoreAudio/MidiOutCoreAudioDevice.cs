@@ -6,7 +6,7 @@ namespace SoundDevices.IO.CoreMIDI
 {
     public class MidiOutCoreAudioDevice : MidiOutDevice
     {
-        internal static void AddDevices(List<MidiOutDevice> devices)
+        internal static void AddDevices(SoundDeviceType soundDeviceType, List<MidiOutDevice> devices)
         {
             
         }

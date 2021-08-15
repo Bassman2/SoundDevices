@@ -18,7 +18,7 @@ namespace SoundDevices.IO.WinMM
         private readonly WinMMImport.WAVEHDR[] buffers = new WinMMImport.WAVEHDR[bufferNum];
         private int bufferPut = 0, bufferGet = 0;
 
-        public static void AddDevices(List<WaveOutDevice> devices)
+        public static void AddDevices(SoundDeviceType soundDeviceType, List<WaveOutDevice> devices)
         {
             for (int i = 0; i < WinMMImport.WaveOutGetNumDevs(); i++)
             {

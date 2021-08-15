@@ -14,7 +14,7 @@ namespace SoundDevices.IO.ASIO
         private Guid classID;
         private AsioImport asioImport;
 
-        internal static void AddDevices(List<WaveDevice> devices)
+        internal static void AddDevices(SoundDeviceType soundDeviceType, List<WaveDevice> devices)
         {
             var regKey = Registry.LocalMachine.OpenSubKey("SOFTWARE\\ASIO");
             if (regKey != null)

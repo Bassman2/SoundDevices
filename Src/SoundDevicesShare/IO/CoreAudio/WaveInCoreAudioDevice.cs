@@ -6,7 +6,7 @@ namespace SoundDevices.IO.CoreMIDI
 {
     internal class WaveInCoreAudioDevice : WaveInDevice
     {
-        internal static void AddDevices(List<WaveInDevice> devices)
+        internal static void AddDevices(SoundDeviceType soundDeviceType, List<WaveInDevice> devices)
         {
             
         }

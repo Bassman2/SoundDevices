@@ -13,25 +13,25 @@ namespace SoundDevices.IO
             {
                 if (soundDeviceTypes.HasFlag(SoundDeviceType.WinMM))
                 {
-                    //MidiInWinMMDevice.AddDevices(devices);
+                    //MidiInWinMMDevice.AddDevices(soundDeviceTypes, devices);
                 }
                 if (soundDeviceTypes.HasFlag(SoundDeviceType.DirectX))
                 {
-                    //MidiInDirectXDevice.AddDevices(devices);
+                    //MidiInDirectXDevice.AddDevices(soundDeviceTypes, devices);
                 }
             }
             if (OperatingSystem.IsLinux())
             {
                 if (soundDeviceTypes.HasFlag(SoundDeviceType.ALSA))
                 {
-                    //MidiInALSADevice.AddDevices(devices);
+                    //MidiInALSADevice.AddDevices(soundDeviceTypes, devices);
                 }
             }
             if (OperatingSystem.IsMacOS())
             {
                 if (soundDeviceTypes.HasFlag(SoundDeviceType.CoreAudio))
                 {
-                    //MidiInCoreAudioDevice.AddDevices(devices);
+                    //MidiInCoreAudioDevice.AddDevices(soundDeviceTypes, devices);
                 }
             }
             return devices;

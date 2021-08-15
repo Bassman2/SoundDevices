@@ -7,14 +7,19 @@ using System.Text;
 
 namespace SoundDevices.IO.DirectX.Internal
 {
-    internal class DirectMusicImport
+	//https://docs.microsoft.com/de-de/dotnet/standard/native-interop/type-marshaling
+	//https://docs.microsoft.com/en-us/previous-versions/ms808940(v=msdn.10)
+	//https://docs.microsoft.com/en-us/previous-versions/ms811324(v=msdn.10)
+	//https://docs.microsoft.com/en-us/previous-versions/ms811324(v=msdn.10)?source=docs
+
+	internal static class DirectMusicImport
     {
 		private static readonly Guid CLSID_DirectMusicPerformance = new Guid("d2ac2881-b39b-11d1-8704-00600893b1bd");
 		private static readonly Guid CLSID_DirectMusicLoader      = new Guid("d2ac2892-b39b-11d1-8704-00600893b1bd");
 		private static readonly Guid CLSID_DirectMusic            = new Guid("636b9f10-0c7d-11d1-95b2-0020afdc7421");
-		//IDirectMusic music;             //Main DirectMusic COM interfaces
-		IDirectMusic directMusic;
-		IDirectMusicLoader8 directMusicLoader8;
+		
+		private static IDirectMusic directMusic;
+		private static IDirectMusicLoader8 directMusicLoader8;
 		//IDirectMusicPerformance8 performance;
 		//IDirectMusicSegment8 pSegment;
 		//IDirectMusicPort8 pMusicPort;
@@ -27,7 +32,7 @@ namespace SoundDevices.IO.DirectX.Internal
 
 		internal static readonly int DMUS_PORTCAPSSize = Marshal.SizeOf(typeof(DMUS_PORTCAPS));
 
-		public void Initialize()
+		static DirectMusicImport()
 		{
 			//comType = Type.GetTypeFromCLSID(guid);
 
@@ -38,8 +43,8 @@ namespace SoundDevices.IO.DirectX.Internal
 			//directMusicLoader8 = (IDirectMusicLoader8)obj;
 
 			var typeDirectMusic = Type.GetTypeFromCLSID(CLSID_DirectMusic);
-			var typeDirectMusic2 = Type.GetTypeFromProgID("Microsoft.DirectMusic", true);
-			directMusic = (IDirectMusic)Activator.CreateInstance(typeDirectMusic2);
+			//var typeDirectMusic2 = Type.GetTypeFromProgID("Microsoft.DirectMusic", true);
+			directMusic = (IDirectMusic)Activator.CreateInstance(typeDirectMusic);
 
 			//DMUS_PORTCAPS portcaps = new();
 			//portcaps.dwSize = DMUS_PORTCAPSSize;
@@ -54,29 +59,47 @@ namespace SoundDevices.IO.DirectX.Internal
 			//this.music8 = this.music;
 		}
 
-		public void AddDevices(List<MidiInDevice> devices)
+		public static void AddInDevices(SoundDeviceType soundDeviceType, List<MidiInDevice> devices)
         {
 			DMUS_PORTCAPS portcaps = new();
 			portcaps.Size = DMUS_PORTCAPSSize;
-
-			int res = directMusic.EnumPort(200, ref portcaps);
-
-
-			//for (int index = 0; true; index++)
-
-
+			
 			int index = 0;
 			while (directMusic.EnumPort(index++, ref portcaps) == S_OK && portcaps.GuidPort != Guid.Empty)
             {
-				Debug.WriteLine($"{index} {portcaps.GuidPort} {portcaps.Description}");
-				devices.Add(new MidiInDirectXDevice(portcaps.GuidPort, portcaps.Description, $"{portcaps.Class} - {portcaps.Type} - {portcaps.Flags} - {portcaps.EffectFlags}"));
-
+				if (portcaps.Class == DMusClass.Input)
+				{
+					if ((soundDeviceType.HasFlag(SoundDeviceType.DirectX_EMU) && portcaps.Type == DMusType.WINMM_DRIVER) ||
+						(soundDeviceType.HasFlag(SoundDeviceType.DirectX_ORG) && portcaps.Type != DMusType.WINMM_DRIVER))
+					{
+						Debug.WriteLine($"{index} {portcaps.GuidPort} {portcaps.Description}");
+						devices.Add(new MidiInDirectXDevice(portcaps.GuidPort, portcaps.Description, $"{portcaps.Class} - {portcaps.Type} - {portcaps.Flags} - {portcaps.EffectFlags}"));
+					}
+				}
 				portcaps.GuidPort = Guid.Empty;
-
 			}
-			
         }
 
+		public static void AddOutDevices(SoundDeviceType soundDeviceType, List<MidiOutDevice> devices)
+		{
+			DMUS_PORTCAPS portcaps = new();
+			portcaps.Size = DMUS_PORTCAPSSize;
+
+			int index = 0;
+			while (directMusic.EnumPort(index++, ref portcaps) == S_OK && portcaps.GuidPort != Guid.Empty)
+			{
+				if (portcaps.Class == DMusClass.Output)
+				{
+					if ((soundDeviceType.HasFlag(SoundDeviceType.DirectX_EMU) && portcaps.Type == DMusType.WINMM_DRIVER) ||
+						(soundDeviceType.HasFlag(SoundDeviceType.DirectX_ORG) && portcaps.Type != DMusType.WINMM_DRIVER))
+					{
+						Debug.WriteLine($"{index} {portcaps.GuidPort} {portcaps.Description}");
+						devices.Add(new MidiOutDirectXDevice(portcaps.GuidPort, portcaps.Description, $"{portcaps.Class} - {portcaps.Type} - {portcaps.Flags} - {portcaps.EffectFlags}"));
+					}
+				}
+				portcaps.GuidPort = Guid.Empty;
+			}
+		}
 		/*
 
 		// Port enumeration function

@@ -7,7 +7,7 @@ namespace SoundDevices.IO.ALSA
 {
     public class MidiInALSADevice : MidiInDevice
     {
-        internal static void AddDevices(List<MidiInDevice> devices)
+        internal static void AddDevices(SoundDeviceType soundDeviceType, List<MidiInDevice> devices)
         {
             
         }

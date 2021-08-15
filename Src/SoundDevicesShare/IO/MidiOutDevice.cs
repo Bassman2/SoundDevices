@@ -9,32 +9,32 @@ namespace SoundDevices.IO
 {
     public abstract class MidiOutDevice : SoundDevice
     {
-        public static IEnumerable<MidiOutDevice> GetDevices(SoundDeviceType soundDeviceTypes = SoundDeviceType.All)
+        public static IEnumerable<MidiOutDevice> GetDevices(SoundDeviceType soundDeviceType = SoundDeviceType.All)
         {
             List<MidiOutDevice> devices = new();
             if (OperatingSystem.IsWindows())
             {
-                if (soundDeviceTypes.HasFlag(SoundDeviceType.WinMM))
+                if (soundDeviceType.HasFlag(SoundDeviceType.WinMM))
                 {
-                    MidiOutWinMMDevice.AddDevices(devices);
+                    MidiOutWinMMDevice.AddDevices(soundDeviceType, devices);
                 }
-                if (soundDeviceTypes.HasFlag(SoundDeviceType.DirectX))
+                if ((soundDeviceType & SoundDeviceType.DirectX) != 0)
                 {
-                    MidiOutDirectXDevice.AddDevices(devices);
+                    MidiOutDirectXDevice.AddDevices(soundDeviceType, devices);
                 }
             }
             if (OperatingSystem.IsLinux())
             {
-                if (soundDeviceTypes.HasFlag(SoundDeviceType.ALSA))
+                if (soundDeviceType.HasFlag(SoundDeviceType.ALSA))
                 {
-                    MidiOutALSADevice.AddDevices(devices);
+                    MidiOutALSADevice.AddDevices(soundDeviceType, devices);
                 }
             }
             if (OperatingSystem.IsMacOS())
             {
-                if (soundDeviceTypes.HasFlag(SoundDeviceType.CoreAudio))
+                if (soundDeviceType.HasFlag(SoundDeviceType.CoreAudio))
                 {
-                    MidiOutCoreAudioDevice.AddDevices(devices);
+                    MidiOutCoreAudioDevice.AddDevices(soundDeviceType, devices);
                 }
             }
             return devices.ToArray();
