@@ -8,10 +8,19 @@ namespace SoundDevices.IO.DirectX
 {
     internal class WaveOutDirectXDevice : WaveOutDevice
     {
-        internal static void AddDevices(List<WaveOutDevice> devices) 
+        internal static void AddDevices(List<WaveOutDevice> devices)
         {
-            DirectXDevice.GetDevices(devices);
+            DirectXDevice.GetWaveOutDevices(devices);
         }
+
+        internal WaveOutDirectXDevice(Guid deviceId, string name, string description)
+        {
+            this.DeviceType = SoundDeviceType.DirectX;
+            this.DeviceId = deviceId;
+            this.Name = name;
+            this.Description = description;
+        
+        }  
 
         #region IDisposable
 

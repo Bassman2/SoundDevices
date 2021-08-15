@@ -13,7 +13,7 @@ namespace SoundDevices.IO.ASIO
     public class WaveOutASIODevice : WaveOutDevice
     {
         private Guid classID;
-        private ASIOImport asioImport;
+        private AsioImport asioImport;
 
         internal static void AddDevices(List<WaveOutDevice> devices)
         {
@@ -53,7 +53,7 @@ namespace SoundDevices.IO.ASIO
             this.Name = name;
             this.Description = description;
 
-            this.asioImport = new ASIOImport();
+            this.asioImport = new AsioImport();
             this.asioImport.InitFromGuid(classID);
 
             string driverName = this.asioImport.GetDriverName();

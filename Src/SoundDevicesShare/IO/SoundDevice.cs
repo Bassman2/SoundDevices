@@ -6,11 +6,12 @@ namespace SoundDevices.IO
 {
     public abstract class SoundDevice : IDisposable
     {
+        public SoundDeviceType DeviceType { get; internal set; }
+        public Guid DeviceId { get; internal set; }
         public string Name { get; internal set; }
         public string Description { get; internal set; }
         public Version Version { get; internal set; }
         public string Manufacturer { get; internal set; }
-        public SoundDeviceType DeviceType { get; internal set; }
 
         #region IDisposable
 

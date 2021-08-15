@@ -7,8 +7,9 @@ namespace ShowDevices.ViewModel
     {
         public DeviceViewModel(SoundDevice device)
         {
-            this.InterfaceType = device.DeviceType;
+            this.Type = device.DeviceType;
             this.Name = device.Name;
+            this.DeviceId = device.DeviceId;
             this.Description = device.Description;
             this.Version = device.Version;
             this.Manufacturer = device.Manufacturer;
@@ -33,12 +34,14 @@ namespace ShowDevices.ViewModel
         {
             
         }
-        
+
+        public SoundDeviceType Type { get; }
+
         public string Name { get; }
 
-        public Version Version { get; }
+        public Guid DeviceId { get; }
 
-        public SoundDeviceType InterfaceType { get; }
+        public Version Version { get; }
 
         public string Description { get; }
 

@@ -12,7 +12,7 @@ namespace SoundDevices.IO.ASIO
     public class WaveASIODevice : WaveDevice
     {
         private Guid classID;
-        private ASIOImport asioImport;
+        private AsioImport asioImport;
 
         internal static void AddDevices(List<WaveDevice> devices)
         {
@@ -29,11 +29,7 @@ namespace SoundDevices.IO.ASIO
                         int disabled = (int)regSubKey.GetValue("Disabled", 0);
                         if (disabled == 0)
                         {
-                            WaveASIODevice device = new WaveASIODevice(classID, name, description);
-                            if (device.IsInput)
-                            {
-                                devices.Add(device);
-                            }
+                            devices.Add(new WaveASIODevice(classID, name, description));
                         }
                     }
                     catch (SoundDeviceException ex)
@@ -53,12 +49,13 @@ namespace SoundDevices.IO.ASIO
             this.Name = name;
             this.Description = description;
 
-            this.asioImport = new ASIOImport();
+            this.asioImport = new AsioImport();
             this.asioImport.InitFromGuid(classID);
 
             string driverName = this.asioImport.GetDriverName();
             int driverVersion = this.asioImport.GetDriverVersion();
 
+            return;
             this.asioImport.Init(IntPtr.Zero);
             this.asioImport.GetChannels(out int numInputChannels, out int numOutputChannels);
 

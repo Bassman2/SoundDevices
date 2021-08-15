@@ -8,7 +8,7 @@ using System.Text;
 namespace SoundDevices.IO.ASIO.Internal
 {
     [SupportedOSPlatform("Windows")]
-    internal class ASIOImport
+    internal class AsioImport
     {
         private IntPtr pAsioComObject;
         private IntPtr pinnedcallbacks;

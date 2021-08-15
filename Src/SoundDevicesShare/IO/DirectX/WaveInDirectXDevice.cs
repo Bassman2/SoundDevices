@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SoundDevices.IO.DirectX.Internal;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,7 +9,16 @@ namespace SoundDevices.IO.DirectX
     {
         internal static void AddDevices(List<WaveInDevice> devices)
         {
-            //DirectX.GetDevices(devices);
+            DirectXDevice.GetWaveInDevices(devices);
+        }
+
+        internal WaveInDirectXDevice(Guid deviceId, string name, string description)
+        {
+            this.DeviceType = SoundDeviceType.DirectX;
+            this.DeviceId = deviceId;
+            this.Name = name;
+            this.Description = description;
+
         }
 
         #region IDisposable

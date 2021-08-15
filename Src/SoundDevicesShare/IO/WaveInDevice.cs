@@ -23,10 +23,10 @@ namespace SoundDevices.IO
                 {
                     WaveInDirectXDevice.AddDevices(devices);
                 }
-                if (soundDeviceTypes.HasFlag(SoundDeviceType.ASIO))
-                {
-                    WaveInASIODevice.AddDevices(devices);
-                }
+                //if (soundDeviceTypes.HasFlag(SoundDeviceType.ASIO))
+                //{
+                //    WaveInASIODevice.AddDevices(devices);
+                //}
             }
             if (OperatingSystem.IsLinux())
             {

@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:ShowDevices.View"
         mc:Ignorable="d"
         Title="Show Devices"
-        Height="450" 
-        Width="800">
+        Height="800" 
+        Width="1600">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />

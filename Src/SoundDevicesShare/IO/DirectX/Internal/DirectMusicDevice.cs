@@ -12,25 +12,25 @@ namespace SoundDevices.IO.DirectX.Internal
 
     //C:\Program Files(x86)\Windows Kits\10\Include\10.0.18362.0\um\dmusicc.h
 
-    internal class DirectMusicDevice
-    {
+    //internal class DirectMusicDevice
+    //{
 
-        public static void GetDevices()
-        {
-            //comType = Type.GetTypeFromCLSID(guid);
-            try
-            {
-                Type comType = Type.GetTypeFromProgID("Microsoft.DirectMusic");
+    //    public static void GetDevices()
+    //    {
+    //        //comType = Type.GetTypeFromCLSID(guid);
+    //        try
+    //        {
+    //            Type comType = Type.GetTypeFromProgID("Microsoft.DirectMusic");
 
-                COMDebugger.Write(comType);
+    //            COMDebugger.Write(comType);
 
 
-                object obj = Activator.CreateInstance(comType);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.ToString());
-            }
-        }
-    }
+    //            object obj = Activator.CreateInstance(comType);
+    //        }
+    //        catch (Exception ex)
+    //        {
+    //            Debug.WriteLine(ex.ToString());
+    //        }
+    //    }
+    //}
 }
