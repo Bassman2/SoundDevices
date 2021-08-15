@@ -7,7 +7,7 @@ namespace SoundDevices.IO.DirectX.Internal
 {
     [ComImport]
     [Guid("47D4D946-62E8-11CF-93BC-444553540000")]
-    internal class DirectSound 
+    internal class DirectSound
     {
     }
 

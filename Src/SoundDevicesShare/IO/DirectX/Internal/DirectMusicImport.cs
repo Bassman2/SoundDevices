@@ -140,4 +140,27 @@ namespace SoundDevices.IO.DirectX.Internal
 		*/
 
 	}
+
+	/// <summary>
+	/// From WAVEFORMAT
+	/// </summary>
+	[StructLayout(LayoutKind.Sequential, Pack = 2)]
+	public class WaveFormat
+	{
+		public short wFormatTag;        /* format type */
+		public short nChannels;         /* number of channels (i.e. mono, stereo, etc.) */
+		public int nSamplesPerSec;    /* sample rate */
+		public int nAvgBytesPerSec;   /* for buffer estimation */
+		public short nBlockAlign;       /* block size of data */
+	}
+
+	/// <summary>
+	/// From WAVEFORMATEX
+	/// </summary>
+	[StructLayout(LayoutKind.Sequential)]
+	public class WaveFormatEx : WaveFormat
+	{
+		public short wBitsPerSample;
+		public short cbSize;
+	}
 }
