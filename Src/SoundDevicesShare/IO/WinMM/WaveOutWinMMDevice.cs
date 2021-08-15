@@ -84,7 +84,7 @@ namespace SoundDevices.IO.WinMM
         {
             waveFormat = waveFormat ?? new WaveFormat();
 
-            WinMMImport.WaveFormatEx format = new();
+            WaveFormatEx format = new();
             format.wFormatTag = 1; // WAVE_FORMAT_PCM
             format.nChannels = (short)waveFormat.Channels;
             format.nSamplesPerSec = (short)waveFormat.SampleRate;

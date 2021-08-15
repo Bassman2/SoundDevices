@@ -15,8 +15,8 @@ namespace SoundDevices.IO.WinMM.Internal
         internal static readonly int WaveInCapsSize = Marshal.SizeOf(typeof(WinMMImport.WaveInCaps));
         internal static readonly int WaveOutCapsSize = Marshal.SizeOf(typeof(WinMMImport.WaveOutCaps));
 
-        internal static readonly int WaveFormatExSize = Marshal.SizeOf(typeof(WinMMImport.WaveFormatEx));
-        internal static readonly int WaveHeaderSize = Marshal.SizeOf(typeof(WinMMImport.WAVEHDR));
+        internal static readonly int WaveFormatExSize = Marshal.SizeOf(typeof(WaveFormatEx));
+        internal static readonly int WaveHeaderSize = Marshal.SizeOf(typeof(WAVEHDR));
         /*
         CALLBACK_FUNCTION	The dwCallback parameter is a callback procedure address.
         CALLBACK_NULL	There is no callback mechanism. This value is the default setting.
@@ -424,29 +424,6 @@ namespace SoundDevices.IO.WinMM.Internal
             public Guid manufacturerGuid;
             public Guid productGuid;
             public Guid nameGuid;
-        }
-
-        /// <summary>
-        /// From WAVEFORMAT
-        /// </summary>
-        [StructLayout(LayoutKind.Sequential, Pack = 2)]
-        public class WaveFormat
-        {
-            public short wFormatTag;        /* format type */
-            public short nChannels;         /* number of channels (i.e. mono, stereo, etc.) */
-            public int nSamplesPerSec;    /* sample rate */
-            public int nAvgBytesPerSec;   /* for buffer estimation */
-            public short nBlockAlign;       /* block size of data */
-        }
-
-        /// <summary>
-        /// From WAVEFORMATEX
-        /// </summary>
-        [StructLayout(LayoutKind.Sequential)]
-        public class WaveFormatEx : WaveFormat
-        {
-            public short wBitsPerSample;
-            public short cbSize;
         }
 
         [StructLayout(LayoutKind.Sequential)]

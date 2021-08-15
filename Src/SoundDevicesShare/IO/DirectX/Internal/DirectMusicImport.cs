@@ -14,10 +14,13 @@ namespace SoundDevices.IO.DirectX.Internal
 
 	internal static class DirectMusicImport
     {
+		private static readonly Guid CLSID_DirectMusic =			new Guid("636b9f10-0c7d-11d1-95b2-0020afdc7421");
+		private static readonly Guid CLSID_DirectMusicCollection =	new Guid("480ff4b0-28b2-11d1-bef7-00c04fbf8fef");
+		private static readonly Guid CLSID_DirectMusicSynth =		new Guid("58C2B4D0-46E7-11D1-89AC-00A0C9054129");
+
 		private static readonly Guid CLSID_DirectMusicPerformance = new Guid("d2ac2881-b39b-11d1-8704-00600893b1bd");
 		private static readonly Guid CLSID_DirectMusicLoader      = new Guid("d2ac2892-b39b-11d1-8704-00600893b1bd");
-		private static readonly Guid CLSID_DirectMusic            = new Guid("636b9f10-0c7d-11d1-95b2-0020afdc7421");
-		
+
 		private static IDirectMusic directMusic;
 		private static IDirectMusicLoader8 directMusicLoader8;
 		//IDirectMusicPerformance8 performance;
