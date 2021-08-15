@@ -9,7 +9,17 @@ namespace SoundDevices.IO.DirectX
     {
         internal static void AddDevices(List<MidiInDevice> devices)
         {
-            new DirectMusicImport().Initialize();
+            DirectMusicImport dmi = new DirectMusicImport();
+            dmi.Initialize();
+            dmi.AddDevices(devices);
+        }
+
+        internal MidiInDirectXDevice(Guid deviceId, string name, string description)
+        {
+            this.DeviceType = SoundDeviceType.DirectX;
+            this.DeviceId = deviceId;
+            this.Name = name;
+            this.Description = description;
         }
 
         public override void Open()
