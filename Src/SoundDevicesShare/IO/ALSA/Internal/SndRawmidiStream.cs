@@ -9,9 +9,9 @@ namespace SoundDevices.IO.ALSA.Internal
     public enum SndRawmidiStream
     {
         /** Output stream */
-        Output = 0,
+        Output = 0,             // SND_RAWMIDI_STREAM_OUTPUT
         /** Input stream */
-        Input,
+        Input,                  // SND_RAWMIDI_STREAM_INPUT
         Last = Input
     }
 }

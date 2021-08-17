@@ -13,9 +13,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Engine\SequencerTrack.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Engine\SequencerTrackState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Engine\SequencerTrackType.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\ALSA\Internal\ALSADevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\ALSA\Internal\ALSAImport.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\ALSA\Internal\ERRNO.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\ALSA\Internal\SndCtl.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\ALSA\Internal\SndCtlType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\ALSA\Internal\SndRawmidiStream.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\ALSA\Internal\SndRawmidiType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\ALSA\Internal\SndrvRawmidiInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\ALSA\MidiInALSADevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\ALSA\MidiOutALSADevice.cs" />
