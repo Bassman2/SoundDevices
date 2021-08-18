@@ -16,7 +16,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)IO\ALSA\Internal\ALSAImport.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\ALSA\Internal\ERRNO.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\ALSA\Internal\SndCtl.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\ALSA\Internal\SndCtlImport.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\ALSA\Internal\SndCtlType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\ALSA\Internal\SndError.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\ALSA\Internal\SndPcm.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\ALSA\Internal\SndRawmidiImport.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\ALSA\Internal\SndRawmidiStream.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\ALSA\Internal\SndRawmidiType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\ALSA\Internal\SndrvRawmidiInfo.cs" />
