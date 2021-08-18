@@ -26,6 +26,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)IO\ALSA\Internal\SndrvRawmidiInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\ALSA\MidiInALSADevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\ALSA\MidiOutALSADevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\ALSA\SndException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\ALSA\WaveInALSADevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\ALSA\WaveOutALSADevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\ASIO\Internal\AsioBufferInfo.cs" />

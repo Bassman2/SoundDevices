@@ -12,6 +12,57 @@ namespace SoundDevices.IO.ALSA.Internal
     [SupportedOSPlatform("Linux")]
     internal static class ALSAImport
     {
+        public static IEnumerable<int> GetCards()
+        {
+            int card = -1; // -1 to start the iteration
+            int err = SndCtlImport.SndCardNext(ref card);
+            if (err < 0)
+            {
+                throw new SndException("Failed to get number of cards", err);
+            }
+
+            while (card >= 0)
+            {
+                yield return card;
+
+                err = SndCtlImport.SndCardNext(ref card);
+                if (err < 0)
+                {
+                    throw new SndException("Failed to get next card number", err);
+                }
+            }
+        }
+
+        public static IEnumerable<(int, SndCtl)> GetCardMidiDevices(int card)
+        {
+            SndCtl ctl = new();
+            int device = -1;
+            string name = $"hw:{card}";
+            int err = SndCtlImport.SndCtlOpen(ref ctl, ref name, 0);
+            if (err < 0)
+            {
+                throw new SndException($"Failted to open control for card {card}", err);
+            }
+            do
+            {
+                err = SndCtlImport.SndCtlRawmidiNextDevice(ref ctl, ref device);
+                if (err < 0)
+                {
+                    throw new SndException("Failed to determine device number", err);
+                }
+                if (device >= 0)
+                {
+                    yield return (device, ctl);
+                    //ListSubdeviceInfo(ref ctl, card, device);
+                }
+            } while (device >= 0);
+            SndCtlImport.SndCtlClose(ref ctl);
+        }
+
+        /// <summary>
+        /// ///////////////////////////////////////////////////////////////////////////////////////////////////
+        /// </summary>
+
         public static void GetCards2()
         {
             foreach (var card in SndCtlImport.Cards)
@@ -33,7 +84,7 @@ namespace SoundDevices.IO.ALSA.Internal
             }
         }
 
-        public static void GetCards()
+        public static void GetCards3()
         {
             int status;
             int card = -1;  // use -1 to prime the pump of iterating through card list
