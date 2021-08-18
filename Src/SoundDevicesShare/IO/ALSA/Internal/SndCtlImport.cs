@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
 using System.Text;
@@ -10,6 +12,58 @@ namespace SoundDevices.IO.ALSA.Internal
     internal static class SndCtlImport
     {
         private const string ALSALibrary = "libasound";
+
+        public static CardEnumerable Cards { get { return new CardEnumerable(); } }
+
+        public class CardEnumerable : IEnumerable<int>
+        {
+            public IEnumerator<int> GetEnumerator()
+            {
+                return new CardEnumerator();
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return GetEnumerator();
+            }
+        }
+
+        public class CardEnumerator : IEnumerator<int>
+        {
+            private int card;
+
+            public int Current { get { return this.card; } }
+
+            object IEnumerator.Current => Current;
+
+            public void Dispose()
+            { }
+
+            public bool MoveNext()
+            {
+                if (this.card < 0)
+                {
+                    return false;
+                }
+                
+                int err = SndCtlImport.SndCardNext(ref this.card);
+                if (err < 0)
+                {
+                    throw new SoundDeviceException($"cannot determine card number: {SndError.SndStrError(err)}");                    
+                }
+                return true;
+            }
+
+            public void Reset()
+            {
+                this.card = -1;
+                int err = SndCtlImport.SndCardNext(ref card);
+                if (err < 0)
+                {
+                    throw new SoundDeviceException($"cannot determine card number: {SndError.SndStrError(err)}");
+                }
+            }
+        }
 
         [DllImport(ALSALibrary, EntryPoint = "snd_card_load")]
         public static extern int SndCardLoad(int card);

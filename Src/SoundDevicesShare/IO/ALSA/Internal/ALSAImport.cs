@@ -12,7 +12,27 @@ namespace SoundDevices.IO.ALSA.Internal
     [SupportedOSPlatform("Linux")]
     internal static class ALSAImport
     {
-        
+        public static void GetCards2()
+        {
+            foreach (var card in SndCtlImport.Cards)
+            {
+                int err;
+                if ((err = SndCtlImport.SndCardGetName(card, out string shortname)) < 0)
+                {
+                    Debug.WriteLine($"cannot determine card shortname: {SndError.SndStrError(err)}");
+                    break;
+                }
+                if ((err = SndCtlImport.SndCardGetLongname(card, out string longname)) < 0)
+                {
+                    Debug.WriteLine($"cannot determine card longname: {SndError.SndStrError(err)}");
+                    break;
+                }
+                Debug.WriteLine($"\tLONG NAME:  {longname}\n");
+                Debug.WriteLine($"\tSHORT NAME: {shortname}\n");
+
+            }
+        }
+
         public static void GetCards()
         {
             int status;
