@@ -17,12 +17,11 @@ namespace SoundDevices.IO.ALSA.Internal
         {
             int status;
             int card = -1;  // use -1 to prime the pump of iterating through card list
-            string longname;
-            string shortname;
+            
 
             if ((status = SndCtlImport.SndCardNext(ref card)) < 0)
             {
-                Debug.WriteLine("cannot determine card number: " + SndError.SndStrError(status));
+                Debug.WriteLine($"cannot determine card number: {SndError.SndStrError(status)}");
                 return;
             }
             if (card < 0)
@@ -33,25 +32,24 @@ namespace SoundDevices.IO.ALSA.Internal
             while (card >= 0)
             {
                 Debug.WriteLine("Card %d:", card);
-                if ((status = SndCtlImport.SndCardGetName(card, out shortname)) < 0)
+                if ((status = SndCtlImport.SndCardGetName(card, out string shortname)) < 0)
                 {
-                    Debug.WriteLine("cannot determine card shortname: %s", SndError.SndStrError(status));
+                    Debug.WriteLine($"cannot determine card shortname: {SndError.SndStrError(status)}");
                     break;
                 }
-                if ((status = SndCtlImport.SndCardGetLongname(card, out longname)) < 0)
+                if ((status = SndCtlImport.SndCardGetLongname(card, out string longname)) < 0)
                 {
-                    Debug.WriteLine("cannot determine card longname: " + SndError.SndStrError(status));
+                    Debug.WriteLine($"cannot determine card longname: {SndError.SndStrError(status)}");
                     break;
                 }
                 Debug.WriteLine($"\tLONG NAME:  {longname}\n");
                 Debug.WriteLine($"\tSHORT NAME: {shortname}\n");
                 if ((status = SndCtlImport.SndCardNext(ref card)) < 0)
                 {
-                    Debug.WriteLine("cannot determine card number: " + SndError.SndStrError(status));
+                    Debug.WriteLine($"cannot determine card number: {SndError.SndStrError(status)}");
                     break;
                 }
             }
-
         }
 
         public static void GetMidiPorts()
@@ -61,7 +59,7 @@ namespace SoundDevices.IO.ALSA.Internal
 
             if ((status = SndCtlImport.SndCardNext(ref card)) < 0)
             {
-                Debug.WriteLine("cannot determine card number: %s", SndError.SndStrError(status));
+                Debug.WriteLine($"cannot determine card number: {SndError.SndStrError(status)}");
                 return;
             }
             if (card < 0)
@@ -73,17 +71,17 @@ namespace SoundDevices.IO.ALSA.Internal
             Debug.WriteLine("====================================\n");
             while (card >= 0)
             {
-                list_midi_devices_on_card(card);
+                ListMidiDevicesOnCard(card);
                 if ((status = SndCtlImport.SndCardNext(ref card)) < 0)
                 {
-                    Debug.WriteLine("cannot determine card number: %s", SndError.SndStrError(status));
+                    Debug.WriteLine($"cannot determine card number: {SndError.SndStrError(status)}");
                     break;
                 }
             }
             Debug.WriteLine("\n");
         }
 
-        private static void list_midi_devices_on_card(int card)
+        private static void ListMidiDevicesOnCard(int card)
         {
             SndCtl ctl = new();
             string name;
@@ -92,7 +90,7 @@ namespace SoundDevices.IO.ALSA.Internal
             name = $"hw:{card}";
             if ((status = SndCtlImport.SndCtlOpen(ref ctl, ref name, 0)) < 0)
             {
-                Debug.WriteLine("cannot open control for card %d: %s", card, SndError.SndStrError(status));
+                Debug.WriteLine($"cannot open control for card {card}: {SndError.SndStrError(status)}");
                 return;
             }
             do
@@ -100,18 +98,18 @@ namespace SoundDevices.IO.ALSA.Internal
                 status = SndCtlImport.SndCtlRawmidiNextDevice(ref ctl, ref device);
                 if (status < 0)
                 {
-                    Debug.WriteLine("cannot determine device number: %s", SndError.SndStrError(status));
+                    Debug.WriteLine($"cannot determine device number: {SndError.SndStrError(status)}");
                     break;
                 }
                 if (device >= 0)
                 {
-                    list_subdevice_info(ref ctl, card, device);
+                    ListSubdeviceInfo(ref ctl, card, device);
                 }
             } while (device >= 0);
             SndCtlImport.SndCtlClose(ref ctl);
         }
 
-        static void list_subdevice_info(ref SndCtl ctl, int card, int device)
+        static void ListSubdeviceInfo(ref SndCtl ctl, int card, int device)
         {
             SndrvRawmidiInfo info = new();
             string name;
@@ -136,12 +134,12 @@ namespace SoundDevices.IO.ALSA.Internal
             isIn = isOut = false;
             try
             {
-                isOut = is_output(ref ctl, card, device, sub);
-                isIn = is_input(ref ctl, card, device, sub);
+                isOut = IsOutput(ref ctl, card, device, sub);
+                isIn = IsInput(ref ctl, card, device, sub);
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("cannot get rawmidi information %d:%d: %s", card, device, SndError.SndStrError(ex.HResult));
+                Debug.WriteLine($"cannot get rawmidi information {card}:{device}: {SndError.SndStrError(ex.HResult)}");
                 return;
             }
 
@@ -151,11 +149,11 @@ namespace SoundDevices.IO.ALSA.Internal
             {
                 if (subs == 1)
                 {
-                    Debug.WriteLine("%c%c  hw:%d,%d    %s\n", isIn ? 'I' : ' ', isOut ? 'O' : ' ', card, device, name);
+                    Debug.WriteLine($"{(isIn ? 'I' : ' ')}{(isOut ? 'O' : ' ')}  hw:{card},{device}    {name}\n");
                 }
                 else
                 {
-                    Debug.WriteLine("%c%c  hw:%d,%d    %s (%d subdevices)\n", isIn ? 'I' : ' ', isOut ? 'O' : ' ', card, device, name, subs);
+                    Debug.WriteLine($"{(isIn ? 'I' : ' ')}{(isOut ? 'O' : ' ')}  hw:{card},{device}    {name} ({subs} subdevices)\n");
                 }
             }
             else
@@ -163,19 +161,19 @@ namespace SoundDevices.IO.ALSA.Internal
                 sub = 0;
                 for (; ; )
                 {
-                    Debug.WriteLine("%c%c  hw:%d,%d,%d  %s\n", isIn ? 'I' : ' ', isOut ? 'O' : ' ', card, device, sub, sub_name);
+                    Debug.WriteLine($"{(isIn ? 'I' : ' ')}{(isOut ? 'O' : ' ')}  hw:{card},{device},{sub}  {sub_name}\n");
                     if (++sub >= subs)
                         break;
 
-                    isIn = is_input(ref ctl, card, device, sub);
-                    isOut = is_output(ref ctl, card, device, sub);
+                    isIn = IsInput(ref ctl, card, device, sub);
+                    isOut = IsOutput(ref ctl, card, device, sub);
                     SndRawmidiImport.SndRawmidiInfoSetSubdevice(ref info, sub);
                     if (isOut)
                     {
                         SndRawmidiImport.SndRawmidiInfoSetStream(ref info, SndRawmidiStream.Output);
                         if ((status = SndCtlImport.SndCtlRawmidiInfo(ref ctl, ref info)) < 0)
                         {
-                            Debug.WriteLine("cannot get rawmidi information %d:%d:%d: %s", card, device, sub, SndError.SndStrError(status));
+                            Debug.WriteLine($"cannot get rawmidi information {card}:{device}:{sub}: {SndError.SndStrError(status)}");
                             break;
                         }
 
@@ -185,7 +183,7 @@ namespace SoundDevices.IO.ALSA.Internal
                         SndRawmidiImport.SndRawmidiInfoSetStream(ref info, SndRawmidiStream.Input);
                         if ((status = SndCtlImport.SndCtlRawmidiInfo(ref ctl, ref info)) < 0)
                         {
-                            Debug.WriteLine("cannot get rawmidi information %d:%d:%d: %s", card, device, sub, SndError.SndStrError(status));
+                            Debug.WriteLine($"cannot get rawmidi information {card}:{device}:{sub}: {SndError.SndStrError(status)}");
                             break;
                         }
                     }
@@ -202,7 +200,7 @@ namespace SoundDevices.IO.ALSA.Internal
         // is_input -- returns true if specified card/device/sub can output MIDI data.
         //
 
-        public static bool is_input(ref SndCtl ctl, int card, int device, int sub)
+        public static bool IsInput(ref SndCtl ctl, int card, int device, int sub)
         {
             SndrvRawmidiInfo info = new();
 
@@ -226,7 +224,7 @@ namespace SoundDevices.IO.ALSA.Internal
         // is_output -- returns true if specified card/device/sub can output MIDI data.
         //
 
-        public static bool is_output(ref SndCtl ctl, int card, int device, int sub)
+        public static bool IsOutput(ref SndCtl ctl, int card, int device, int sub)
         {
             SndrvRawmidiInfo info = new();
 

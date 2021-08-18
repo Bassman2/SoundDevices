@@ -31,7 +31,8 @@ namespace SoundDevices.IO.ALSA.Internal
         unsigned int snd_rawmidi_info_get_flags(const snd_rawmidi_info_t *obj);
         const char *snd_rawmidi_info_get_id(const snd_rawmidi_info_t *obj);
         */
-                [DllImport(ALSALibrary, EntryPoint = "snd_rawmidi_info_get_name", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        
+        [DllImport(ALSALibrary, EntryPoint = "snd_rawmidi_info_get_name", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         [return: MarshalAs(UnmanagedType.LPStr)]
         public static extern string SndRawmidiInfoGetName(ref SndrvRawmidiInfo obj);
 
