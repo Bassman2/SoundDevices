@@ -1,5 +1,5 @@
 ﻿using SoundDevices.IO.ALSA;
-using SoundDevices.IO.CoreMIDI;
+using SoundDevices.IO.CoreAudio;
 using SoundDevices.IO.DirectX;
 using SoundDevices.IO.WinMM;
 using System;
@@ -34,7 +34,7 @@ namespace SoundDevices.IO
             {
                 if (soundDeviceType.HasFlag(SoundDeviceType.CoreAudio))
                 {
-                    MidiInCoreAudioDevice.AddDevices(soundDeviceType, devices);
+                    MidiInCoreMidiDevice.AddDevices(soundDeviceType, devices);
                 }
             }
             return devices;

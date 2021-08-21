@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SoundDevices.IO.CoreMIDI
+namespace SoundDevices.IO.CoreAudio
 {
     internal sealed class WaveInCoreAudioDevice : WaveInDevice
     {

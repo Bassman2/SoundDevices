@@ -15,21 +15,21 @@ namespace MacPuncture50
             var midiLibrary = dlopen(CoreMidiLibrary, 0);
 
 
-            var indirect = dlsym(midiLibrary, "kMIDIPropertyDisplayName");
-            if (indirect == IntPtr.Zero)
-                return IntPtr.Zero;
-            IntPtr displayName Marshal.ReadIntPtr(indirect);
+            //var indirect = dlsym(midiLibrary, "kMIDIPropertyDisplayName");
+            //if (indirect == IntPtr.Zero)
+            //    return IntPtr.Zero;
+            //IntPtr displayName Marshal.ReadIntPtr(indirect);
 
 
 
 
 
-            var indirect = dlsym(handle, symbol);
-            if (indirect == IntPtr.Zero)
-                return IntPtr.Zero;
-            return Marshal.ReadIntPtr(indirect);
-            kMIDIPropertyDisplayName = Dlfcn.GetIntPtr(midiLibrary, "kMIDIPropertyDisplayName");
-            dlsym(IntPtr handle, string symbol);
+            //var indirect = dlsym(handle, symbol);
+            //if (indirect == IntPtr.Zero)
+            //    return IntPtr.Zero;
+            //return Marshal.ReadIntPtr(indirect);
+            //kMIDIPropertyDisplayName = Dlfcn.GetIntPtr(midiLibrary, "kMIDIPropertyDisplayName");
+            //dlsym(IntPtr handle, string symbol);
 
             int devNum = MIDIGetNumberOfDevices();
             Console.WriteLine($"MIDIGetNumberOfDevices: {devNum}");
@@ -102,7 +102,7 @@ namespace MacPuncture50
         private extern static void MIDIRestart();
 
         [DllImport(CoreMidiLibrary)]
-        private extern static int MIDIGetNumberOfDevices();
+        public extern static int MIDIGetNumberOfDevices();
 
         [DllImport(CoreMidiLibrary)]
         private extern static int MIDIGetNumberOfExternalDevices();

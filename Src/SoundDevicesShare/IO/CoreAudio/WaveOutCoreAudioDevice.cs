@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace SoundDevices.IO.CoreMIDI
+namespace SoundDevices.IO.CoreAudio
 {
     internal sealed class WaveOutCoreAudioDevice : WaveOutDevice
     {

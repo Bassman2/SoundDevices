@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace SoundDevices.IO.CoreMidi.Internal
+namespace SoundDevices.IO.CoreAudio.Internal
 {
-    internal static class SystemLibrary
+    internal static class SystemImport
     {
         private const string systemLibrary = "/usr/lib/libSystem.dylib";
 

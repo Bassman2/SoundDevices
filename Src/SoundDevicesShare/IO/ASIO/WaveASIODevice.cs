@@ -26,8 +26,8 @@ namespace SoundDevices.IO.ASIO
                         var regSubKey = regKey.OpenSubKey(name);
                         var classID = new Guid((string)regSubKey.GetValue("CLSID"));
                         string description = regSubKey.GetValue("Description") as string;
-                        int disabled = (int)regSubKey.GetValue("Disabled", 0);
-                        if (disabled == 0)
+                        //int disabled = (int)regSubKey.GetValue("Disabled", 0);
+                        //if (disabled == 0)
                         {
                             devices.Add(new WaveASIODevice(classID, name, description));
                         }

@@ -31,6 +31,21 @@ namespace SoundDevices.IO.ASIO.Internal
                 throw new SoundDeviceException("Unable to instantiate ASIO. Check if STAThread is set");
             }
 
+            //try
+            //{
+
+            //    dynamic d = pAsioComObject;
+            //    object x = d.getDriverVersion();
+
+            //} 
+            //catch (Exception ex)
+            //{
+
+
+            //}
+            //dynamic pAsioComObject2 = Activator.CreateInstance(Type.GetTypeFromCLSID(asioGuid));
+            //object x = pAsioComObject2.getDriverVersion();
+
             // The first pointer at the adress of the ASIO Com Object is a pointer to the
             // C++ Virtual table of the object.
             // Gets a pointer to VTable.

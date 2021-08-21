@@ -1,7 +1,7 @@
 ﻿using SoundDevices.IO.DirectX;
 using SoundDevices.IO.WinMM;
 using SoundDevices.IO.ASIO;
-using SoundDevices.IO.CoreMIDI;
+using SoundDevices.IO.CoreAudio;
 using SoundDevices.IO.ALSA;
 using System;
 using System.Collections.Generic;
