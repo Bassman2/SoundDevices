@@ -9,7 +9,7 @@ using System.Text;
 namespace SoundDevices.IO.ASIO
 {
     [SupportedOSPlatform("Windows")]
-    public class WaveASIODevice : WaveDevice
+    public sealed class WaveASIODevice : WaveDevice
     {
         private Guid classID;
         private AsioImport asioImport;
@@ -70,13 +70,8 @@ namespace SoundDevices.IO.ASIO
             }
         }
 
-        #region IDisposable
-
-        protected override void Dispose(bool disposing)
-        {
-        }
-
-        #endregion
+        public override void Dispose()
+        { }
 
         public bool IsInput { get; }
 

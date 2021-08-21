@@ -8,7 +8,7 @@ using System.Text;
 
 namespace SoundDevices.IO.WinMM
 {
-    internal class WaveOutWinMMDevice : WaveOutDevice
+    internal sealed class WaveOutWinMMDevice : WaveOutDevice
     {
         private readonly int deviceID;
         private IntPtr deviceHandle;
@@ -20,28 +20,16 @@ namespace SoundDevices.IO.WinMM
 
         public static void AddDevices(SoundDeviceType soundDeviceType, List<WaveOutDevice> devices)
         {
-            for (int i = 0; i < WinMMImport.WaveOutGetNumDevs(); i++)
+            foreach (var (deviceId, waveOutCaps) in WinMMImport.WaveOutGetDevices())
             {
-                try
-                {
-                    devices.Add(new WaveOutWinMMDevice(i));
-                }
-                catch (SoundDeviceException ex)
-                {
-                    Debug.WriteLine(ex);
-                }
+                devices.Add(new WaveOutWinMMDevice(deviceId, waveOutCaps));
             }
         }
 
-        private WaveOutWinMMDevice(int deviceID)
+        private WaveOutWinMMDevice(int deviceID, WinMMImport.WaveOutCaps waveOutCaps)
         {
             this.deviceID = deviceID;
             this.deviceCallback = HandleMessage;
-
-            if (WinMMImport.WaveOutGetDevCaps((IntPtr)deviceID, out WinMMImport.WaveOutCaps waveOutCaps, WinMMImport.WaveOutCapsSize) != 0)
-            {
-                throw new SoundDeviceException("WaveOutGetDevCaps failed");
-            }
             this.DeviceType = SoundDeviceType.WinMM;
             this.Name = waveOutCaps.name;
             this.Version = new Version(waveOutCaps.driverVersion.Major, waveOutCaps.driverVersion.Minor);
@@ -53,33 +41,22 @@ namespace SoundDevices.IO.WinMM
                 buffers[i].dwBufferLength = bufferSize;
             }
         }
-        
-        #region IDisposable
 
-        private bool disposedValue;
-
-        protected override void Dispose(bool disposing)
+        public override void Dispose()
         {
-            if (!disposedValue)
+            if (this.deviceHandle != IntPtr.Zero)
             {
-                if (disposing)
-                {
-                    // TODO: dispose managed state (managed objects)
-                }
+                WinMMImport.WaveOutReset(this.deviceHandle);
+                WinMMImport.WaveOutClose(this.deviceHandle);
+                this.deviceHandle = IntPtr.Zero;
 
-                for (int i = 0; i < bufferNum; i++)
-                {
-                    Marshal.FreeHGlobal(buffers[i].lpData);
-                }
-
-                // TODO: free unmanaged resources (unmanaged objects) and override finalizer
-                // TODO: set large fields to null
-                disposedValue = true;
+                //for (int i = 0; i < bufferNum; i++)
+                //{
+                //    Marshal.FreeHGlobal(buffers[i].lpData);
+                //}
             }
         }
-
-        #endregion
-
+        
         public override void Open(WaveFormat waveFormat = null)
         {
             waveFormat = waveFormat ?? new WaveFormat();

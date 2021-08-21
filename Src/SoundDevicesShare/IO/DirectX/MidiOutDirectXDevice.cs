@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SoundDevices.IO.DirectX
 {
-    public class MidiOutDirectXDevice : MidiOutDevice
+    public sealed class MidiOutDirectXDevice : MidiOutDevice
     {
         internal static void AddDevices(SoundDeviceType soundDeviceType, List<MidiOutDevice> devices)
         {
@@ -19,6 +19,9 @@ namespace SoundDevices.IO.DirectX
             this.Name = name;
             this.Description = description;
         }
+
+        public override void Dispose()
+        { }
 
         public override void Open()
         { }

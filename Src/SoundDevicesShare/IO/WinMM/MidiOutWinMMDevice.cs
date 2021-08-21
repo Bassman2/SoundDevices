@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 
 namespace SoundDevices.IO.WinMM
 {
-    internal class MidiOutWinMMDevice : MidiOutDevice
+    internal sealed class MidiOutWinMMDevice : MidiOutDevice
     {
         private readonly int deviceID;
         private IntPtr deviceHandle;
@@ -15,60 +15,31 @@ namespace SoundDevices.IO.WinMM
 
         internal static void AddDevices(SoundDeviceType soundDeviceType, List<MidiOutDevice> devices)
         {
-            // -1 for windows Midi mixer
-            for (int i = -1; i < WinMMImport.MidiOutGetNumDevs(); i++)
+            foreach (var (deviceId, midiOutCaps) in WinMMImport.MidiOutGetDevices())
             {
-                try
-                {
-                    devices.Add(new MidiOutWinMMDevice(i));
-                }
-                catch (SoundDeviceException ex)
-                {
-                    Debug.WriteLine(ex);
-                }
+                devices.Add(new MidiOutWinMMDevice(deviceId, midiOutCaps));
             }
         }
 
-        private MidiOutWinMMDevice(int deviceID)
+        private MidiOutWinMMDevice(int deviceID, WinMMImport.MidiOutCaps midiOutCaps)
         {
             this.deviceID = deviceID;
             this.deviceCallback = HandleMessage;
-
-
-            if (WinMMImport.MidiOutGetDevCaps((IntPtr)deviceID, out WinMMImport.MidiOutCaps midiOutCaps, WinMMImport.MidiOutCapsSize) != 0)
-            {
-                throw new SoundDeviceException("MidiOutGetDevCaps failed");
-            }
-
             this.DeviceType = SoundDeviceType.WinMM;
             this.Name = midiOutCaps.name;
             this.Version = new Version(midiOutCaps.driverVersion.Major, midiOutCaps.driverVersion.Minor);
             this.Manufacturer = midiOutCaps.mid.ToString();
         }
 
-
-        #region IDisposable
-
-        private bool disposedValue;
-
-        protected override void Dispose(bool disposing)
+        public override void Dispose()
         {
-            if (!disposedValue)
+            if (this.deviceHandle != IntPtr.Zero)
             {
-                if (disposing)
-                {
-                    WinMMImport.MidiOutReset(this.deviceHandle);
-                    WinMMImport.MidiOutClose(this.deviceHandle);
-
-                }
-
-                // TODO: free unmanaged resources (unmanaged objects) and override finalizer
-                // TODO: set large fields to null
-                disposedValue = true;
+                WinMMImport.MidiOutReset(this.deviceHandle);
+                WinMMImport.MidiOutClose(this.deviceHandle);
+                this.deviceHandle = IntPtr.Zero;
             }
         }
-
-        #endregion
 
         public override void Open()
         {

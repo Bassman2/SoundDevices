@@ -5,12 +5,15 @@ using System.Text;
 
 namespace SoundDevices.IO.CoreMIDI
 {
-    public class MidiInCoreAudioDevice : MidiInDevice
+    public sealed class MidiInCoreAudioDevice : MidiInDevice
     {
         internal static void AddDevices(SoundDeviceType soundDeviceType, List<MidiInDevice> devices)
         {
             
         }
+
+        public override void Dispose()
+        { }
 
         public override void Open()
         { }

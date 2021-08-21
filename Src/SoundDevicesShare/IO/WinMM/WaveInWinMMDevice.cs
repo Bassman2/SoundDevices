@@ -16,61 +16,35 @@ namespace SoundDevices.IO.WinMM
 
         internal static void AddDevices(SoundDeviceType soundDeviceType, List<WaveInDevice> devices)
         {
-            int num = WinMMImport.WaveInGetNumDevs();
-            for (int i = 0; i < num; i++)
+            foreach (var (deviceId, waveInCaps) in WinMMImport.WaveInGetDevices())
             {
-                try
-                {
-                    devices.Add(new WaveInWinMMDevice(i));
-                }
-                catch (SoundDeviceException ex)
-                {
-                    Debug.WriteLine(ex);
-                }
+                devices.Add(new WaveInWinMMDevice(deviceId, waveInCaps));
             }
         }
 
-        private WaveInWinMMDevice(int deviceID)
+        private WaveInWinMMDevice(int deviceID, WinMMImport.WaveInCaps waveInCaps)
         {
             this.deviceID = deviceID;
-
-            if (WinMMImport.WaveInGetDevCaps((IntPtr)deviceID, out WinMMImport.WaveInCaps waveInCaps, WinMMImport.WaveInCapsSize) != 0)
-            {
-                throw new SoundDeviceException("WaveInGetDevCaps failed");
-            }
-
             this.DeviceType = SoundDeviceType.WinMM;
             this.Name = waveInCaps.name;
             this.Version = new Version(waveInCaps.driverVersion.Major, waveInCaps.driverVersion.Minor);
             this.deviceCallback = OnCallback;
         }
 
+        public override void Dispose()
+        {
+            if (this.deviceHandle != IntPtr.Zero)
+            {
+                WinMMImport.WaveInReset(this.deviceHandle);
+                WinMMImport.WaveInClose(this.deviceHandle);
+                this.deviceHandle = IntPtr.Zero;
+            }
+        }
+        
         private void OnCallback(IntPtr handle, WinMMMsg msg, IntPtr instance, IntPtr param1, IntPtr param2)
         {
             //throw new NotImplementedException();
         }
-
-        #region IDisposable
-
-        private bool disposedValue;
-
-        protected override void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    WinMMImport.WaveInReset(this.deviceHandle);
-                    WinMMImport.WaveInClose(this.deviceHandle);
-                }
-
-                // TODO: free unmanaged resources (unmanaged objects) and override finalizer
-                // TODO: set large fields to null
-                disposedValue = true;
-            }
-        }
-
-        #endregion
 
         public override void Open(WaveFormat waveFormat = null)
         {

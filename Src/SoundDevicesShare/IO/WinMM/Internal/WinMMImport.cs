@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -27,14 +28,59 @@ namespace SoundDevices.IO.WinMM.Internal
         public const int CALLBACK_FUNCTION = 0x30000;
 
         public delegate void Callback(IntPtr handle, WinMMMsg msg, IntPtr instance, IntPtr param1, IntPtr param2);
-        
+
+        public static IEnumerable<(int, MidiInCaps)> MidiInGetDevices()
+        {
+            for (int i = 0; i < MidiInGetNumDevs(); i++)
+            {
+                if (WinMMImport.MidiInGetDevCaps(i, out WinMMImport.MidiInCaps midiInCaps, MidiInCapsSize) == 0)
+                {
+                    yield return (i, midiInCaps);
+                }
+            }
+        }
+
+        public static IEnumerable<(int, MidiOutCaps)> MidiOutGetDevices()
+        {
+            // -1 for windows Midi mixer
+            for (int i = -1; i < MidiOutGetNumDevs(); i++)
+            {
+                if (WinMMImport.MidiOutGetDevCaps(i, out WinMMImport.MidiOutCaps midiOutCaps, MidiOutCapsSize) == 0)
+                {
+                    yield return (i, midiOutCaps);
+                }
+            }
+        }
+
+        public static IEnumerable<(int, WaveInCaps)> WaveInGetDevices()
+        {
+            for (int i = 0; i < WaveInGetNumDevs(); i++)
+            {
+                if (WinMMImport.WaveInGetDevCaps(i, out WaveInCaps waveInCaps, WaveInCapsSize) == 0)
+                {
+                    yield return (i, waveInCaps);
+                }
+            }
+        }
+
+        public static IEnumerable<(int, WaveOutCaps)> WaveOutGetDevices()
+        {
+            for (int i = -1; i < WaveOutGetNumDevs(); i++)
+            {
+                if (WinMMImport.WaveOutGetDevCaps(i, out WaveOutCaps waveOutCaps, WaveOutCapsSize) == 0)
+                {
+                    yield return (i, waveOutCaps);
+                }
+            }
+        }
+
         #region MIDI IN
 
         [DllImport(WinMMLibrary, EntryPoint = "midiInGetNumDevs")]
         public static extern int MidiInGetNumDevs();
 
         [DllImport(WinMMLibrary, EntryPoint = "midiInGetDevCaps", CharSet = CharSet.Auto)]
-        public static extern int MidiInGetDevCaps(IntPtr deviceID, out MidiInCaps midiInCaps, int sizeMidiInCaps);
+        public static extern int MidiInGetDevCaps(int deviceID, out MidiInCaps midiInCaps, int sizeMidiInCaps);
 
         [DllImport(WinMMLibrary, EntryPoint = "midiInOpen")]
         public static extern int MidiInOpen(out IntPtr handle, int deviceID, Callback callback, IntPtr instance, int flags);
@@ -68,7 +114,7 @@ namespace SoundDevices.IO.WinMM.Internal
         public static extern int MidiOutGetNumDevs();
 
         [DllImport(WinMMLibrary, EntryPoint = "midiOutGetDevCaps", CharSet = CharSet.Auto)]
-        public static extern int MidiOutGetDevCaps(IntPtr deviceID, out MidiOutCaps midiOutCaps, int sizeMidiOutCaps);
+        public static extern int MidiOutGetDevCaps(int deviceID, out MidiOutCaps midiOutCaps, int sizeMidiOutCaps);
 
         [DllImport(WinMMLibrary, EntryPoint = "midiOutOpen")]
         public static extern int MidiOutOpen(out IntPtr handle, int deviceID, Callback callback, IntPtr instance, int flags);
@@ -99,7 +145,7 @@ namespace SoundDevices.IO.WinMM.Internal
         public static extern int WaveInGetNumDevs();
 
         [DllImport(WinMMLibrary, EntryPoint = "waveInGetDevCaps", CharSet = CharSet.Auto)]
-        public static extern int WaveInGetDevCaps(IntPtr deviceID, out WaveInCaps waveinCaps, int sizeWaveInCaps);
+        public static extern int WaveInGetDevCaps(int deviceID, out WaveInCaps waveinCaps, int sizeWaveInCaps);
 
         [DllImport(WinMMLibrary, EntryPoint = "waveInOpen")]
         public static extern int WaveInOpen(out IntPtr handle, int deviceID, [In, MarshalAs(UnmanagedType.LPStruct)] WaveFormatEx b, Callback callback, IntPtr instance, int dwFlags);
@@ -139,7 +185,7 @@ namespace SoundDevices.IO.WinMM.Internal
         public static extern int WaveOutGetNumDevs();
 
         [DllImport(WinMMLibrary, EntryPoint = "waveOutGetDevCaps", CharSet = CharSet.Auto)]
-        public static extern int WaveOutGetDevCaps(IntPtr deviceID, out WaveOutCaps waveOutCaps, int sizeWaveOutCaps);
+        public static extern int WaveOutGetDevCaps(int deviceID, out WaveOutCaps waveOutCaps, int sizeWaveOutCaps);
 
         [DllImport(WinMMLibrary, EntryPoint = "waveOutOpen")]
         public static extern int WaveOutOpen(out IntPtr handle, int deviceID, [In, MarshalAs(UnmanagedType.LPStruct)] WaveFormatEx b, Callback callback, IntPtr instance, int dwFlags);

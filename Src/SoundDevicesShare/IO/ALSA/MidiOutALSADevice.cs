@@ -4,12 +4,15 @@ using System.Text;
 
 namespace SoundDevices.IO.ALSA
 {
-    public class MidiOutALSADevice : MidiOutDevice
+    public sealed class MidiOutALSADevice : MidiOutDevice
     {
         internal static void AddDevices(SoundDeviceType soundDeviceType, List<MidiOutDevice> devices)
         {
             
         }
+
+        public override void Dispose()
+        { }
 
         public override void Open()
         { }

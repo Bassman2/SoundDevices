@@ -8,8 +8,11 @@ using System.Text;
 namespace SoundDevices.IO.ALSA
 {
     [SupportedOSPlatform("Linux")]
-    public class MidiInALSADevice : MidiInDevice
+    public sealed class MidiInALSADevice : MidiInDevice
     {
+        public override void Dispose()
+        { }
+
         internal static void AddDevices(SoundDeviceType soundDeviceType, List<MidiInDevice> devices)
         {
             foreach (var card in ALSAImport.GetCards())
@@ -198,5 +201,7 @@ namespace SoundDevices.IO.ALSA
 
         public override void Stop()
         { }
+
+        
     }
 }
