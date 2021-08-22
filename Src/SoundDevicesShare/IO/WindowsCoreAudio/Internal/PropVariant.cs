@@ -27,7 +27,13 @@ namespace SoundDevices.IO.WindowsCoreAudio.Internal
         [FieldOffset(8)] bool boolVal;
         [FieldOffset(8)] int scode;
         [FieldOffset(8)] System.Runtime.InteropServices.ComTypes.FILETIME filetime;
-        [FieldOffset(8)] IntPtr everything_else;
+        [FieldOffset(8)] IntPtr ptr;
+
+
+        public bool IsEmpty => (VarEnum)vt == VarEnum.VT_EMPTY;
+
+        public static implicit operator int(PropVariant propVariant) => propVariant.lVal;
+        public static implicit operator string(PropVariant propVariant) => propVariant.ToString();
 
         //I'm sure there is a more efficient way to do this but this works ..for now..
         internal byte[] GetBlob()
@@ -44,28 +50,39 @@ namespace SoundDevices.IO.WindowsCoreAudio.Internal
         {
             get
             {
-                VarEnum ve = (VarEnum)vt;
-                switch (ve)
+                return (VarEnum)vt switch
                 {
-                case VarEnum.VT_I1:
-                    return bVal;
-                case VarEnum.VT_I2:
-                    return iVal;
-                case VarEnum.VT_I4:
-                    return lVal;
-                case VarEnum.VT_I8:
-                    return hVal;
-                case VarEnum.VT_INT:
-                    return iVal;
-                case VarEnum.VT_UI4:
-                    return ulVal;
-                case VarEnum.VT_LPWSTR:
-                    return Marshal.PtrToStringUni(everything_else);
-                case VarEnum.VT_BLOB:
-                    return GetBlob();
-                }
-                return "FIXME Type = " + ve.ToString();
+                    VarEnum.VT_EMPTY => string.Empty,
+                    VarEnum.VT_NULL => null,
+                    VarEnum.VT_I1 => bVal,
+                    VarEnum.VT_I2 => iVal,
+                    VarEnum.VT_I4 => lVal,
+                    VarEnum.VT_I8 => hVal,
+                    VarEnum.VT_INT => iVal,
+                    VarEnum.VT_UI4 => ulVal,
+                    VarEnum.VT_LPWSTR => Marshal.PtrToStringUni(ptr),
+                    VarEnum.VT_BLOB => GetBlob(),
+                    _ => $"FIXME Type = {(VarEnum)vt}"
+                };
             }
+        }
+
+        public override string ToString()
+        {
+            return (VarEnum)vt switch
+            {
+                VarEnum.VT_EMPTY => string.Empty,
+                VarEnum.VT_NULL => null,
+                VarEnum.VT_I1 => bVal.ToString(),
+                VarEnum.VT_I2 => iVal.ToString(),
+                VarEnum.VT_I4 => lVal.ToString(),
+                VarEnum.VT_I8 => hVal.ToString(),
+                VarEnum.VT_INT => iVal.ToString(),
+                VarEnum.VT_UI4 => ulVal.ToString(),
+                VarEnum.VT_LPWSTR => Marshal.PtrToStringUni(ptr),
+                //VarEnum.VT_BLOB => GetBlob(),
+                _ => $"FIXME Type = {(VarEnum)vt}"
+            };
         }
     }
 }

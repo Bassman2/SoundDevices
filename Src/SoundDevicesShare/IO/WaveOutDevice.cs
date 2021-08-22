@@ -6,6 +6,7 @@ using SoundDevices.IO.ALSA;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using SoundDevices.IO.WindowsCoreAudio;
 
 namespace SoundDevices.IO
 {
@@ -16,6 +17,10 @@ namespace SoundDevices.IO
             List<WaveOutDevice> devices = new();
             if (OperatingSystem.IsWindows())
             {
+                if (soundDeviceType.HasFlag(SoundDeviceType.WinCoreAudio))
+                {
+                    WaveOutWinCoreAudioDevice.AddDevices(soundDeviceType, devices);
+                }
                 if (soundDeviceType.HasFlag(SoundDeviceType.WinMM))
                 {
                     WaveOutWinMMDevice.AddDevices(soundDeviceType, devices);

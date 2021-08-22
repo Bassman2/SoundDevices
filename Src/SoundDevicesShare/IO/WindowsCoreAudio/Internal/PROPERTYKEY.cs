@@ -34,5 +34,10 @@ namespace SoundDevices.IO.WindowsCoreAudio.Internal
         {
             return base.GetHashCode();
         }
-    };
+
+        public override string ToString()
+        {
+            return $"{fmtid}:{pid}";
+        }
+    }
 }

@@ -55,8 +55,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)IO\WindowsCoreAudio\Internal\IMMEndpoint.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\WindowsCoreAudio\Internal\IMMNotificationClient.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\WindowsCoreAudio\Internal\IPropertyStore.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\WindowsCoreAudio\Internal\PKEY.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\WindowsCoreAudio\Internal\PROPERTYKEY.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\WindowsCoreAudio\Internal\PropertyStore.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\WindowsCoreAudio\Internal\PropVariant.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\WindowsCoreAudio\WaveInWinCoreAudioDevice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\WindowsCoreAudio\WaveOutWinCoreAudioDevice.cs" />
     <Compile Include="..\SoundDevicesShare\IO\CoreAudio\Internal\CoreAudioImport.cs" />
     <Compile Include="..\SoundDevicesShare\IO\CoreAudio\Internal\MidiError.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IO\CoreAudio\Internal\MidiObjectType.cs" />

@@ -14,9 +14,10 @@ namespace SoundDevices.IO
         DirectX_ORG = 0x00000020,
         DirectX = 0x00000030,
         ASIO = 0x00000100,
+        WinCoreAudio = 0x000001000,
         // Linux
-        ALSA = 0x00001000,
+        ALSA = 0x00010000,
         // Mac
-        CoreAudio = 0x00010000
+        CoreAudio = 0x00100000
     }
 }
