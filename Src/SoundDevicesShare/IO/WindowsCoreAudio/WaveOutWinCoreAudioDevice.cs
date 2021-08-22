@@ -1,13 +1,10 @@
 ﻿using SoundDevices.IO.WindowsCoreAudio.Internal;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Text;
 
 namespace SoundDevices.IO.WindowsCoreAudio
 {
-    
+
     internal sealed class WaveOutWinCoreAudioDevice : WaveOutDevice
     {
         private IMMDevice device;
@@ -31,6 +28,7 @@ namespace SoundDevices.IO.WindowsCoreAudio
             this.DeviceType = SoundDeviceType.WinCoreAudio;
 
             this.propertyStore = new PropertyStore(device);
+            this.propertyStore.DebugProperties();
 
             this.Manufacturer = propertyStore.GetDeviceManufacturer;
             this.Name = propertyStore.GetDeviceFriendlyName;

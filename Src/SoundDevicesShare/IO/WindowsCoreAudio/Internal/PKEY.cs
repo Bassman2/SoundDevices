@@ -10,54 +10,59 @@ namespace SoundDevices.IO.WindowsCoreAudio.Internal
         public const int ENDPOINT_SYSFX_ENABLED = 0x00000000;
         public const int ENDPOINT_SYSFX_DISABLED = 0x00000001;
 
-        public static readonly PROPERTYKEY PKEY_AudioEndpoint_FormFactor = new PROPERTYKEY(new Guid(0x1da5d803, 0xd492, 0x4edd, 0x8c, 0x23, 0xe0, 0xc0, 0xff, 0xee, 0x7f, 0x0e), 0);
-        public static readonly PROPERTYKEY PKEY_AudioEndpoint_ControlPanelPageProvider = new PROPERTYKEY(new Guid(0x1da5d803, 0xd492, 0x4edd, 0x8c, 0x23, 0xe0, 0xc0, 0xff, 0xee, 0x7f, 0x0e), 1);
-        public static readonly PROPERTYKEY PKEY_AudioEndpoint_Association = new PROPERTYKEY(new Guid(0x1da5d803, 0xd492, 0x4edd, 0x8c, 0x23, 0xe0, 0xc0, 0xff, 0xee, 0x7f, 0x0e), 2);
-        public static readonly PROPERTYKEY PKEY_AudioEndpoint_PhysicalSpeakers = new PROPERTYKEY(new Guid(0x1da5d803, 0xd492, 0x4edd, 0x8c, 0x23, 0xe0, 0xc0, 0xff, 0xee, 0x7f, 0x0e), 3);
-        public static readonly PROPERTYKEY PKEY_AudioEndpoint_GUID = new PROPERTYKEY(new Guid(0x1da5d803, 0xd492, 0x4edd, 0x8c, 0x23, 0xe0, 0xc0, 0xff, 0xee, 0x7f, 0x0e), 4);
-        public static readonly PROPERTYKEY PKEY_AudioEndpoint_Disable_SysFx = new PROPERTYKEY(new Guid(0x1da5d803, 0xd492, 0x4edd, 0x8c, 0x23, 0xe0, 0xc0, 0xff, 0xee, 0x7f, 0x0e), 5);
-        public static readonly PROPERTYKEY PKEY_AudioEndpoint_FullRangeSpeakers = new PROPERTYKEY(new Guid(0x1da5d803, 0xd492, 0x4edd, 0x8c, 0x23, 0xe0, 0xc0, 0xff, 0xee, 0x7f, 0x0e), 6);
-        public static readonly PROPERTYKEY PKEY_AudioEndpoint_Supports_EventDriven_Mode = new PROPERTYKEY(new Guid(0x1da5d803, 0xd492, 0x4edd, 0x8c, 0x23, 0xe0, 0xc0, 0xff, 0xee, 0x7f, 0x0e), 7);
-        public static readonly PROPERTYKEY PKEY_AudioEndpoint_JackSubType = new PROPERTYKEY(new Guid(0x1da5d803, 0xd492, 0x4edd, 0x8c, 0x23, 0xe0, 0xc0, 0xff, 0xee, 0x7f, 0x0e), 8);
+        private static readonly Guid GUID_AudioEndpoint = new Guid(0x1da5d803, 0xd492, 0x4edd, 0x8c, 0x23, 0xe0, 0xc0, 0xff, 0xee, 0x7f, 0x0e);
+        private static readonly Guid GUID_Device = new Guid(0xa45c254e, 0xdf1c, 0x4efd, 0x80, 0x20, 0x67, 0xd1, 0x46, 0xa8, 0x50, 0xe0);
+        private static readonly Guid GUID_DeviceInterface = new Guid(0x026e516e, 0xb814, 0x414b, 0x83, 0xcd, 0x85, 0x6d, 0x6f, 0xef, 0x48, 0x22);
+
+        public static readonly PROPERTYKEY PKEY_AudioEndpoint_FormFactor = new PROPERTYKEY(GUID_AudioEndpoint, 0);
+        public static readonly PROPERTYKEY PKEY_AudioEndpoint_ControlPanelPageProvider = new PROPERTYKEY(GUID_AudioEndpoint, 1);
+        public static readonly PROPERTYKEY PKEY_AudioEndpoint_Association = new PROPERTYKEY(GUID_AudioEndpoint, 2);
+        public static readonly PROPERTYKEY PKEY_AudioEndpoint_PhysicalSpeakers = new PROPERTYKEY(GUID_AudioEndpoint, 3);
+        public static readonly PROPERTYKEY PKEY_AudioEndpoint_GUID = new PROPERTYKEY(GUID_AudioEndpoint, 4);
+        public static readonly PROPERTYKEY PKEY_AudioEndpoint_Disable_SysFx = new PROPERTYKEY(GUID_AudioEndpoint, 5);
+        public static readonly PROPERTYKEY PKEY_AudioEndpoint_FullRangeSpeakers = new PROPERTYKEY(GUID_AudioEndpoint, 6);
+        public static readonly PROPERTYKEY PKEY_AudioEndpoint_Supports_EventDriven_Mode = new PROPERTYKEY(GUID_AudioEndpoint, 7);
+        public static readonly PROPERTYKEY PKEY_AudioEndpoint_JackSubType = new PROPERTYKEY(GUID_AudioEndpoint, 8);
+
         public static readonly PROPERTYKEY PKEY_AudioEngine_DeviceFormat = new PROPERTYKEY(new Guid(0xf19f064d, 0x82c, 0x4e27, 0xbc, 0x73, 0x68, 0x82, 0xa1, 0xbb, 0x8e, 0x4c), 0);
         public static readonly PROPERTYKEY PKEY_AudioEngine_OEMFormat = new PROPERTYKEY(new Guid(0xe4870e26, 0x3cc5, 0x4cd2, 0xba, 0x46, 0xca, 0xa, 0x9a, 0x70, 0xed, 0x4), 3);
 
         // Device Properties
         // These PKEYs correspond to the old setupapi SPDRP_XXX properties
-        public static readonly PROPERTYKEY PKEY_Device_DeviceDesc = new PROPERTYKEY(new Guid(0xa45c254e, 0xdf1c, 0x4efd, 0x80, 0x20, 0x67, 0xd1, 0x46, 0xa8, 0x50, 0xe0), 2);
-        public static readonly PROPERTYKEY PKEY_Device_HardwareIds = new PROPERTYKEY(new Guid(0xa45c254e, 0xdf1c, 0x4efd, 0x80, 0x20, 0x67, 0xd1, 0x46, 0xa8, 0x50, 0xe0), 3);
-        public static readonly PROPERTYKEY PKEY_Device_CompatibleIds = new PROPERTYKEY(new Guid(0xa45c254e, 0xdf1c, 0x4efd, 0x80, 0x20, 0x67, 0xd1, 0x46, 0xa8, 0x50, 0xe0), 4);
-        public static readonly PROPERTYKEY PKEY_Device_Service = new PROPERTYKEY(new Guid(0xa45c254e, 0xdf1c, 0x4efd, 0x80, 0x20, 0x67, 0xd1, 0x46, 0xa8, 0x50, 0xe0), 6);
-        public static readonly PROPERTYKEY PKEY_Device_Class = new PROPERTYKEY(new Guid(0xa45c254e, 0xdf1c, 0x4efd, 0x80, 0x20, 0x67, 0xd1, 0x46, 0xa8, 0x50, 0xe0), 9);
-        public static readonly PROPERTYKEY PKEY_Device_ClassGuid = new PROPERTYKEY(new Guid(0xa45c254e, 0xdf1c, 0x4efd, 0x80, 0x20, 0x67, 0xd1, 0x46, 0xa8, 0x50, 0xe0), 10);
-        public static readonly PROPERTYKEY PKEY_Device_Driver = new PROPERTYKEY(new Guid(0xa45c254e, 0xdf1c, 0x4efd, 0x80, 0x20, 0x67, 0xd1, 0x46, 0xa8, 0x50, 0xe0), 11);
-        public static readonly PROPERTYKEY PKEY_Device_ConfigFlags = new PROPERTYKEY(new Guid(0xa45c254e, 0xdf1c, 0x4efd, 0x80, 0x20, 0x67, 0xd1, 0x46, 0xa8, 0x50, 0xe0), 12);
-        public static readonly PROPERTYKEY PKEY_Device_Manufacturer = new PROPERTYKEY(new Guid(0xa45c254e, 0xdf1c, 0x4efd, 0x80, 0x20, 0x67, 0xd1, 0x46, 0xa8, 0x50, 0xe0), 13);
-        public static readonly PROPERTYKEY PKEY_Device_FriendlyName = new PROPERTYKEY(new Guid(0xa45c254e, 0xdf1c, 0x4efd, 0x80, 0x20, 0x67, 0xd1, 0x46, 0xa8, 0x50, 0xe0), 14);
-        public static readonly PROPERTYKEY PKEY_Device_LocationInfo = new PROPERTYKEY(new Guid(0xa45c254e, 0xdf1c, 0x4efd, 0x80, 0x20, 0x67, 0xd1, 0x46, 0xa8, 0x50, 0xe0), 15);
-        public static readonly PROPERTYKEY PKEY_Device_PDOName = new PROPERTYKEY(new Guid(0xa45c254e, 0xdf1c, 0x4efd, 0x80, 0x20, 0x67, 0xd1, 0x46, 0xa8, 0x50, 0xe0), 16);
-        public static readonly PROPERTYKEY PKEY_Device_Capabilities = new PROPERTYKEY(new Guid(0xa45c254e, 0xdf1c, 0x4efd, 0x80, 0x20, 0x67, 0xd1, 0x46, 0xa8, 0x50, 0xe0), 17);
-        public static readonly PROPERTYKEY PKEY_Device_UINumber = new PROPERTYKEY(new Guid(0xa45c254e, 0xdf1c, 0x4efd, 0x80, 0x20, 0x67, 0xd1, 0x46, 0xa8, 0x50, 0xe0), 18);
-        public static readonly PROPERTYKEY PKEY_Device_UpperFilters = new PROPERTYKEY(new Guid(0xa45c254e, 0xdf1c, 0x4efd, 0x80, 0x20, 0x67, 0xd1, 0x46, 0xa8, 0x50, 0xe0), 19);
-        public static readonly PROPERTYKEY PKEY_Device_LowerFilters = new PROPERTYKEY(new Guid(0xa45c254e, 0xdf1c, 0x4efd, 0x80, 0x20, 0x67, 0xd1, 0x46, 0xa8, 0x50, 0xe0), 20);
-        public static readonly PROPERTYKEY PKEY_Device_BusTypeGuid = new PROPERTYKEY(new Guid(0xa45c254e, 0xdf1c, 0x4efd, 0x80, 0x20, 0x67, 0xd1, 0x46, 0xa8, 0x50, 0xe0), 21);
-        public static readonly PROPERTYKEY PKEY_Device_LegacyBusType = new PROPERTYKEY(new Guid(0xa45c254e, 0xdf1c, 0x4efd, 0x80, 0x20, 0x67, 0xd1, 0x46, 0xa8, 0x50, 0xe0), 22);
-        public static readonly PROPERTYKEY PKEY_Device_BusNumber = new PROPERTYKEY(new Guid(0xa45c254e, 0xdf1c, 0x4efd, 0x80, 0x20, 0x67, 0xd1, 0x46, 0xa8, 0x50, 0xe0), 23);
-        public static readonly PROPERTYKEY PKEY_Device_EnumeratorName = new PROPERTYKEY(new Guid(0xa45c254e, 0xdf1c, 0x4efd, 0x80, 0x20, 0x67, 0xd1, 0x46, 0xa8, 0x50, 0xe0), 24);
-        public static readonly PROPERTYKEY PKEY_Device_Security = new PROPERTYKEY(new Guid(0xa45c254e, 0xdf1c, 0x4efd, 0x80, 0x20, 0x67, 0xd1, 0x46, 0xa8, 0x50, 0xe0), 25);
-        public static readonly PROPERTYKEY PKEY_Device_SecuritySDS = new PROPERTYKEY(new Guid(0xa45c254e, 0xdf1c, 0x4efd, 0x80, 0x20, 0x67, 0xd1, 0x46, 0xa8, 0x50, 0xe0), 26);
-        public static readonly PROPERTYKEY PKEY_Device_DevType = new PROPERTYKEY(new Guid(0xa45c254e, 0xdf1c, 0x4efd, 0x80, 0x20, 0x67, 0xd1, 0x46, 0xa8, 0x50, 0xe0), 27);
-        public static readonly PROPERTYKEY PKEY_Device_Exclusive = new PROPERTYKEY(new Guid(0xa45c254e, 0xdf1c, 0x4efd, 0x80, 0x20, 0x67, 0xd1, 0x46, 0xa8, 0x50, 0xe0), 28);
-        public static readonly PROPERTYKEY PKEY_Device_Characteristics = new PROPERTYKEY(new Guid(0xa45c254e, 0xdf1c, 0x4efd, 0x80, 0x20, 0x67, 0xd1, 0x46, 0xa8, 0x50, 0xe0), 29);
-        public static readonly PROPERTYKEY PKEY_Device_Address = new PROPERTYKEY(new Guid(0xa45c254e, 0xdf1c, 0x4efd, 0x80, 0x20, 0x67, 0xd1, 0x46, 0xa8, 0x50, 0xe0), 30);
-        public static readonly PROPERTYKEY PKEY_Device_UINumberDescFormat = new PROPERTYKEY(new Guid(0xa45c254e, 0xdf1c, 0x4efd, 0x80, 0x20, 0x67, 0xd1, 0x46, 0xa8, 0x50, 0xe0), 31);
-        public static readonly PROPERTYKEY PKEY_Device_PowerData = new PROPERTYKEY(new Guid(0xa45c254e, 0xdf1c, 0x4efd, 0x80, 0x20, 0x67, 0xd1, 0x46, 0xa8, 0x50, 0xe0), 32);
-        public static readonly PROPERTYKEY PKEY_Device_RemovalPolicy = new PROPERTYKEY(new Guid(0xa45c254e, 0xdf1c, 0x4efd, 0x80, 0x20, 0x67, 0xd1, 0x46, 0xa8, 0x50, 0xe0), 33);
-        public static readonly PROPERTYKEY PKEY_Device_RemovalPolicyDefault = new PROPERTYKEY(new Guid(0xa45c254e, 0xdf1c, 0x4efd, 0x80, 0x20, 0x67, 0xd1, 0x46, 0xa8, 0x50, 0xe0), 34);
-        public static readonly PROPERTYKEY PKEY_Device_RemovalPolicyOverride = new PROPERTYKEY(new Guid(0xa45c254e, 0xdf1c, 0x4efd, 0x80, 0x20, 0x67, 0xd1, 0x46, 0xa8, 0x50, 0xe0), 34);
-        public static readonly PROPERTYKEY PKEY_Device_InstallState = new PROPERTYKEY(new Guid(0xa45c254e, 0xdf1c, 0x4efd, 0x80, 0x20, 0x67, 0xd1, 0x46, 0xa8, 0x50, 0xe0), 36);
-        public static readonly PROPERTYKEY PKEY_Device_LocationPaths = new PROPERTYKEY(new Guid(0xa45c254e, 0xdf1c, 0x4efd, 0x80, 0x20, 0x67, 0xd1, 0x46, 0xa8, 0x50, 0xe0), 37);
-        public static readonly PROPERTYKEY PKEY_Device_BaseContainerId = new PROPERTYKEY(new Guid(0xa45c254e, 0xdf1c, 0x4efd, 0x80, 0x20, 0x67, 0xd1, 0x46, 0xa8, 0x50, 0xe0), 38);
+        public static readonly PROPERTYKEY PKEY_Device_DeviceDesc = new PROPERTYKEY(GUID_Device, 2);
+        public static readonly PROPERTYKEY PKEY_Device_HardwareIds = new PROPERTYKEY(GUID_Device, 3);
+        public static readonly PROPERTYKEY PKEY_Device_CompatibleIds = new PROPERTYKEY(GUID_Device, 4);
+        public static readonly PROPERTYKEY PKEY_Device_Service = new PROPERTYKEY(GUID_Device, 6);
+        public static readonly PROPERTYKEY PKEY_Device_Class = new PROPERTYKEY(GUID_Device, 9);
+        public static readonly PROPERTYKEY PKEY_Device_ClassGuid = new PROPERTYKEY(GUID_Device, 10);
+        public static readonly PROPERTYKEY PKEY_Device_Driver = new PROPERTYKEY(GUID_Device, 11);
+        public static readonly PROPERTYKEY PKEY_Device_ConfigFlags = new PROPERTYKEY(GUID_Device, 12);
+        public static readonly PROPERTYKEY PKEY_Device_Manufacturer = new PROPERTYKEY(GUID_Device, 13);
+        public static readonly PROPERTYKEY PKEY_Device_FriendlyName = new PROPERTYKEY(GUID_Device, 14);
+        public static readonly PROPERTYKEY PKEY_Device_LocationInfo = new PROPERTYKEY(GUID_Device, 15);
+        public static readonly PROPERTYKEY PKEY_Device_PDOName = new PROPERTYKEY(GUID_Device, 16);
+        public static readonly PROPERTYKEY PKEY_Device_Capabilities = new PROPERTYKEY(GUID_Device, 17);
+        public static readonly PROPERTYKEY PKEY_Device_UINumber = new PROPERTYKEY(GUID_Device, 18);
+        public static readonly PROPERTYKEY PKEY_Device_UpperFilters = new PROPERTYKEY(GUID_Device, 19);
+        public static readonly PROPERTYKEY PKEY_Device_LowerFilters = new PROPERTYKEY(GUID_Device, 20);
+        public static readonly PROPERTYKEY PKEY_Device_BusTypeGuid = new PROPERTYKEY(GUID_Device, 21);
+        public static readonly PROPERTYKEY PKEY_Device_LegacyBusType = new PROPERTYKEY(GUID_Device, 22);
+        public static readonly PROPERTYKEY PKEY_Device_BusNumber = new PROPERTYKEY(GUID_Device, 23);
+        public static readonly PROPERTYKEY PKEY_Device_EnumeratorName = new PROPERTYKEY(GUID_Device, 24);
+        public static readonly PROPERTYKEY PKEY_Device_Security = new PROPERTYKEY(GUID_Device, 25);
+        public static readonly PROPERTYKEY PKEY_Device_SecuritySDS = new PROPERTYKEY(GUID_Device, 26);
+        public static readonly PROPERTYKEY PKEY_Device_DevType = new PROPERTYKEY(GUID_Device, 27);
+        public static readonly PROPERTYKEY PKEY_Device_Exclusive = new PROPERTYKEY(GUID_Device, 28);
+        public static readonly PROPERTYKEY PKEY_Device_Characteristics = new PROPERTYKEY(GUID_Device, 29);
+        public static readonly PROPERTYKEY PKEY_Device_Address = new PROPERTYKEY(GUID_Device, 30);
+        public static readonly PROPERTYKEY PKEY_Device_UINumberDescFormat = new PROPERTYKEY(GUID_Device, 31);
+        public static readonly PROPERTYKEY PKEY_Device_PowerData = new PROPERTYKEY(GUID_Device, 32);
+        public static readonly PROPERTYKEY PKEY_Device_RemovalPolicy = new PROPERTYKEY(GUID_Device, 33);
+        public static readonly PROPERTYKEY PKEY_Device_RemovalPolicyDefault = new PROPERTYKEY(GUID_Device, 34);
+        public static readonly PROPERTYKEY PKEY_Device_RemovalPolicyOverride = new PROPERTYKEY(GUID_Device, 34);
+        public static readonly PROPERTYKEY PKEY_Device_InstallState = new PROPERTYKEY(GUID_Device, 36);
+        public static readonly PROPERTYKEY PKEY_Device_LocationPaths = new PROPERTYKEY(GUID_Device, 37);
+        public static readonly PROPERTYKEY PKEY_Device_BaseContainerId = new PROPERTYKEY(GUID_Device, 38);
 
         // Device properties
         // These PKEYs correspond to a device's status and problem code
@@ -155,11 +160,18 @@ namespace SoundDevices.IO.WindowsCoreAudio.Internal
         public static readonly PROPERTYKEY PKEY_DeviceClass_ClassCoInstallers = new PROPERTYKEY(new Guid(0x713d1703, 0xa2e2, 0x49f5, 0x92, 0x14, 0x56, 0x47, 0x2e, 0xf3, 0xda, 0x5c), 2);
 
         // Device interface properties
-        public static readonly PROPERTYKEY PKEY_DeviceInterface_FriendlyName = new PROPERTYKEY(new Guid(0x026e516e, 0xb814, 0x414b, 0x83, 0xcd, 0x85, 0x6d, 0x6f, 0xef, 0x48, 0x22), 2);
-        public static readonly PROPERTYKEY PKEY_DeviceInterface_Enabled = new PROPERTYKEY(new Guid(0x026e516e, 0xb814, 0x414b, 0x83, 0xcd, 0x85, 0x6d, 0x6f, 0xef, 0x48, 0x22), 3);
-        public static readonly PROPERTYKEY PKEY_DeviceInterface_ClassGuid = new PROPERTYKEY(new Guid(0x026e516e, 0xb814, 0x414b, 0x83, 0xcd, 0x85, 0x6d, 0x6f, 0xef, 0x48, 0x22), 4);
+        public static readonly PROPERTYKEY PKEY_DeviceInterface_FriendlyName = new PROPERTYKEY(GUID_DeviceInterface, 2);
+        public static readonly PROPERTYKEY PKEY_DeviceInterface_Enabled = new PROPERTYKEY(GUID_DeviceInterface, 3);
+        public static readonly PROPERTYKEY PKEY_DeviceInterface_ClassGuid = new PROPERTYKEY(GUID_DeviceInterface, 4);
 
         // Device interface class properties
         public static readonly PROPERTYKEY PKEY_DeviceInterfaceClass_DefaultInterface = new PROPERTYKEY(new Guid(0x14c83a99, 0x0b3f, 0x44b7, 0xbe, 0x4c, 0xa1, 0x78, 0xd3, 0x99, 0x05, 0x64), 2);
+
+        private static readonly Guid GUID_Capture = new Guid(0xa45c254e, 0xdf1c, 0x4efd, 0x80, 0x20, 0x67, 0xd1, 0x46, 0xa8, 0x50, 0xe0);
+
+
+        public static readonly PROPERTYKEY PKEY_Capture_DeviceName = new PROPERTYKEY(GUID_Capture, 2);
+        public static readonly PROPERTYKEY PKEY_Capture_DeviceInterface = new PROPERTYKEY(GUID_Capture, 6);
+
     }
 }

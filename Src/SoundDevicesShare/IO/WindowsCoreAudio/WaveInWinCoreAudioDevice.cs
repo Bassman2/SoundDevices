@@ -1,10 +1,5 @@
 ﻿using SoundDevices.IO.WindowsCoreAudio.Internal;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Text;
 
 namespace SoundDevices.IO.WindowsCoreAudio
 {
@@ -33,6 +28,7 @@ namespace SoundDevices.IO.WindowsCoreAudio
             this.DeviceType = SoundDeviceType.WinCoreAudio;
             
             this.propertyStore = new PropertyStore(device);
+            this.propertyStore.DebugProperties();
 
             this.Manufacturer = propertyStore.GetDeviceManufacturer;
             this.Name = propertyStore.GetDeviceFriendlyName;

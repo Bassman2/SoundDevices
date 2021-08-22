@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
 
 namespace SoundDevices.IO.WindowsCoreAudio.Internal
 {
@@ -33,13 +36,25 @@ namespace SoundDevices.IO.WindowsCoreAudio.Internal
 
         public void DebugProperties()
         {
+            Debug.WriteLine("----------------------------------------------------------------------");
+            Dictionary<PROPERTYKEY, string> dict = new();
+            Type t = typeof(PKEY);
+            foreach (FieldInfo fi in t.GetFields().Where(f => f.FieldType == typeof(PROPERTYKEY)))
+            {
+                string name = fi.Name;
+                PROPERTYKEY pk = (PROPERTYKEY)fi.GetValue(null);
+                dict.TryAdd(pk, name);
+            }
+
             this.propertyStore.GetCount(out int num);
             for (int i = 0; i < num; i++)
             {
                 this.propertyStore.GetAt(i, out PROPERTYKEY key);
                 this.propertyStore.GetValue(ref key, out PropVariant pv);
-                Debug.WriteLine($"{key} {pv}");
+                dict.TryGetValue(key, out string name);
+                Debug.WriteLine($"[{i}] {name} : {key} : {pv}");
             }
+            Debug.WriteLine("----------------------------------------------------------------------");
         }
     }
 }
