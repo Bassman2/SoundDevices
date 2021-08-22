@@ -1,0 +1,35 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace SoundDevices.IO.CoreAudio.Internal
+{
+    internal static class CoreAudioProperties
+    {
+        // kAudioDevicePropertyDeviceUID
+
+/*
+var kAudioDevicePropertyAvailableNominalSampleRates: AudioObjectPropertySelector
+var kAudioDevicePropertyClockDomain: AudioObjectPropertySelector
+var kAudioDevicePropertyConfigurationApplication: AudioObjectPropertySelector
+var kAudioDevicePropertyDeviceCanBeDefaultDevice: AudioObjectPropertySelector
+var kAudioDevicePropertyDeviceCanBeDefaultSystemDevice: AudioObjectPropertySelector
+var kAudioDevicePropertyDeviceIsAlive: AudioObjectPropertySelector
+var kAudioDevicePropertyDeviceIsRunning: AudioObjectPropertySelector
+var kAudioDevicePropertyDeviceUID: AudioObjectPropertySelector
+var kAudioDevicePropertyIcon: AudioObjectPropertySelector
+var kAudioDevicePropertyIsHidden: AudioObjectPropertySelector
+var kAudioDevicePropertyLatency: AudioObjectPropertySelector
+var kAudioDevicePropertyModelUID: AudioObjectPropertySelector
+var kAudioDevicePropertyNominalSampleRate: AudioObjectPropertySelector
+var kAudioDevicePropertyPreferredChannelLayout: AudioObjectPropertySelector
+var kAudioDevicePropertyPreferredChannelsForStereo: AudioObjectPropertySelector
+var kAudioDevicePropertyRelatedDevices: AudioObjectPropertySelector
+var kAudioDevicePropertySafetyOffset: AudioObjectPropertySelector
+var kAudioDevicePropertyStreams: AudioObjectPropertySelector
+var kAudioDevicePropertyTransportType: AudioObjectPropertySelector
+var kAudioObjectPropertyControlList: AudioObjectPropertySelector 
+ */ 
+  
+}
+}
