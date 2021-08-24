@@ -18,7 +18,7 @@ ASIO
 
 ALSA
 
-### Mac
+### Apple
 
 Core (CoreAudio, CoreMidi)
 
