@@ -2,13 +2,15 @@
 
 Midi and Wave IO on all platforms for .NET 5 and later.
 
-## Planned Support
+## Under Construction
 
 ### Windows
 
+Code Audio (MMDevice, WASAPI, ...)
+
 WinMM
 
-DirectX
+DirectX (DirectSound, DirectMusic)
 
 ASIO
 
@@ -18,7 +20,7 @@ ALSA
 
 ### Mac
 
-CoreAudio
+Core (CoreAudio, CoreMidi)
 
 
 
