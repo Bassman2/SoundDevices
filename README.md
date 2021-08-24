@@ -18,7 +18,7 @@ ASIO
 
 ALSA
 
-### Apple
+### Apple (macOS, iOS)
 
 Core (CoreAudio, CoreMidi)
 
