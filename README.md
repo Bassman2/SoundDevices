@@ -20,7 +20,7 @@ ALSA
 
 ### Apple (macOS, iOS)
 
-Core (CoreAudio, CoreMidi)
+Core Library / Core Audio (Audio Units, Core MIDI)
 
 
 
